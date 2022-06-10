@@ -1,0 +1,115 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../widgets/dummy_drawer.dart';
+import '../widgets/user_avatar.dart';
+
+class MemberProfileScreen extends StatelessWidget {
+  const MemberProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: const DummyDrawer(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: UserAvatar(
+              radius: 60,
+            ),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                const UserAvatar(radius: 140),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: GridView.count(
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    crossAxisCount: 2,
+                    children: const <Widget>[
+                      CustomCard(
+                        icon: (FontAwesomeIcons.addressBook),
+                        tag: 'ledger',
+                      ),
+                      CustomCard(
+                        icon: (FontAwesomeIcons.message),
+                        tag: 'message',
+                      ),
+                      CustomCard(
+                        icon: (FontAwesomeIcons.userGroup),
+                        tag: 'member',
+                      ),
+                      CustomCard(
+                        icon: (FontAwesomeIcons.person),
+                        tag: 'profile',
+                      ),
+                      CustomCard(
+                        icon: (Icons.settings),
+                        tag: 'settings',
+                      ),
+                      CustomCard(
+                        icon: (FontAwesomeIcons.personCirclePlus),
+                        tag: 'member add ',
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomCard extends StatelessWidget {
+  const CustomCard({Key? key, required this.icon, required this.tag})
+      : super(key: key);
+  final IconData icon;
+  final String tag;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        elevation: 10,
+        shadowColor: Colors.yellow,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 70,
+              color: const Color(0xFFFFB800),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              tag.toUpperCase(),
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
