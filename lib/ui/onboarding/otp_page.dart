@@ -64,7 +64,7 @@ class OtpInput extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const OnboardingScreen(),
+                    builder: (context) => const CommunityList(),
                   ),
                 );
               },
