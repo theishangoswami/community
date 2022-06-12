@@ -1,3 +1,4 @@
+import 'package:community_internal/ui/screens/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -10,7 +11,6 @@ class MemberProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DummyDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
@@ -40,10 +40,19 @@ class MemberProfileScreen extends StatelessWidget {
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                     crossAxisCount: 2,
-                    children: const <Widget>[
-                      CustomCard(
-                        icon: (FontAwesomeIcons.addressBook),
-                        tag: 'ledger',
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Transactions(),
+                            ),
+                          ),
+                        },
+                        child: CustomCard(
+                          icon: (FontAwesomeIcons.addressBook),
+                          tag: 'ledger',
+                        ),
                       ),
                       CustomCard(
                         icon: (FontAwesomeIcons.message),

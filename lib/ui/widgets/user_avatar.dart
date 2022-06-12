@@ -13,11 +13,11 @@ class UserAvatar extends StatelessWidget {
       height: radius,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.black, width: 3),
+        border: Border.all(color: Colors.black, width: 2),
       ),
       child: Container(
-        width: radius - 5,
-        height: radius - 5,
+        width: radius - 8,
+        height: radius - 8,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(

@@ -73,7 +73,7 @@ class _LoginFormState extends State<LoginForm> {
             height: MediaQuery.of(context).size.height * 0.1,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 0.5,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(

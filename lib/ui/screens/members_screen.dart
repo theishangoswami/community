@@ -38,16 +38,20 @@ class _MembersScreenState extends State<MembersScreen>
     return Scaffold(
       drawer: const DummyDrawer(),
       appBar: AppBar(
+        title: Text(
+          "Members".toUpperCase(),
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: GestureDetector(
               child: const UserAvatar(
-                radius: 60,
+                radius: 50,
               ),
               onTap: () {
                 Navigator.of(context).push(

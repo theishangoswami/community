@@ -58,7 +58,7 @@ class OtpInput extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           SizedBox(
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width * 0.5,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
