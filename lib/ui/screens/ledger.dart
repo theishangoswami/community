@@ -3,6 +3,8 @@ import 'package:community_internal/ui/widgets/dummy_drawer.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
+import 'form.dart';
+
 class Ledger extends StatefulWidget {
   const Ledger({Key? key}) : super(key: key);
 
@@ -55,7 +57,13 @@ class _LedgerState extends State<Ledger> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Formm(),
+                    ),
+                  );
+                },
                 child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -115,7 +123,9 @@ class _LedgerState extends State<Ledger> {
                     )),
               ),
             );
-          }),
+          }
+          ),
+
     );
   }
 }

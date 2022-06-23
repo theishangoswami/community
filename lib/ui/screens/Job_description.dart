@@ -170,6 +170,7 @@
 //     );
 //   }
 // }
+import 'package:community_internal/ui/screens/messaging.dart';
 import 'package:flutter/material.dart';
 
 class Job extends StatefulWidget {
@@ -264,7 +265,7 @@ class _JobState extends State<Job> {
                       height: 15,
                       width: 15,
                       decoration: BoxDecoration(
-                        color: Colors.purpleAccent,
+                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Icon(Icons.done,color: Colors.white,size: 13,)),
@@ -283,7 +284,7 @@ class _JobState extends State<Job> {
                       height: 15,
                       width: 15,
                       decoration: BoxDecoration(
-                        color: Colors.purpleAccent,
+                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Icon(Icons.done,color: Colors.white,size: 13,)),
@@ -302,7 +303,7 @@ class _JobState extends State<Job> {
                       height: 15,
                       width: 15,
                       decoration: BoxDecoration(
-                        color: Colors.purpleAccent,
+                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Icon(Icons.done,color: Colors.white,size: 13,)),
@@ -321,7 +322,7 @@ class _JobState extends State<Job> {
                       height: 15,
                       width: 15,
                       decoration: BoxDecoration(
-                        color: Colors.purpleAccent,
+                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Icon(Icons.done,color: Colors.white,size: 13,)),
@@ -340,7 +341,7 @@ class _JobState extends State<Job> {
                       height: 15,
                       width: 15,
                       decoration: BoxDecoration(
-                        color: Colors.purpleAccent,
+                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Icon(Icons.done,color: Colors.white,size: 13,)),
@@ -360,7 +361,7 @@ class _JobState extends State<Job> {
                     height: 70,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.amber,
                       borderRadius: BorderRadius.circular(11),
                     ),
                     child: Center(
@@ -368,22 +369,30 @@ class _JobState extends State<Job> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 70,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 14),
-                      child: Text(
-                        'Apply for job',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>Messaging()),
+                    );
+                  },
+                  child: Container(
+                    height: 70,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 14),
+                        child: Text(
+                          'Apply for job',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black
+                          ),
                         ),
                       ),
                     ),
