@@ -44,7 +44,7 @@ class _OTPFieldsState extends State<OTPFields> {
     _controller4.dispose();
   }
 
-  final InputDecoration _decoration = InputDecoration(
+  final InputDecoration _decoration = const InputDecoration(
     enabledBorder: InputBorder.none,
     focusedBorder: InputBorder.none,
     border: InputBorder.none,
@@ -65,9 +65,10 @@ class _OTPFieldsState extends State<OTPFields> {
                 width: 50,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: _controller1.text == ''
-                          ? Colors.transparent
-                          : Colors.black),
+                    color: _controller1.text == ''
+                        ? Colors.transparent
+                        : Colors.black,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.shade200,
@@ -83,7 +84,7 @@ class _OTPFieldsState extends State<OTPFields> {
                             child: Container(
                               width: 15,
                               height: 15,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(50),
                                 ),
@@ -108,9 +109,10 @@ class _OTPFieldsState extends State<OTPFields> {
                 width: 50,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: _controller2.text == ''
-                          ? Colors.transparent
-                          : Colors.black),
+                    color: _controller2.text == ''
+                        ? Colors.transparent
+                        : Colors.black,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.shade200,
@@ -126,7 +128,7 @@ class _OTPFieldsState extends State<OTPFields> {
                             child: Container(
                               width: 15,
                               height: 15,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(50),
                                 ),
@@ -151,9 +153,10 @@ class _OTPFieldsState extends State<OTPFields> {
                 width: 50,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: _controller3.text == ''
-                          ? Colors.transparent
-                          : Colors.black),
+                    color: _controller3.text == ''
+                        ? Colors.transparent
+                        : Colors.black,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.shade200,
@@ -169,7 +172,7 @@ class _OTPFieldsState extends State<OTPFields> {
                             child: Container(
                               width: 15,
                               height: 15,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(50),
                                 ),
@@ -194,9 +197,10 @@ class _OTPFieldsState extends State<OTPFields> {
                 width: 50,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: _controller4.text == ''
-                          ? Colors.transparent
-                          : Colors.black),
+                    color: _controller4.text == ''
+                        ? Colors.transparent
+                        : Colors.black,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.shade200,
@@ -212,7 +216,7 @@ class _OTPFieldsState extends State<OTPFields> {
                             child: Container(
                               width: 15,
                               height: 15,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(50),
                                 ),

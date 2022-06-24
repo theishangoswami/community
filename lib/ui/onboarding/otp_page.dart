@@ -1,6 +1,5 @@
 import 'package:community_internal/ui/onboarding/otp_fields.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
-import 'package:community_internal/ui/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class CodeVerificationPage extends StatelessWidget {
@@ -71,9 +70,10 @@ class OtpInput extends StatelessWidget {
               child: const Text(
                 'VERIFICATION',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -87,7 +87,9 @@ class OtpInput extends StatelessWidget {
                 child: Text(
                   'Re-send (32)',
                   style: Theme.of(context).textTheme.button?.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                 ),
               )
             ],
