@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:community_internal/app/constants.dart';
+
 PostModel postModelFromJson(String str) => PostModel.fromJson(json.decode(str));
 
 String postModelToJson(PostModel data) => json.encode(data.toJson());
@@ -21,7 +23,7 @@ class PostModel {
   final String userId;
   final String societyId;
   final String typeOfPost;
-  final String postLink;
+  final String? postLink;
   final String postDescription;
   final String ads;
   final String status;
@@ -55,7 +57,9 @@ class PostModel {
         userId: json["user_id"],
         societyId: json["society_id"],
         typeOfPost: json["type_of_post"],
-        postLink: json["post_link"],
+        postLink: json["post_link"] == null
+            ? null
+            : Constants.imageBaseUrl + json["post_link"],
         postDescription: json["post_description"],
         ads: json["ads"],
         status: json["status"],

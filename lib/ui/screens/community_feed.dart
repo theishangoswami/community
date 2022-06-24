@@ -1,5 +1,4 @@
 import 'package:community_internal/ui/widgets/comment_box.dart';
-import 'package:community_internal/ui/widgets/like_button.dart';
 import 'package:community_internal/ui/widgets/post_card.dart';
 import 'package:flutter/material.dart';
 
@@ -42,10 +41,6 @@ class _CommunityFeedState extends State<CommunityFeed> {
     _commentFocusNode.dispose();
     super.dispose();
   }
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +79,8 @@ class _CommunityFeedState extends State<CommunityFeed> {
             ListView.builder(
               itemCount: 8,
               itemBuilder: (context, index) {
-                return const PostCard();
+                return PostCard(
+                );
               },
             ),
             _CommentBox(
@@ -171,16 +167,18 @@ class __CommentBoxState extends State<_CommentBox>
       visible: visibility,
       child: FadeTransition(
         opacity: _animation,
-        child: Builder(builder: (context) {
-          return Align(
-            alignment: Alignment.bottomCenter,
-            child: CommentBox(
-              textEditingController: widget.textEditingController,
-              focusNode: widget.focusNode,
-              onSubmitted: widget.addComment,
-            ),
-          );
-        }),
+        child: Builder(
+          builder: (context) {
+            return Align(
+              alignment: Alignment.bottomCenter,
+              child: CommentBox(
+                textEditingController: widget.textEditingController,
+                focusNode: widget.focusNode,
+                onSubmitted: widget.addComment,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
