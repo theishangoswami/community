@@ -42,6 +42,10 @@ class _CommunityFeedState extends State<CommunityFeed> {
     _commentFocusNode.dispose();
     super.dispose();
   }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

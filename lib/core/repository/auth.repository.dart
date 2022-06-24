@@ -5,10 +5,7 @@ class AuthRepository {
   Future<bool> sendOtp(String phoneNumber) async {
     try {
       return await HttpBuilder.post(
-            'user/otp',
-            body: {
-              'mobile_number': phoneNumber,
-            },
+            'user/otp?mobile_number=$phoneNumber',
           ) !=
           null;
     } catch (e) {
@@ -20,11 +17,7 @@ class AuthRepository {
   Future<bool> verifyOtp(String phoneNumber, String otp) async {
     try {
       return await HttpBuilder.post(
-            'user/registration_otp',
-            body: {
-              'mobile_number': phoneNumber,
-              'otp': otp,
-            },
+            'user/registration_otp?mobile_number=$phoneNumber&otp=$otp',
           ) !=
           null;
     } catch (e) {
