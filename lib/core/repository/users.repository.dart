@@ -19,4 +19,21 @@ class UserRepository {
     }
     return [];
   }
+
+  Future<UserModel?> getUser(String id) async {
+    try {
+      var res = await HttpBuilder.get('single_user/view/$id');
+      if (res != null) {
+        var body = jsonDecode(res.body)['resp'] as List;
+        if (body.isNotEmpty) {
+          return UserModel.fromJson(body.first);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
 }

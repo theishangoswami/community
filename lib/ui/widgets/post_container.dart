@@ -2,11 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:community_internal/core/models/comment.model.dart';
 import 'package:community_internal/core/models/like.model.dart';
+import 'package:community_internal/core/models/user.model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
+import 'package:community_internal/core/utils/date.utils.dart';
+import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:community_internal/core/models/post.model.dart';
+
+import '../../core/repository/users.repository.dart';
 
 class PostContainer extends StatelessWidget {
   final PostModel post;
@@ -59,7 +64,7 @@ class PostContainer extends StatelessWidget {
   }
 }
 
-class _PostHeader extends StatelessWidget {
+class _PostHeader extends StatefulWidget {
   final PostModel post;
 
   const _PostHeader({
@@ -67,45 +72,77 @@ class _PostHeader extends StatelessWidget {
   });
 
   @override
+  State<_PostHeader> createState() => _PostHeaderState();
+}
+
+class _PostHeaderState extends State<_PostHeader> {
+  UserModel? userModel;
+  bool isUserDetailsfetching = false;
+  @override
+  void initState() {
+    super.initState();
+    fetchUserDetails();
+  }
+
+  fetchUserDetails() async {
+    setState(() {
+      isUserDetailsfetching = true;
+    });
+    userModel = await UserRepository().getUser(widget.post.userId);
+    setState(() {
+      isUserDetailsfetching = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: const [
-        // UserAvatar(
-        //   radius: 35,
-        //   imgUrl: post.user.profileImageUrl,
-        // ),
-        // const SizedBox(width: 8.0),
-        // Expanded(
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text(
-        //         post.user.name.toUpperCase(),
-        //         style: const TextStyle(
-        //           fontWeight: FontWeight.w600,
-        //         ),
-        //       ),
-        //       Row(
-        //         children: [
-        //           Text(
-        //             '${post.timeAgo} • '.toUpperCase(),
-        //             style: TextStyle(
-        //               color: Colors.grey[600],
-        //               fontSize: 12.0,
-        //             ),
-        //           ),
-        //           Icon(
-        //             Icons.public,
-        //             color: Colors.grey[600],
-        //             size: 12.0,
-        //           )
-        //         ],
-        //       )
-        //     ],
-        //   ),
-        // ),
-      ],
-    );
+    return userModel == null
+        ? isUserDetailsfetching
+            ? const LinearProgressIndicator()
+            : SizedBox(
+                child: Text(
+                  "Posted " + DateTimeUtils.convertToAgo(widget.post.date),
+                ),
+              )
+        : Row(
+            children: [
+              const UserAvatar(
+                radius: 35,
+                imgUrl: "",
+              ),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userModel?.userName ?? "",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '${DateTimeUtils.convertToAgo(widget.post.date)} • '
+                              .toUpperCase(),
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        Icon(
+                          Icons.public,
+                          color: Colors.grey[600],
+                          size: 12.0,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          );
   }
 }
 
