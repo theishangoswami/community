@@ -1,6 +1,6 @@
+import 'package:community_internal/ui/onboarding/login_page.dart';
 import 'package:community_internal/ui/screens/ads.dart';
 import 'package:community_internal/ui/screens/community_feed_fb.dart';
-import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/create_post.dart';
 import 'package:community_internal/ui/screens/ledger.dart';
 import 'package:community_internal/ui/screens/members_screen.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Caladea',
       ),
       // home: const OnboardingScreen(),
-      home: const CommunityList(),
+      home: const LoginPage(),
     );
   }
 }

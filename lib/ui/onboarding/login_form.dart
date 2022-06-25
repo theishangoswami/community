@@ -115,7 +115,9 @@ class _LoginFormState extends State<LoginForm> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CodeVerificationPage(),
+                          builder: (context) => CodeVerificationPage(
+                            phonenumber: _mobileNumberController.text.trim(),
+                          ),
                         ),
                       );
                     }
