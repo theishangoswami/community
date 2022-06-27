@@ -1,4 +1,5 @@
 import 'package:community_internal/ui/screens/member_profile.dart';
+import 'package:community_internal/ui/screens/members.list.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,7 +19,6 @@ class _MembersScreenState extends State<MembersScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = TabController(length: 5, vsync: this);
     _controller?.addListener(() {
@@ -28,7 +28,6 @@ class _MembersScreenState extends State<MembersScreen>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _controller?.dispose();
   }
@@ -101,92 +100,7 @@ class _MembersScreenState extends State<MembersScreen>
           ],
         ),
       ),
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: (){
-              },
-              child: GridView.builder(
-                physics: const ScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 2.0,
-                  mainAxisSpacing: 25.0,
-                  childAspectRatio: (MediaQuery.of(context).size.width) /
-                      (MediaQuery.of(context).size.height / 1.4),
-                ),
-                itemCount: 12,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Material(
-                      elevation: 8.0,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      shadowColor: Colors.amber.withOpacity(0.8),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/person.jpg',
-                                  ),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Sunil Pandey'.toUpperCase(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Secretary'.toUpperCase(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Brahman Samithi'.toUpperCase(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
-      ),
+      body: const MembersGridList(),
     );
   }
 }

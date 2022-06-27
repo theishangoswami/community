@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/user_avatar.dart';
 
-
 class MemberProfileScreen extends StatelessWidget {
   const MemberProfileScreen({Key? key}) : super(key: key);
 
@@ -57,10 +56,11 @@ class MemberProfileScreen extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Messaging()),
+                            MaterialPageRoute(
+                                builder: (context) => Messaging()),
                           );
                         },
                         child: CustomCard(
@@ -73,7 +73,7 @@ class MemberProfileScreen extends StatelessWidget {
                         tag: 'member',
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => Profile()),
@@ -115,7 +115,7 @@ class CustomCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Material(
         elevation: 10,
-        shadowColor: Colors.yellow,
+        shadowColor: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -50,24 +50,25 @@ class _AdsPageState extends State<AdsPage> {
         itemBuilder: (context, index) {
           return Stack(
             children: [
-             PostContainer(
-                post: PostModel(
-                  user: UserModel(
-                    name: 'Sunil Pandey',
-                    profileImageUrl:
-                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-                  ),
-                  caption:
-                  'This is an amazing caption! Just wanted to share with the world!',
-                  timeAgo: '2d ago',
-                  likes: 54,
-                  comments: 20,
-                  shares: 14,
-                  imageUrl: [
-                    'https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-                  ],
-                ),
-              ),
+              //  PostContainer(
+              //     post: PostModel(
+              // user: UserModel(
+              //   name: 'Sunil Pandey',
+              //   profileImageUrl:
+              //   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+              // ),
+              // caption:
+              // 'This is an amazing caption! Just wanted to share with the world!',
+              // timeAgo: '2d ago',
+              // likes: 54,
+              // comments: 20,
+              // shares: 14,
+              // imageUrl: [
+              //   'https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+              // ],
+              //   ),
+              // ),
+
               Column(
                 children: [
                   SizedBox(
@@ -76,15 +77,19 @@ class _AdsPageState extends State<AdsPage> {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 9,horizontal: 6),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 9, horizontal: 6),
                       child: Card(
                         elevation: 5,
                         child: Container(
-                          height: 24,
-                          width: 70,
-                          color: Colors.amber,
-                            child:Center(child: Text("Posted as Ad",style: TextStyle(fontSize: 10),))
-                        ),
+                            height: 24,
+                            width: 70,
+                            color: Colors.amber,
+                            child: Center(
+                                child: Text(
+                              "Posted as Ad",
+                              style: TextStyle(fontSize: 10),
+                            ))),
                       ),
                     ),
                   ),
@@ -94,7 +99,7 @@ class _AdsPageState extends State<AdsPage> {
           );
         },
         separatorBuilder: (ctx, i) => Container(),
-        itemCount: 8,
+        itemCount: 1,
       ),
     );
   }
