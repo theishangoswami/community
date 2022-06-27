@@ -371,10 +371,6 @@ class _JobState extends State<Job> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>Messaging()),
-                    );
                   },
                   child: Container(
                     height: 70,
