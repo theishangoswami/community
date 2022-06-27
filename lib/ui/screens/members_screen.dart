@@ -105,80 +105,84 @@ class _MembersScreenState extends State<MembersScreen>
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: GridView.builder(
-              physics: const ScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 2.0,
-                mainAxisSpacing: 25.0,
-                childAspectRatio: (MediaQuery.of(context).size.width) /
-                    (MediaQuery.of(context).size.height / 1.4),
-              ),
-              itemCount: 12,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Material(
-                    elevation: 8.0,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    shadowColor: Colors.amber.withOpacity(0.8),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/person.jpg',
-                                ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Sunil Pandey'.toUpperCase(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                Text(
-                                  'Secretary'.toUpperCase(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                                Text(
-                                  'Brahman Samithi'.toUpperCase(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                );
+            child: GestureDetector(
+              onTap: (){
               },
+              child: GridView.builder(
+                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 2.0,
+                  mainAxisSpacing: 25.0,
+                  childAspectRatio: (MediaQuery.of(context).size.width) /
+                      (MediaQuery.of(context).size.height / 1.4),
+                ),
+                itemCount: 12,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Material(
+                      elevation: 8.0,
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      shadowColor: Colors.amber.withOpacity(0.8),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/person.jpg',
+                                  ),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Sunil Pandey'.toUpperCase(),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Secretary'.toUpperCase(),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Brahman Samithi'.toUpperCase(),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

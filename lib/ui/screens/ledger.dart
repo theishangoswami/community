@@ -3,6 +3,7 @@ import 'package:community_internal/ui/widgets/dummy_drawer.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
+import 'Job_description.dart';
 import 'form.dart';
 
 class Ledger extends StatefulWidget {
@@ -51,80 +52,102 @@ class _LedgerState extends State<Ledger> {
           )
         ],
       ),
-      body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Formm(),
-                    ),
-                  );
-                },
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    elevation: 5,
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 90,
-                          width: 90,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0),
-                            ),
-                            child: Image.network(
-                              "https://bigstep.com/assets/images/blog/webservers.jpg",
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+      body: Stack(
+        children: [
+          ListView.builder(
+              itemCount: 10,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>  Job(),
                         ),
-                        const SizedBox(
-                          width: 20,
+                      );
+                    },
+                    child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text(
-                                "Accountant | Krishna Text",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
+                        elevation: 5,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 90,
+                              width: 90,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0),
+                                ),
+                                child: Image.network(
+                                  "https://bigstep.com/assets/images/blog/webservers.jpg",
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 5),
-                              child: Text(
-                                "Jammu West, Near Delhi",
-                                style: TextStyle(fontSize: 14),
-                              ),
+                            const SizedBox(
+                              width: 20,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text("Rs 10,000 -Rs 12,000",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            SizedBox(height: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    "Accountant | Krishna Text",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 18),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    "Jammu West, Near Delhi",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Text("Rs 10,000 -Rs 12,000",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    )),
+                        )),
+                  ),
+                );
+              }
               ),
-            );
-          }
-          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Card(
+              color: Colors.transparent,
+              elevation: 11,
+              child: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  backgroundColor: Colors.amber,
+                  onPressed: (){
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>  Formm(),
+                  ),
+                );
+              }
+              ),
+            ),
+          )
+        ],
+      ),
 
     );
   }
