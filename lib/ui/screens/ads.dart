@@ -1,146 +1,106 @@
-import 'package:community_internal/ui/screens/profile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import 'inbox.dart';
+import '../widgets/dummy_drawer.dart';
+import '../widgets/user_avatar.dart';
+import 'member_profile.dart';
 
 class AdsPage extends StatefulWidget {
   const AdsPage({Key? key}) : super(key: key);
 
   @override
-  State<AdsPage> createState() => _AdsPageState();
+  _AdsPageState createState() => _AdsPageState();
 }
 
 class _AdsPageState extends State<AdsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DummyDrawer(),
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-            );
-          },
-          child: const Text(
-            "CHATS",
-            style: TextStyle(fontSize: 25),
-          ),
+        title: Text(
+          "Home".toUpperCase(),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.orangeAccent,
-      ),
-      body: ListView(
-        children: [
-          const SizedBox(
-            height: 12,
-          ),
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+        actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Container(
-              height: 55,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 4,
-                ),
-                borderRadius: BorderRadius.circular(22),
+            padding: const EdgeInsets.all(10.0),
+            child: GestureDetector(
+              child: const UserAvatar(
+                radius: 50,
               ),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.search,
-                    size: 29,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const MemberProfileScreen(),
                   ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "Search",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
-                  )
-                ],
-              ),
+                );
+              },
             ),
-          ),
-          // Container(
-          //   width: 355,
-          //   height:80,
-          //   child: ListView.builder(
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount: 10,
-          //       itemBuilder: (context, index) {
-          //         return  Padding(
-          //           padding: const EdgeInsets.all(8.0),
-          //           child: CircleAvatar(
-          //             backgroundColor: Colors.black,
-          //             child: Text("S",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),
-          //             radius: 31,
-          //
-          //           ),
-          //         );
-          //       }),
-          // ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
+          )
+        ],
+      ),
+      body: ListView.separated(
+        itemBuilder: (context, index) {
+          return Stack(
+            children: [
+              //  PostContainer(
+              //     post: PostModel(
+              // user: UserModel(
+              //   name: 'Sunil Pandey',
+              //   profileImageUrl:
+              //   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+              // ),
+              // caption:
+              // 'This is an amazing caption! Just wanted to share with the world!',
+              // timeAgo: '2d ago',
+              // likes: 54,
+              // comments: 20,
+              // shares: 14,
+              // imageUrl: [
+              //   'https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+              // ],
+              //   ),
+              // ),
+
+              Column(
                 children: [
                   const SizedBox(
-                    height: 20,
+                    height: 8,
                   ),
-                  SizedBox(
-                    height: 590,
-                    child: ListView.builder(
-                      // physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ChatBox()),
-                                );
-                              },
-                              child: const ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  backgroundImage: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU"),
-                                  radius: 25,
-                                ),
-                                title: Text("ISHAN",
-                                    style: TextStyle(fontSize: 17)),
-                                subtitle: Text("Whats up",
-                                    style: TextStyle(fontSize: 16)),
-                                trailing: Text("2:34 pm",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                              ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 9,
+                        horizontal: 6,
+                      ),
+                      child: Card(
+                        elevation: 5,
+                        child: Container(
+                          height: 24,
+                          width: 70,
+                          color: Colors.amber,
+                          child: const Center(
+                            child: Text(
+                              "Posted as Ad",
+                              style: TextStyle(fontSize: 10),
                             ),
-                            const Divider(
-                              color: Colors.black,
-                            ),
-                          ],
-                        );
-                      },
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          )
-        ],
+            ],
+          );
+        },
+        separatorBuilder: (ctx, i) => Container(),
+        itemCount: 1,
       ),
     );
   }

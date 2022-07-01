@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:community_internal/core/models/comment.model.dart';
@@ -40,11 +42,24 @@ class PostContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _PostHeader(
-                      post: post,
+                    const SizedBox(height: 5.0),
+                    Text(
+                      "AMAN SINGH",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8.0),
-                    Text(post.postDescription.toUpperCase()),
+                    const SizedBox(height: 5.0),
+                    Row(
+                      children: [
+                        Text("${post.postDescription.toUpperCase()} | "),
+                        _PostHeader(
+                          post: post,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10.0),
                     if (post.postLink != null) const SizedBox(height: 10.0),
                   ],
                 ),

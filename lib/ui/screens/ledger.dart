@@ -6,6 +6,7 @@ import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 
+import 'Job_description.dart';
 import 'form.dart';
 
 class Ledger extends StatefulWidget {
@@ -68,6 +69,29 @@ class _LedgerState extends State<Ledger> {
             )
           ],
         ),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterFloat,
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 7,
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => const Formm()));
+          },
+          label: const Text(
+            'POST JOB',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          icon: const Icon(
+            Icons.add,
+            color: Colors.black,
+            size: 20,
+          ),
+          backgroundColor: Colors.amber,
+        ),
         body: ListView.builder(
           itemCount: jobs.length,
           itemBuilder: (BuildContext context, int index) {
@@ -78,7 +102,7 @@ class _LedgerState extends State<Ledger> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const Formm(),
+                      builder: (context) => Job(),
                     ),
                   );
                 },

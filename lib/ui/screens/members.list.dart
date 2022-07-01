@@ -58,7 +58,7 @@ class _MembersGridListState extends State<MembersGridList> {
                 child: Material(
                   elevation: 8.0,
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  shadowColor: Colors.amber.withOpacity(0.8),
+                  shadowColor: Colors.black.withOpacity(0.8),
                   child: Column(
                     children: [
                       Expanded(
@@ -71,9 +71,9 @@ class _MembersGridListState extends State<MembersGridList> {
                             ),
                             image: DecorationImage(
                               image: AssetImage(
-                                Assets.images.userIcon.path,
+                                Assets.images.person.path,
                               ),
-                              fit: BoxFit.fitHeight,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),

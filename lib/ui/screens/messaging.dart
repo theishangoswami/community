@@ -1,3 +1,4 @@
+import 'package:community_internal/ui/screens/inbox.dart';
 import 'package:flutter/material.dart';
 class Messaging extends StatefulWidget {
   @override
@@ -28,30 +29,38 @@ class _MessagingState extends State<Messaging> {
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        ListTile(
-                          leading:CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            backgroundImage:NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU") ,
-                            radius: 25,
+                        GestureDetector(
+                          onTap:(){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>ChatBox()),
+                            );
+                    },
+                          child: ListTile(
+                            leading:CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              backgroundImage:NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU") ,
+                              radius: 25,
+                            ),
+                            title: Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Text("ISHAN",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Text("Whats up",style: TextStyle(fontSize: 16)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(3.6),
+                                  child: Text("2:34 pm",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey)),
+                                )
+                              ],
+                            ),
+                            trailing: Text("Read ✔ ",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green)),
                           ),
-                          title: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Text("ISHAN",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(3),
-                                child: Text("Whats up",style: TextStyle(fontSize: 16)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(3.6),
-                                child: Text("2:34 pm",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey)),
-                              )
-                            ],
-                          ),
-                          trailing: Text("Read ✔ ",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green)),
                         ),
                         Divider(
                           color: Colors.black,

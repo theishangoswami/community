@@ -1,8 +1,9 @@
+import 'package:community_internal/ui/screens/messaging.dart';
+import 'package:community_internal/ui/screens/profile.dart';
 import 'package:community_internal/ui/screens/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../widgets/dummy_drawer.dart';
 import '../widgets/user_avatar.dart';
 
 class MemberProfileScreen extends StatelessWidget {
@@ -54,17 +55,34 @@ class MemberProfileScreen extends StatelessWidget {
                           tag: 'ledger',
                         ),
                       ),
-                      CustomCard(
-                        icon: (FontAwesomeIcons.message),
-                        tag: 'message',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Messaging()),
+                          );
+                        },
+                        child: CustomCard(
+                          icon: (FontAwesomeIcons.message),
+                          tag: 'message',
+                        ),
                       ),
                       CustomCard(
                         icon: (FontAwesomeIcons.userGroup),
                         tag: 'member',
                       ),
-                      CustomCard(
-                        icon: (FontAwesomeIcons.person),
-                        tag: 'profile',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Profile()),
+                          );
+                        },
+                        child: CustomCard(
+                          icon: (FontAwesomeIcons.person),
+                          tag: 'profile',
+                        ),
                       ),
                       CustomCard(
                         icon: (Icons.settings),
@@ -97,7 +115,7 @@ class CustomCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Material(
         elevation: 10,
-        shadowColor: Colors.yellow,
+        shadowColor: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
