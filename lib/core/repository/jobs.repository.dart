@@ -20,4 +20,17 @@ class JobRepository {
     }
     return [];
   }
+
+  Future<bool> createJob(JobModel jobModel) async {
+    try {
+      Uri uri = Uri(
+        scheme: 'https',queryParameters: {},
+        path: 'jobs/add',
+      );
+      await HttpBuilder.post("jobs/add");
+    } catch (e) {
+      debugPrint("$e");
+    }
+    return false;
+  }
 }

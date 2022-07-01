@@ -17,17 +17,24 @@ class _AdsPageState extends State<AdsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: GestureDetector(
-          onTap: (){
+      appBar: AppBar(
+        title: GestureDetector(
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Profile()),
             );
           },
-          child: Text("CHATS",style: TextStyle(fontSize: 25),)),backgroundColor: Colors.orangeAccent,),
+          child: const Text(
+            "CHATS",
+            style: TextStyle(fontSize: 25),
+          ),
+        ),
+        backgroundColor: Colors.orangeAccent,
+      ),
       body: ListView(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Padding(
@@ -43,12 +50,18 @@ class _AdsPageState extends State<AdsPage> {
                 borderRadius: BorderRadius.circular(22),
               ),
               child: Row(
-                children: [
-                  Icon(Icons.search,size: 29,),
+                children: const [
+                  Icon(
+                    Icons.search,
+                    size: 29,
+                  ),
                   SizedBox(
                     width: 15,
                   ),
-                  Text("Search",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w300),)
+                  Text(
+                    "Search",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                  )
                 ],
               ),
             ),
@@ -80,48 +93,53 @@ class _AdsPageState extends State<AdsPage> {
               ),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                   Container(
+                  SizedBox(
                     height: 590,
                     child: ListView.builder(
                       // physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              GestureDetector(
-                                onTap:(){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ChatBox()),
-                                  );
-                                },
-                                child: ListTile(
-                                  leading:CircleAvatar(
-                                    backgroundColor: Colors.grey,
-                                    backgroundImage:NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU") ,
-                                    radius: 25,
-                                  ),
-                                  title: Text("ISHAN",style: TextStyle(fontSize: 17)),
-                                  subtitle: Text("Whats up",style: TextStyle(fontSize: 16)),
-                                  trailing: Text("2:34 pm",style: TextStyle(fontWeight: FontWeight.bold)),
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ChatBox()),
+                                );
+                              },
+                              child: const ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.grey,
+                                  backgroundImage: NetworkImage(
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU"),
+                                  radius: 25,
                                 ),
+                                title: Text("ISHAN",
+                                    style: TextStyle(fontSize: 17)),
+                                subtitle: Text("Whats up",
+                                    style: TextStyle(fontSize: 16)),
+                                trailing: Text("2:34 pm",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
                               ),
-                              Divider(
-                                color: Colors.black,
-                              ),
-                            ],
-                          );
-                        }),
+                            ),
+                            const Divider(
+                              color: Colors.black,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
             ),
           )
-
-
         ],
       ),
     );
