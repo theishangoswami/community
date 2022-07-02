@@ -23,7 +23,7 @@ class UserAvatar extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: imgUrl == null
-                ? AssetImage(
+                ? const AssetImage(
                     'assets/images/user-icon.jpg',
                   )
                 : Image.network(imgUrl!).image,

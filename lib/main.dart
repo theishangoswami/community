@@ -1,6 +1,9 @@
+import 'package:community_internal/app/locator.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/onboarding/login_page.dart';
-import 'package:community_internal/ui/screens/ads.dart';
+import 'package:community_internal/ui/screens/ads_screen.dart';
 import 'package:community_internal/ui/screens/community_feed_fb.dart';
+import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/create_post.dart';
 import 'package:community_internal/ui/screens/ledger.dart';
 import 'package:community_internal/ui/screens/members_screen.dart';
@@ -9,8 +12,12 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp()
-      .then((value) => print("Connected to Firebase"));
+  await setupLocator();
+  try {
+    await Firebase.initializeApp()
+        .then((value) => print("Connected to Firebase"));
+  } catch (e) {}
+
   runApp(const MyApp());
 }
 
@@ -27,7 +34,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Caladea',
       ),
       // home: const OnboardingScreen(),
-      home: const LoginPage(),
+      home: StorageService().isUserLoggedIn()
+          ? const CommunityList()
+          : const LoginPage(),
     );
   }
 }
@@ -68,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           MembersScreen(),
           CreatePost(),
           Ledger(),
-          AdsPage(),
+          AdsScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -20,4 +20,15 @@ class JobRepository {
     }
     return [];
   }
+
+  Future<bool> createJob(JobModel jobModel) async {
+    try {
+      Uri uri =
+          Uri.parse('jobs/add').replace(queryParameters: jobModel.toJson());
+      return (await HttpBuilder.post(uri.toString())) != null;
+    } catch (e) {
+      debugPrint("$e");
+    }
+    return false;
+  }
 }

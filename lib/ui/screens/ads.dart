@@ -1,8 +1,5 @@
-import 'package:community_internal/ui/widgets/post_container.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/post_model.dart';
-import '../../data/models/user_model.dart';
 import '../widgets/dummy_drawer.dart';
 import '../widgets/user_avatar.dart';
 import 'member_profile.dart';
@@ -71,25 +68,29 @@ class _AdsPageState extends State<AdsPage> {
 
               Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 9, horizontal: 6),
+                        vertical: 9,
+                        horizontal: 6,
+                      ),
                       child: Card(
                         elevation: 5,
                         child: Container(
-                            height: 24,
-                            width: 70,
-                            color: Colors.amber,
-                            child: Center(
-                                child: Text(
+                          height: 24,
+                          width: 70,
+                          color: Colors.amber,
+                          child: const Center(
+                            child: Text(
                               "Posted as Ad",
                               style: TextStyle(fontSize: 10),
-                            ))),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),

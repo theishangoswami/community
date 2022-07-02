@@ -1,4 +1,5 @@
 import 'package:community_internal/core/repository/auth.repository.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +129,10 @@ class _OtpInputState extends State<OtpInput> {
                   widget.setBusy(true);
                   bool res = await AuthRepository()
                       .verifyOtp(widget.phoneNumber, pincode);
-                  widget.setBusy(true);
+                  if (res) {
+                    await StorageService().saveUser(widget.phoneNumber);
+                  }
+                  widget.setBusy(false);
                   if (res) {
                     Navigator.push(
                       context,

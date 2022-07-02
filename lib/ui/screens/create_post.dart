@@ -163,7 +163,7 @@ class _CreatePostState extends State<CreatePost> {
                                 },
                                 decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 20.0),
+                                      vertical: 10.0, horizontal: 20.0,),
                                   hintText: 'Type your thoughts here...',
                                   hintStyle: TextStyle(color: Colors.black38),
                                   border: InputBorder.none,

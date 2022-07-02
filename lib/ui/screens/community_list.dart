@@ -268,7 +268,6 @@ class CommunityTileCustom extends StatelessWidget {
   }
 }
 
-
 // class CommunityTileCustom extends StatelessWidget {
 //   const CommunityTileCustom({Key? key}) : super(key: key);
 

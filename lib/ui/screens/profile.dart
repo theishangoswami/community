@@ -7,27 +7,27 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   List<Icon> icon = [
-    Icon(
+    const Icon(
       Icons.phone,
       color: Colors.black,
     ),
-    Icon(
+    const Icon(
       Icons.email,
       color: Colors.black,
     ),
-    Icon(
+    const Icon(
       Icons.add_road,
       color: Colors.black,
     ),
-    Icon(
+    const Icon(
       Icons.supervised_user_circle_rounded,
       color: Colors.black,
     ),
-    Icon(
+    const Icon(
       Icons.location_on_sharp,
       color: Colors.black,
     ),
-    Icon(
+    const Icon(
       Icons.cabin,
       color: Colors.black,
     ),
@@ -54,19 +54,19 @@ class _ProfileState extends State<Profile> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 17,
                     ),
-                    CircleAvatar(
+                    const CircleAvatar(
                       backgroundColor: Colors.amber,
                       radius: 30,
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: EdgeInsets.all(10),
                         child: Text(
                           "S",
                           style: TextStyle(color: Colors.black, fontSize: 30),
@@ -77,38 +77,38 @@ class _ProfileState extends State<Profile> {
                       padding: const EdgeInsets.all(10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text(
                             "Shivam",
                             style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
+                                fontSize: 22, fontWeight: FontWeight.bold,),
                           ),
                           Text(
                             "ANDROID DEVELOPER",
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w400),
+                                fontSize: 18, fontWeight: FontWeight.w400,),
                           ),
                           Text(
                             "GOOGLE",
                             style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w400),
+                                fontSize: 12, fontWeight: FontWeight.w400,),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 10),
+                          vertical: 20, horizontal: 10,),
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 570,
                             child: ListView.builder(
                                 shrinkWrap: true,
@@ -119,19 +119,19 @@ class _ProfileState extends State<Profile> {
                                       ListTile(
                                         leading: icon[index],
                                         title: Text(name[index]),
-                                        subtitle: Text("user details"),
-                                        trailing: Icon(Icons.edit),
+                                        subtitle: const Text("user details"),
+                                        trailing: const Icon(Icons.edit),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 17),
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 17,),
                                         child: Divider(
                                           thickness: 1.5,
                                         ),
                                       )
                                     ],
                                   );
-                                }),
+                                },),
                           ),
                           // Container(
                           //   height: 50,
@@ -151,19 +151,19 @@ class _ProfileState extends State<Profile> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Colors.black),
+                            color: Colors.black,),
                         child: RaisedButton(
                             highlightElevation: 4,
                             elevation: 5,
                             color: Colors.white,
-                            child: Text(
+                            child: const Text(
                               "Other details",
                               style: TextStyle(color: Colors.black),
                             ),
-                            onPressed: () {}),
+                            onPressed: () {},),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],

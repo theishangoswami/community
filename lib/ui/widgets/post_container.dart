@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:community_internal/core/models/post.model.dart';
-
 import '../../core/repository/users.repository.dart';
 
 class PostContainer extends StatelessWidget {
@@ -43,22 +42,9 @@ class PostContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 5.0),
-                    Text(
-                      "AMAN SINGH",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 5.0),
-                    Row(
-                      children: [
-                        Text("${post.postDescription.toUpperCase()} | "),
-                        _PostHeader(
-                          post: post,
-                        ),
-                      ],
-                    ),
+                    _PostHeader(post: post),
+                    const SizedBox(height: 10.0),
+                    Text("${post.postDescription}"),
                     const SizedBox(height: 10.0),
                     if (post.postLink != null) const SizedBox(height: 10.0),
                   ],
@@ -113,7 +99,11 @@ class _PostHeaderState extends State<_PostHeader> {
   Widget build(BuildContext context) {
     return userModel == null
         ? isUserDetailsfetching
-            ? const LinearProgressIndicator()
+            ? SizedBox(
+                height: 10,
+                width: MediaQuery.of(context).size.width,
+                child: const LinearProgressIndicator(),
+              )
             : SizedBox(
                 child: Text(
                   "Posted " + DateTimeUtils.convertToAgo(widget.post.date),
@@ -133,7 +123,9 @@ class _PostHeaderState extends State<_PostHeader> {
                     Text(
                       userModel?.userName ?? "",
                       style: const TextStyle(
-                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Row(
@@ -324,7 +316,6 @@ class _PostStatsState extends State<_PostStats> {
                 label: 'Like'.toUpperCase(),
                 lableColor: Colors.black87,
                 onTap: () {
-                  print('Like');
                 },
               ),
               _PostButton(

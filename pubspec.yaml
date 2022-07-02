@@ -18,8 +18,10 @@ dependencies:
   firebase_core: ^1.17.1
   fluttertoast: ^8.0.9
   font_awesome_flutter: ^10.1.0
-  flutter_tags: ^0.4.9+1
+  get_it: ^7.2.0
   pin_code_fields: ^7.4.0
+  shared_preferences: ^2.0.15
+  flutter_tags: ^0.4.9+1
   flutter:
     sdk: flutter
 

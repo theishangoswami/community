@@ -45,11 +45,11 @@ class OTPTextField extends StatelessWidget {
                 borderSide: BorderSide(
                     color: controller.text.isNotEmpty
                         ? Colors.black
-                        : Colors.grey),
+                        : Colors.grey,),
               ),
               hintText: '0',
             ),
       ),
-    ));
+    ),);
   }
 }
