@@ -16,14 +16,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^3.3.19
   firebase_core: ^1.17.1
+  flutter:
+    sdk: flutter
+  flutter_tags: ^0.4.9+1
   fluttertoast: ^8.0.9
   font_awesome_flutter: ^10.1.0
   get_it: ^7.2.0
+  image_picker: ^0.8.5+3
   pin_code_fields: ^7.4.0
   shared_preferences: ^2.0.15
-  flutter_tags: ^0.4.9+1
-  flutter:
-    sdk: flutter
 
 dev_dependencies:
   flutter_lints: ^1.0.0

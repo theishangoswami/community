@@ -26,17 +26,17 @@ class CommunityModel {
     required this.date,
   });
 
-  final String id;
-  final String userId;
-  final String societyName;
-  final String societyCityId;
-  final String communityId;
-  final String societyAddress;
-  final String societyDocuments;
+  final String? id;
+  final String? userId;
+  final String? societyName;
+  final String? societyCityId;
+  final String? communityId;
+  final String? societyAddress;
+  final String? societyDocuments;
   final String? societyLogo;
-  final String person;
-  final String status;
-  final DateTime date;
+  final String? person;
+  final String? status;
+  final DateTime? date;
 
   CommunityModel copyWith({
     String? id,
@@ -92,6 +92,6 @@ class CommunityModel {
         "society_logo": societyLogo,
         "person": person,
         "status": status,
-        "date": date.toIso8601String(),
+        "date": date?.toIso8601String(),
       };
 }

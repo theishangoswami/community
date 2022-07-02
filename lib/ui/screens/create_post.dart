@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/ui/widgets/dummy_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,9 +15,51 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+  final FilePickerService _filePickerService = FilePickerService();
+  File? file;
+  int? type;
   bool isAd = true;
   TextEditingController messageTEC = TextEditingController();
   String messageText = '';
+
+  shwoDialog() async {
+    await showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text("Add Youtube link"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                messageTEC.clear();
+                setState(() {
+                  type = null;
+                });
+              },
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Colors.black45),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  type = 4;
+                });
+              },
+              child: const Text("Add"),
+            )
+          ],
+          content: TextFormField(
+            decoration: const InputDecoration(labelText: "Youtube link"),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,13 +120,20 @@ class _CreatePostState extends State<CreatePost> {
             type: MaterialType.card,
             child: Container(
               alignment: Alignment.center,
-              // color: Colors.grey,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.5,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     ListTile(
+                      onTap: () async {
+                        var file =
+                            await _filePickerService.pickImageFromCamera();
+                        setState(() {
+                          this.file = file;
+                          type = 1;
+                        });
+                      },
                       leading: const Icon(
                         Icons.camera_alt_sharp,
                         color: Colors.lightGreen,
@@ -89,6 +141,14 @@ class _CreatePostState extends State<CreatePost> {
                       title: Text("Camera".toUpperCase()),
                     ),
                     ListTile(
+                      onTap: () async {
+                        var file =
+                            await _filePickerService.pickImageFromGallery();
+                        setState(() {
+                          this.file = file;
+                          type = 2;
+                        });
+                      },
                       leading: const Icon(
                         Icons.photo,
                         color: Colors.blue,
@@ -96,6 +156,13 @@ class _CreatePostState extends State<CreatePost> {
                       title: Text("Photo".toUpperCase()),
                     ),
                     ListTile(
+                      onTap: () async {
+                        var file = await _filePickerService.pickVideo();
+                        setState(() {
+                          this.file = file;
+                          type = 3;
+                        });
+                      },
                       leading: const Icon(
                         Icons.video_call,
                         color: Colors.orangeAccent,
@@ -103,6 +170,9 @@ class _CreatePostState extends State<CreatePost> {
                       title: Text("Video".toUpperCase()),
                     ),
                     ListTile(
+                      onTap: () {
+                        shwoDialog();
+                      },
                       leading: const Icon(
                         FontAwesomeIcons.youtube,
                         color: Colors.red,
@@ -163,7 +233,9 @@ class _CreatePostState extends State<CreatePost> {
                                 },
                                 decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 20.0,),
+                                    vertical: 10.0,
+                                    horizontal: 20.0,
+                                  ),
                                   hintText: 'Type your thoughts here...',
                                   hintStyle: TextStyle(color: Colors.black38),
                                   border: InputBorder.none,
@@ -174,7 +246,6 @@ class _CreatePostState extends State<CreatePost> {
                             // ignore: deprecated_member_use
                             FlatButton(
                               onPressed: () {
-                                //Implement send functionality.
                                 messageTEC.clear();
                               },
                               child: Text(

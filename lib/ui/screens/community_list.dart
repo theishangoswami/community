@@ -203,7 +203,7 @@ class CommunityTileCustom extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Text(
-              communityModel.societyName.toUpperCase(),
+              communityModel.societyName?.toUpperCase() ?? "NA",
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
