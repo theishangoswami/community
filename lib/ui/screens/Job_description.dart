@@ -173,15 +173,15 @@
 import 'package:community_internal/core/models/job.model.dart';
 import 'package:flutter/material.dart';
 
-class Job extends StatefulWidget {
+class JobDetails extends StatefulWidget {
   final JobModel jobModel;
 
-  const Job({Key? key, required this.jobModel}) : super(key: key);
+  const JobDetails({Key? key, required this.jobModel}) : super(key: key);
   @override
-  _JobState createState() => _JobState();
+  _JobDetailsState createState() => _JobDetailsState();
 }
 
-class _JobState extends State<Job> {
+class _JobDetailsState extends State<JobDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -260,13 +260,6 @@ class _JobState extends State<Job> {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 14),
-              //   child: Text("Requirements" ,style: TextStyle(
-              //     fontSize: 24,
-              //     fontWeight: FontWeight.w600,
-              //   ),),
-              // ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Text(
@@ -281,158 +274,70 @@ class _JobState extends State<Job> {
               const SizedBox(
                 height: 25,
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
+              ...{
+                "Gender": widget.jobModel.gender,
+                "Education": widget.jobModel.education,
+                "Experience": widget.jobModel.experience,
+                "Location": widget.jobModel.location
+              }
+                  .entries
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Container(
+                              height: 15,
+                              width: 15,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Icon(
+                                Icons.done,
+                                color: Colors.white,
+                                size: 13,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    e.key,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                const Text(":  "),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    (e.value?.isNotEmpty ?? false)
+                                        ? (e.value ?? "NA")
+                                        : "NA",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      child: const Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: 13,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    "Check mark",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
                     ),
                   )
-                ],
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: const Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: 13,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    "Check mark Second",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: const Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: 13,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    "Check mark third",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: const Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: 13,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    "Check mark four",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: const Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: 13,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    "Check mark fifth",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              ),
+                  .toList(),
               const SizedBox(
                 height: 21,
               ),

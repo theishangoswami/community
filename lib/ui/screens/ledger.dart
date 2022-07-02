@@ -58,12 +58,15 @@ class _LedgerState extends State<Ledger> {
                 child: const UserAvatar(
                   radius: 50,
                 ),
-                onTap: () {
-                  Navigator.of(context).push(
+                onTap: () async {
+                  var res = await Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const MemberProfileScreen(),
                     ),
                   );
+                  if (res == true) {
+                    fetchAllJobs();
+                  }
                 },
               ),
             )
@@ -105,7 +108,7 @@ class _LedgerState extends State<Ledger> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => Job(
+                      builder: (context) => JobDetails(
                         jobModel: job,
                       ),
                     ),

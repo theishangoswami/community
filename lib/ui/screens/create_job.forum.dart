@@ -84,7 +84,7 @@ class CreateJobForumState extends State<CreateJobForum> {
         isBusy = false;
       });
       if (res) {
-        Navigator.pop(context);
+        Navigator.pop(context, true);
       }
     }
   }
