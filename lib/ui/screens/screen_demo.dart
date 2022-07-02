@@ -16,13 +16,13 @@ class ScreenDemo extends StatefulWidget {
 
 class _ScreenDemoState extends State<ScreenDemo> {
   final List screens = [
-    CommunityList(),
-    OnboardingScreen(),
-    CommunityFeedFb(),
-    CommunityFeed(),
-    CreatePost(),
-    MembersScreen(),
-    MemberProfileScreen(),
+    const CommunityList(),
+    const OnboardingScreen(),
+    const CommunityFeedFb(),
+    const CommunityFeed(),
+    const CreatePost(),
+    const MembersScreen(),
+    const MemberProfileScreen(),
   ];
   final List screenNames = [
     'Community List',
@@ -45,7 +45,7 @@ class _ScreenDemoState extends State<ScreenDemo> {
             padding: const EdgeInsets.all(20.0),
             child: ListView.separated(
               itemBuilder: (context, index) {
-                return Container(
+                return SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(

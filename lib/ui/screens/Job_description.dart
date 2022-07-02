@@ -170,10 +170,13 @@
 //     );
 //   }
 // }
-import 'package:community_internal/ui/screens/messaging.dart';
+import 'package:community_internal/core/models/job.model.dart';
 import 'package:flutter/material.dart';
 
 class Job extends StatefulWidget {
+  final JobModel jobModel;
+
+  const Job({Key? key, required this.jobModel}) : super(key: key);
   @override
   _JobState createState() => _JobState();
 }
@@ -186,26 +189,28 @@ class _JobState extends State<Job> {
         title: Row(
           children: [
             Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(60),
-                ),
-                height: 40,
-                width: 50,
-                child: Image.network(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6YPdq33xIQpx_EY_eCrU95tVOJT3I4cJCnw&usqp=CAU")),
-            SizedBox(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(60),
+              ),
+              height: 40,
+              width: 50,
+              child: Image.network(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6YPdq33xIQpx_EY_eCrU95tVOJT3I4cJCnw&usqp=CAU",
+              ),
+            ),
+            const SizedBox(
               width: 8,
             ),
             Text(
-              "Cosax Studios".toUpperCase(),
-              style: TextStyle(fontWeight: FontWeight.w500),
+              "${widget.jobModel.jobsTitle}".toUpperCase(),
+              style: const TextStyle(fontWeight: FontWeight.w500),
             )
           ],
         ),
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             child: Icon(Icons.more_vert),
           )
         ],
@@ -215,14 +220,14 @@ class _JobState extends State<Job> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
                   'Job Description'.toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.w400,
                   ),
@@ -236,18 +241,20 @@ class _JobState extends State<Job> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 child: Text(
-                    "Avoid internal jargon that may confuse the job seeker. Stick to standard levels of experience like “Senior” rather than “Grade 6” or other terms people are less likely to look for",
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black)),
+                  widget.jobModel.description ?? "NA",
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black,
+                  ),
+                ),
               ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
                 child: Text(
                   'Requirements'.toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.w400,
                   ),
@@ -260,17 +267,18 @@ class _JobState extends State<Job> {
               //     fontWeight: FontWeight.w600,
               //   ),),
               // ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Text(
-                    "While you may be tempted to list every requirement you expect from for your ideal candidate, if you include too many qualifications and skills this could dissuade potential applicants.",
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black)),
+                  "While you may be tempted to list every requirement you expect from for your ideal candidate, if you include too many qualifications and skills this could dissuade potential applicants.",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black,
+                  ),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Row(
@@ -278,26 +286,30 @@ class _JobState extends State<Job> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
-                        height: 15,
-                        width: 15,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Icon(
-                          Icons.done,
-                          color: Colors.white,
-                          size: 13,
-                        )),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.done,
+                        color: Colors.white,
+                        size: 13,
+                      ),
+                    ),
                   ),
-                  Text("Check mark",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black))
+                  const Text(
+                    "Check mark",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Row(
@@ -305,26 +317,30 @@ class _JobState extends State<Job> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
-                        height: 15,
-                        width: 15,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Icon(
-                          Icons.done,
-                          color: Colors.white,
-                          size: 13,
-                        )),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.done,
+                        color: Colors.white,
+                        size: 13,
+                      ),
+                    ),
                   ),
-                  Text("Check mark Second",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black))
+                  const Text(
+                    "Check mark Second",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Row(
@@ -332,26 +348,30 @@ class _JobState extends State<Job> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
-                        height: 15,
-                        width: 15,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Icon(
-                          Icons.done,
-                          color: Colors.white,
-                          size: 13,
-                        )),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.done,
+                        color: Colors.white,
+                        size: 13,
+                      ),
+                    ),
                   ),
-                  Text("Check mark third",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black))
+                  const Text(
+                    "Check mark third",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Row(
@@ -359,26 +379,30 @@ class _JobState extends State<Job> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
-                        height: 15,
-                        width: 15,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Icon(
-                          Icons.done,
-                          color: Colors.white,
-                          size: 13,
-                        )),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.done,
+                        color: Colors.white,
+                        size: 13,
+                      ),
+                    ),
                   ),
-                  Text("Check mark four",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black))
+                  const Text(
+                    "Check mark four",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Row(
@@ -386,26 +410,30 @@ class _JobState extends State<Job> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
-                        height: 15,
-                        width: 15,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Icon(
-                          Icons.done,
-                          color: Colors.white,
-                          size: 13,
-                        )),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.done,
+                        color: Colors.white,
+                        size: 13,
+                      ),
+                    ),
                   ),
-                  Text("Check mark fifth",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black))
+                  const Text(
+                    "Check mark fifth",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 21,
               ),
               Row(
@@ -420,7 +448,7 @@ class _JobState extends State<Job> {
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(11),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.local_activity,
                           color: Colors.white,
@@ -440,13 +468,16 @@ class _JobState extends State<Job> {
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 14),
+                            horizontal: 15,
+                            vertical: 14,
+                          ),
                           child: Text(
                             'Apply for job'.toUpperCase(),
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

@@ -7,7 +7,7 @@ import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'Job_description.dart';
-import 'form.dart';
+import 'create_job.forum.dart';
 
 class Ledger extends StatefulWidget {
   const Ledger({Key? key}) : super(key: key);
@@ -74,8 +74,11 @@ class _LedgerState extends State<Ledger> {
         floatingActionButton: FloatingActionButton.extended(
           elevation: 7,
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const Formm()));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const CreateJobForum(),
+              ),
+            );
           },
           label: const Text(
             'POST JOB',
@@ -102,7 +105,9 @@ class _LedgerState extends State<Ledger> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => Job(),
+                      builder: (context) => Job(
+                        jobModel: job,
+                      ),
                     ),
                   );
                 },

@@ -50,7 +50,7 @@ class MemberProfileScreen extends StatelessWidget {
                             ),
                           ),
                         },
-                        child: CustomCard(
+                        child: const CustomCard(
                           icon: (FontAwesomeIcons.addressBook),
                           tag: 'ledger',
                         ),
@@ -60,15 +60,15 @@ class MemberProfileScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Messaging()),
+                                builder: (context) => Messaging(),),
                           );
                         },
-                        child: CustomCard(
+                        child: const CustomCard(
                           icon: (FontAwesomeIcons.message),
                           tag: 'message',
                         ),
                       ),
-                      CustomCard(
+                      const CustomCard(
                         icon: (FontAwesomeIcons.userGroup),
                         tag: 'member',
                       ),
@@ -79,16 +79,16 @@ class MemberProfileScreen extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => Profile()),
                           );
                         },
-                        child: CustomCard(
+                        child: const CustomCard(
                           icon: (FontAwesomeIcons.person),
                           tag: 'profile',
                         ),
                       ),
-                      CustomCard(
+                      const CustomCard(
                         icon: (Icons.settings),
                         tag: 'settings',
                       ),
-                      CustomCard(
+                      const CustomCard(
                         icon: (FontAwesomeIcons.personCirclePlus),
                         tag: 'member add ',
                       ),

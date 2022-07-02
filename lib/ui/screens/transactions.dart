@@ -1,6 +1,3 @@
-import 'package:community_internal/ui/screens/member_profile.dart';
-import 'package:community_internal/ui/widgets/dummy_drawer.dart';
-import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class Transactions extends StatefulWidget {
@@ -49,7 +46,7 @@ class _TransactionsState extends State<Transactions> {
                         children: [
                           Text("₹ 10,000".toUpperCase(),
                               style: const TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold)),
+                                  fontSize: 23, fontWeight: FontWeight.bold,),),
                           const SizedBox(
                             height: 5,
                           ),
@@ -79,7 +76,7 @@ class _TransactionsState extends State<Transactions> {
                         children: [
                           Text("₹ 30,000".toUpperCase(),
                               style: const TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold)),
+                                  fontSize: 23, fontWeight: FontWeight.bold,),),
                           const SizedBox(
                             height: 5,
                           ),
@@ -98,7 +95,7 @@ class _TransactionsState extends State<Transactions> {
               height: 20,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 13),
+              padding: const EdgeInsets.symmetric(horizontal: 13),
               child: Text(
                 "Transactions".toUpperCase(),
                 style:
@@ -108,7 +105,7 @@ class _TransactionsState extends State<Transactions> {
             const SizedBox(
               height: 5,
             ),
-            Container(
+            SizedBox(
               height: 370,
               child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
@@ -131,15 +128,15 @@ class _TransactionsState extends State<Transactions> {
                                     Text("Donation Received".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 17,
-                                            fontWeight: FontWeight.w500)),
+                                            fontWeight: FontWeight.w500,),),
                                     Text("By Nihal ji".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 12,
-                                            fontWeight: FontWeight.w400)),
+                                            fontWeight: FontWeight.w400,),),
                                     Text("12 June".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 12,
-                                            fontWeight: FontWeight.w400)),
+                                            fontWeight: FontWeight.w400,),),
                                   ],
                                 ),
                                 trailing: Column(
@@ -147,14 +144,14 @@ class _TransactionsState extends State<Transactions> {
                                     Text("₹ 300".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 17,
-                                            fontWeight: FontWeight.w500)),
+                                            fontWeight: FontWeight.w500,),),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                        ));
-                  }),
+                        ),);
+                  },),
             ),
             Center(
               child: Row(
@@ -171,7 +168,7 @@ class _TransactionsState extends State<Transactions> {
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
-                    )),
+                    ),),
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(20),
@@ -186,8 +183,8 @@ class _TransactionsState extends State<Transactions> {
                       style: const TextStyle(
                           color: Colors.amber,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14),
-                    )),
+                          fontSize: 14,),
+                    ),),
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(20),
@@ -199,7 +196,7 @@ class _TransactionsState extends State<Transactions> {
             const SizedBox(
               height: 30,
             ),
-          ]),
+          ],),
         ],
       ),
     );

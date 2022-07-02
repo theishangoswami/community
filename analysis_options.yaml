@@ -2,9 +2,7 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-    - always_use_package_imports
     - no_logic_in_create_state
-    - always_declare_return_types
     - avoid_renaming_method_parameters
     - avoid_unnecessary_containers
     - camel_case_types

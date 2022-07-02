@@ -79,8 +79,7 @@ class _CommunityFeedState extends State<CommunityFeed> {
             ListView.builder(
               itemCount: 8,
               itemBuilder: (context, index) {
-                return PostCard(
-                );
+                return const PostCard();
               },
             ),
             _CommentBox(

@@ -13,8 +13,11 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
-  await Firebase.initializeApp()
-      .then((value) => print("Connected to Firebase"));
+  try {
+    await Firebase.initializeApp()
+        .then((value) => print("Connected to Firebase"));
+  } catch (e) {}
+
   runApp(const MyApp());
 }
 
