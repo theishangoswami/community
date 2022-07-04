@@ -46,22 +46,99 @@ class _CreatePostState extends State<CreatePost> {
           )
         ],
       ),
-      body: ListTile(
-        leading: const UserAvatar(
-          radius: 70,
-        ),
-        title: Text(
-          "Sunil Pandey".toUpperCase(),
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
+      body: Column(
+        children: [
+          ListTile(
+            leading: const UserAvatar(
+              radius: 70,
+            ),
+            title: Text(
+              "Sunil Pandey".toUpperCase(),
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            subtitle: Text(
+              "Secretary".toUpperCase(),
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
-        ),
-        subtitle: Text(
-          "Secretary".toUpperCase(),
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 275,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.amber,
+                      width: 2.0,
+                    ),
+                    left: BorderSide(
+                      color: Colors.amber,
+                      width: 2.0,
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.amber,
+                      width: 2.0,
+                    ),
+                    right: BorderSide(
+                      color: Colors.amber,
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: TextField(
+                          controller: TextEditingController(),
+                          onChanged: (value) {
+                            //Do something with the user input.
+                            messageText = value;
+                          },
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 20.0),
+                            hintText: 'Type your thoughts here...',
+                            hintStyle: TextStyle(color: Colors.black38),
+                            border: InputBorder.none,
+                          ),
+                          style: const TextStyle(color: Colors.black87),
+                        ),
+                      ),
+                    ),
+                    // ignore: deprecated_member_use
+                    // FlatButton(
+                    //   onPressed: () {
+                    //     //Implement send functionality.
+                    //     messageTEC.clear();
+                    //   },
+                      // child: Align(
+                      //   alignment: Alignment.topRight,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(15),
+                      //     child: Text(
+                      //       'Post'.toUpperCase(),
+                      //       style: const TextStyle(
+                      //         color: Colors.lightBlueAccent,
+                      //         fontWeight: FontWeight.bold,
+                      //         fontSize: 18.0,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                    // ),
+                  ],
+                ),
+              ),
+          )
+        ],
       ),
       bottomSheet: BottomSheet(
         enableDrag: false,
@@ -77,121 +154,108 @@ class _CreatePostState extends State<CreatePost> {
               alignment: Alignment.center,
               // color: Colors.grey,
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListTile(
-                      leading: const Icon(
-                        Icons.camera_alt_sharp,
-                        color: Colors.lightGreen,
-                      ),
-                      title: Text("Camera".toUpperCase()),
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(
+                      Icons.camera_alt_sharp,
+                      color: Colors.lightGreen,
                     ),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.photo,
-                        color: Colors.blue,
-                      ),
-                      title: Text("Photo".toUpperCase()),
+                    title: Text("Camera".toUpperCase()),
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.photo,
+                      color: Colors.blue,
                     ),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.video_call,
-                        color: Colors.orangeAccent,
-                      ),
-                      title: Text("Video".toUpperCase()),
+                    title: Text("Photo".toUpperCase()),
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.video_call,
+                      color: Colors.orangeAccent,
                     ),
-                    ListTile(
-                      leading: const Icon(
-                        FontAwesomeIcons.youtube,
-                        color: Colors.red,
-                      ),
-                      title: Text("Youtube Link".toUpperCase()),
+                    title: Text("Video".toUpperCase()),
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      FontAwesomeIcons.youtube,
+                      color: Colors.red,
                     ),
-                    ListTile(
-                      trailing: Switch(
-                        value: isAd,
-                        onChanged: (val) {
-                          setState(() {
-                            isAd = val;
-                          });
-                        },
-                        activeColor: Colors.amber,
-                        activeTrackColor: Colors.lightBlueAccent,
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          "Post as an Advertisement".toUpperCase(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border(
-                            top: BorderSide(
+                    title: Text("Youtube Link".toUpperCase()),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: Container(
+                          height: 55,
+                          width: 180,
+                          decoration: BoxDecoration(
                               color: Colors.amber,
-                              width: 2.0,
-                            ),
-                            left: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            ),
-                            bottom: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            ),
-                            right: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            ),
+                              borderRadius: BorderRadius.circular(12)
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  FontAwesomeIcons.ad,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Post as Ad".toUpperCase(),style: TextStyle(fontSize: 18),),
+                              ),
+                            ],
                           ),
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              child: TextField(
-                                controller: TextEditingController(),
-                                onChanged: (value) {
-                                  //Do something with the user input.
-                                  messageText = value;
-                                },
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 20.0),
-                                  hintText: 'Type your thoughts here...',
-                                  hintStyle: TextStyle(color: Colors.black38),
-                                  border: InputBorder.none,
-                                ),
-                                style: const TextStyle(color: Colors.black87),
-                              ),
-                            ),
-                            // ignore: deprecated_member_use
-                            FlatButton(
-                              onPressed: () {
-                                //Implement send functionality.
-                                messageTEC.clear();
-                              },
-                              child: Text(
-                                'Post'.toUpperCase(),
-                                style: const TextStyle(
-                                  color: Colors.lightBlueAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
-                    )
-                  ],
-                ),
+                  Container(
+                    height: 55,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                    borderRadius: BorderRadius.circular(12)
+                      ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            FontAwesomeIcons.signsPost,
+                            color: Colors.blue,
+                          ),
+                        ),
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Text("Post".toUpperCase(),style: TextStyle(fontSize: 18),),
+                 ),
+                      ],
+                    ),
+                  ),
+                    ],
+                  ),
+
+                  // ListTile(
+                  //   trailing: Switch(
+                  //     value: isAd,
+                  //     onChanged: (val) {
+                  //       setState(() {
+                  //         isAd = val;
+                  //       });
+                  //     },
+                  //     activeColor: Colors.amber,
+                  //     activeTrackColor: Colors.lightBlueAccent,
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           );

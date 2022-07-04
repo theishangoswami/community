@@ -13,6 +13,8 @@ class _ProfileState extends State<Profile> {
     Icon(Icons.supervised_user_circle_rounded,color: Colors.black,),
     Icon(Icons.location_on_sharp,color: Colors.black,),
     Icon(Icons.cabin,color: Colors.black,),
+    Icon(Icons.sd_card,color: Colors.black,),
+    Icon(Icons.flight,color:Colors.black),
   ];
   List<String> name=[
     "8677829011",
@@ -20,7 +22,9 @@ class _ProfileState extends State<Profile> {
     "Lg-1, gate no-9, Shalimar Garden",
     "Male",
     "Ghaziabad",
-    "Shalimar Garden"
+    "Shalimar Garden",
+    "Adhaar Card Details",
+    "Passport",
   ];
 
 
@@ -119,12 +123,12 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 borderRadius: BorderRadius.circular(25),
                               ),
-                              child:Column(
+                              child:ListView(
                                 children: [
                                   Container(
                                     height:570,
                                     child: ListView.builder(
-                                        itemCount: 6,
+                                        itemCount: 8,
                                         itemBuilder: (context, index) {
                                           return Column(
                                             children: [
