@@ -16,7 +16,6 @@ class _CommunityListState extends State<CommunityList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DummyDrawer(),
       appBar: AppBar(
         title: Text(
           "All Communities".toUpperCase(),

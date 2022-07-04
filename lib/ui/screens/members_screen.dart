@@ -36,7 +36,6 @@ class _MembersScreenState extends State<MembersScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DummyDrawer(),
       appBar: AppBar(
         title: Text(
           "Members".toUpperCase(),
@@ -56,7 +55,7 @@ class _MembersScreenState extends State<MembersScreen>
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const MemberProfileScreen(),
+                    builder: (context) =>  MemberProfileScreen(),
                   ),
                 );
               },

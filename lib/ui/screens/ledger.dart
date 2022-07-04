@@ -24,7 +24,6 @@ class _LedgerState extends State<Ledger> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DummyDrawer(),
       appBar: AppBar(
         title: Text(
           "Job Openings".toUpperCase(),

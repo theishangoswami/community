@@ -18,7 +18,6 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DummyDrawer(),
       appBar: AppBar(
         title: Text(
           "Post".toUpperCase(),

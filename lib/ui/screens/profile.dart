@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'image.dart';
+
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  TextEditingController control =TextEditingController();
   List<Icon> icon=[
     Icon(Icons.phone,color: Colors.black,),
     Icon(Icons.email,color: Colors.black,),
@@ -26,7 +29,6 @@ class _ProfileState extends State<Profile> {
     "Adhaar Card Details",
     "Passport",
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +137,29 @@ class _ProfileState extends State<Profile> {
                                               ListTile(
                                                 leading: icon[index],
                                                 title: Text(name[index]),
-                                                subtitle: Text("user details"),
-                                                trailing: Icon(Icons.edit),
+                                                subtitle:Text(name[index]),
+                                                trailing: GestureDetector(
+                                                    onTap: (){
+                                                      showDialog(context: context, builder: (context){
+                                                        return AlertDialog(
+                                                          title: Text(name[index]),
+                                                          content: TextField(
+                                                            controller: control,
+                                                          ),
+                                                          actions: [
+                                                            RaisedButton(onPressed: (){
+                                                              setState((){
+                                                                name[index]=control.text;
+                                                              });
+                                                              Navigator.pop(context);
+                                                            },
+                                                                child: Text("Ok")
+                                                            ),
+                                                          ],
+                                                        );
+                                                      });
+                                                    },
+                                                    child: Icon(Icons.edit)),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: 17),
@@ -148,15 +171,6 @@ class _ProfileState extends State<Profile> {
                                           );
                                         }),
                                   ),
-                                  // Container(
-                                  //   height: 50,
-                                  //   width: 200,
-                                  //   child: Center(child: Text("Edit Profile",style:TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white))),
-                                  //   decoration: BoxDecoration(
-                                  //       borderRadius: BorderRadius.circular(25),
-                                  //       color: Colors.black
-                                  //   ),
-                                  // )
                                 ],
                               ),
                             ),
@@ -170,13 +184,13 @@ class _ProfileState extends State<Profile> {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.black
-                          ),
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.black
+                      ),
                       child: RaisedButton(
-                        highlightElevation: 4,
-                        elevation: 5,
-                        color: Colors.white,
+                          highlightElevation: 4,
+                          elevation: 5,
+                          color: Colors.white,
                           child: Text("Other details",style: TextStyle(color: Colors.black),),
                           onPressed: (){}
                       ),

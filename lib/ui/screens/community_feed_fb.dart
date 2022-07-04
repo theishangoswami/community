@@ -8,7 +8,7 @@ import '../widgets/user_avatar.dart';
 import 'member_profile.dart';
 
 class CommunityFeedFb extends StatefulWidget {
-  const CommunityFeedFb({Key? key}) : super(key: key);
+  const  CommunityFeedFb({Key? key}) : super(key: key);
 
   @override
   _CommunityFeedFbState createState() => _CommunityFeedFbState();
@@ -18,7 +18,6 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DummyDrawer(),
       appBar: AppBar(
         title: Text(
           "Home".toUpperCase(),

@@ -1,6 +1,7 @@
 import 'package:community_internal/ui/onboarding/otp_fields.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/onboarding_screen.dart';
+import 'package:community_internal/ui/screens/user_details.dart';
 import 'package:flutter/material.dart';
 
 class CodeVerificationPage extends StatelessWidget {
@@ -64,7 +65,7 @@ class OtpInput extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const CommunityList(),
+                    builder: (context) => const UserDetails(),
                   ),
                 );
               },
