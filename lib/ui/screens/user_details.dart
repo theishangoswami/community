@@ -1,5 +1,6 @@
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
+import 'package:community_internal/ui/screens/members_details.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_form_field/image_form_field.dart';
@@ -210,7 +211,7 @@ class _UserDetailsState extends State<UserDetails> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CommunityList()),
+                    MaterialPageRoute(builder: (context) => MultiForm()),
                   );
                 },
                 child: Padding(
