@@ -1,3 +1,4 @@
+import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:flutter/material.dart';
 int x = 0;
 class MultiForm extends StatefulWidget {
@@ -12,7 +13,14 @@ class _MultiFormState extends State<MultiForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('REGISTER USERS'),
+        title: GestureDetector(
+            onTap:() {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CommunityList()),
+              );
+            },
+            child: Text('REGISTER USERS')),
         actions: <Widget>[],
       ),
       body: Container(

@@ -129,22 +129,22 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      Container(
-                        height: 50,
-                        width: 160,
-                        child: Center(
-                            child: Text(
-                              "Bill Paid".toUpperCase(),
-                              style: const TextStyle(
-                                  color: Colors.amber,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14),
-                            )),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
+                      // Container(
+                      //   height: 50,
+                      //   width: 160,
+                      //   child: Center(
+                      //       child: Text(
+                      //         "Bill Paid".toUpperCase(),
+                      //         style: const TextStyle(
+                      //             color: Colors.amber,
+                      //             fontWeight: FontWeight.bold,
+                      //             fontSize: 14),
+                      //       )),
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.black,
+                      //     borderRadius: BorderRadius.circular(20),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -176,15 +176,15 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text("Donation Received".toUpperCase(),
+                                    Text("Expenses spent".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w500)),
-                                    Text("By Nihal ji".toUpperCase(),
+                                    Text("By ishan ji".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),
-                                    Text("12 June".toUpperCase(),
+                                    Text("17 August".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),
@@ -192,7 +192,7 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                                 ),
                                 trailing: Column(
                                   children: [
-                                    Text("₹ 300".toUpperCase(),
+                                    Text("₹ 20".toUpperCase(),
                                         style: const TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w500)),
@@ -217,7 +217,7 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                         width: 160,
                         child: Center(
                             child: Text(
-                              "Recieved Donation".toUpperCase(),
+                              "Paid Expenses".toUpperCase(),
                               style: const TextStyle(
                                 color: Colors.amber,
                                 fontWeight: FontWeight.bold,
@@ -229,22 +229,22 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      Container(
-                        height: 50,
-                        width: 160,
-                        child: Center(
-                            child: Text(
-                              "Expenses Paid".toUpperCase(),
-                              style: const TextStyle(
-                                  color: Colors.amber,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14),
-                            )),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
+                      // Container(
+                      //   height: 50,
+                      //   width: 160,
+                      //   child: Center(
+                      //       child: Text(
+                      //         "Expenses Details".toUpperCase(),
+                      //         style: const TextStyle(
+                      //             color: Colors.amber,
+                      //             fontWeight: FontWeight.bold,
+                      //             fontSize: 14),
+                      //       )),
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.black,
+                      //     borderRadius: BorderRadius.circular(20),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
