@@ -1,8 +1,10 @@
+import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/models/community.model.dart';
 import 'package:community_internal/core/repository/community.repo.dart';
 import 'package:community_internal/main.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/dummy_drawer.dart';
 import '../widgets/user_avatar.dart';
@@ -29,7 +31,9 @@ class _CommunityListState extends State<CommunityList> {
     setState(() {
       isBusy = true;
     });
-    communityList = await _communityRepository.getCommunityList();
+    communityList = (await _communityRepository.getCommunityList())
+        // .where((CommunityModel e) => e.status == 'apporoved')
+        .toList();
     setState(() {
       isBusy = false;
     });
@@ -218,7 +222,7 @@ class CommunityTileCustom extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Text(
-              communityModel.person.toString() + " members",
+              (communityModel.person ?? "0").toString() + " members",
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -230,38 +234,40 @@ class CommunityTileCustom extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          if (communityModel.status == "apporoved")
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: ButtonTheme(
-                height: 26,
-                minWidth: double.infinity,
-                child: Center(
-                  child: MaterialButton(
-                    color: Colors.amber,
-                    child: Text(
-                      "Join".toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+          // if (communityModel.status == "apporoved")
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: ButtonTheme(
+              height: 26,
+              minWidth: double.infinity,
+              child: Center(
+                child: MaterialButton(
+                  color: Colors.amber,
+                  child: Text(
+                    "Join".toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                  onPressed: () async {
+                    await locator<SharedPreferences>()
+                        .setString('societyId', communityModel.id ?? "");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyHomePage(),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyHomePage(),
-                        ),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
+                    );
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
                   ),
                 ),
               ),
             ),
+          ),
         ],
       ),
     );

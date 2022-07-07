@@ -1,6 +1,8 @@
-import 'dart:convert';
+// To parse this JSON data, do
+//
+//     final postModel = postModelFromJson(jsonString);
 
-import 'package:community_internal/app/constants.dart';
+import 'dart:convert';
 
 PostModel postModelFromJson(String str) => PostModel.fromJson(json.decode(str));
 
@@ -8,26 +10,26 @@ String postModelToJson(PostModel data) => json.encode(data.toJson());
 
 class PostModel {
   PostModel({
-    required this.id,
+    this.id,
     required this.userId,
     required this.societyId,
     required this.typeOfPost,
     required this.postLink,
     required this.postDescription,
     required this.ads,
-    required this.status,
-    required this.date,
+    this.status,
+    this.date,
   });
 
-  final String id;
-  final String userId;
-  final String societyId;
-  final String typeOfPost;
-  final String? postLink;
-  final String postDescription;
-  final String ads;
-  final String status;
-  final DateTime date;
+  final String? id;
+  final String? userId;
+  final String? societyId;
+  final String? typeOfPost;
+  final dynamic postLink;
+  final String? postDescription;
+  final String? ads;
+  final String? status;
+  final String? date;
 
   PostModel copyWith({
     String? id,
@@ -38,7 +40,7 @@ class PostModel {
     String? postDescription,
     String? ads,
     String? status,
-    DateTime? date,
+    String? date,
   }) =>
       PostModel(
         id: id ?? this.id,
@@ -57,13 +59,11 @@ class PostModel {
         userId: json["user_id"],
         societyId: json["society_id"],
         typeOfPost: json["type_of_post"],
-        postLink: json["post_link"] == null
-            ? null
-            : Constants.imageBaseUrl + json["post_link"],
+        postLink: json["post_link"],
         postDescription: json["post_description"],
         ads: json["ads"],
         status: json["status"],
-        date: DateTime.parse(json["date"]),
+        date: (json["date"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,6 +75,6 @@ class PostModel {
         "post_description": postDescription,
         "ads": ads,
         "status": status,
-        "date": date.toIso8601String(),
+        "date": date,
       };
 }

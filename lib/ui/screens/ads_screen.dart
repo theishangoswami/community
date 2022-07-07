@@ -14,7 +14,8 @@ class AdsScreen extends StatefulWidget {
   State<AdsScreen> createState() => _AdsScreenState();
 }
 
-class _AdsScreenState extends State<AdsScreen> {
+class _AdsScreenState extends State<AdsScreen>
+    with AutomaticKeepAliveClientMixin {
   final PostRepository _postRepository = PostRepository();
   List<PostModel> postsList = [];
   bool isBusy = false;
@@ -38,6 +39,7 @@ class _AdsScreenState extends State<AdsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -80,4 +82,7 @@ class _AdsScreenState extends State<AdsScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

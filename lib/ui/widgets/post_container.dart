@@ -6,8 +6,8 @@ import 'package:community_internal/core/models/comment.model.dart';
 import 'package:community_internal/core/models/like.model.dart';
 import 'package:community_internal/core/models/user.model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
-import 'package:community_internal/core/utils/date.utils.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -89,7 +89,7 @@ class _PostHeaderState extends State<_PostHeader> {
     setState(() {
       isUserDetailsfetching = true;
     });
-    userModel = await UserRepository().getUser(widget.post.userId);
+    userModel = await UserRepository().getUser(widget.post.userId!);
     setState(() {
       isUserDetailsfetching = false;
     });
@@ -106,14 +106,14 @@ class _PostHeaderState extends State<_PostHeader> {
               )
             : SizedBox(
                 child: Text(
-                  "Posted " + DateTimeUtils.convertToAgo(widget.post.date),
+                  "Posted " + (widget.post.date!),
                 ),
               )
         : Row(
             children: [
-              const UserAvatar(
+              UserAvatar(
                 radius: 35,
-                imgUrl: "",
+                imgUrl: userModel?.profile ?? "",
               ),
               const SizedBox(width: 8.0),
               Expanded(
@@ -131,8 +131,7 @@ class _PostHeaderState extends State<_PostHeader> {
                     Row(
                       children: [
                         Text(
-                          '${DateTimeUtils.convertToAgo(widget.post.date)} • '
-                              .toUpperCase(),
+                          '${(widget.post.date!)} • '.toUpperCase(),
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 12.0,
@@ -211,7 +210,8 @@ class _PostStats extends StatefulWidget {
   State<_PostStats> createState() => _PostStatsState();
 }
 
-class _PostStatsState extends State<_PostStats> {
+class _PostStatsState extends State<_PostStats>
+    with AutomaticKeepAliveClientMixin {
   final PostRepository _postRepository = PostRepository();
   List<LikeModel> likes = [];
   bool isLikesFetched = false;
@@ -228,14 +228,16 @@ class _PostStatsState extends State<_PostStats> {
   }
 
   void _fetchLikes() async {
-    likes = await _postRepository.fetchLikes(widget.post.id);
-    setState(() {
-      isLikesFetched = true;
-    });
+    likes = await _postRepository.fetchLikes(widget.post.id!);
+    if (mounted) {
+      setState(() {
+        isLikesFetched = true;
+      });
+    }
   }
 
   void _fetchComments() async {
-    comments = await _postRepository.fetchComments(widget.post.id);
+    comments = await _postRepository.fetchComments(widget.post.id!);
     setState(() {
       isCommentsFetched = true;
     });
@@ -243,6 +245,7 @@ class _PostStatsState extends State<_PostStats> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
@@ -315,8 +318,7 @@ class _PostStatsState extends State<_PostStats> {
                 ),
                 label: 'Like'.toUpperCase(),
                 lableColor: Colors.black87,
-                onTap: () {
-                },
+                onTap: () {},
               ),
               _PostButton(
                 icon: Icon(
@@ -327,7 +329,9 @@ class _PostStatsState extends State<_PostStats> {
                 label: 'Comment'.toUpperCase(),
                 onTap: () {
                   _commentBox(context);
-                  print('Comment');
+                  if (kDebugMode) {
+                    print('Comment');
+                  }
                 },
               ),
               _PostButton(
@@ -396,6 +400,9 @@ class _PostStatsState extends State<_PostStats> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _PostButton extends StatelessWidget {

@@ -15,7 +15,6 @@ class CommunityRepository {
         var body = jsonDecode(res.body)['result'];
         return body
             .map<CommunityModel>((e) => CommunityModel.fromJson(e))
-            .where((CommunityModel e) => e.status == 'apporoved')
             .toList();
       }
     } catch (e) {
