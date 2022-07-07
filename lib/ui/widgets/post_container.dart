@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:community_internal/app/constants.dart';
 import 'package:community_internal/core/models/comment.model.dart';
 import 'package:community_internal/core/models/like.model.dart';
 import 'package:community_internal/core/models/user.model.dart';
@@ -51,9 +52,15 @@ class PostContainer extends StatelessWidget {
                 ),
               ),
               if (post.postLink != null)
-                _PostPhotoContainer(
-                  postImageUrl: [post.postLink ?? ""],
-                ),
+                post.typeOfPost == "4"
+                    ? Text("${post.typeOfPost}")
+                    : post.postLink.toString().isEmpty
+                        ? const SizedBox()
+                        : _PostPhotoContainer(
+                            postImageUrl: [
+                              Constants.imageBaseUrl + (post.postLink ?? "")
+                            ],
+                          ),
               _PostStats(
                 post: post,
               ),
