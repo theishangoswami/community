@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 
 enum Sky { Donations, Expenses }
 
@@ -7,15 +8,16 @@ Map<Sky, Color> skyColors = <Sky, Color>{
   Sky.Donations: Color(0xFFFFFFFF),
   Sky.Expenses: Color(0xFFFFFFFF),
 };
-
 class SegmentedControlSample extends StatefulWidget {
   const SegmentedControlSample({Key? key}) : super(key: key);
+
 
   @override
   State<SegmentedControlSample> createState() => _SegmentedControlSampleState();
 }
 
-class _SegmentedControlSampleState extends State<SegmentedControlSample> {
+class _SegmentedControlSampleState extends State<SegmentedControlSample>   with TickerProviderStateMixin<SegmentedControlSample>{
+bool v =true;
   Sky _selectedSegment = Sky.Donations;
   @override
   Widget build(BuildContext context) {
@@ -55,8 +57,9 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
       child: _selectedSegment == Sky.Donations?Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Container(
+            v==true?Container(
               color: Colors.white,
               height: 370,
               child: ListView.builder(
@@ -103,11 +106,68 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                           ),
                         ));
                   }),
+            ):Container(
+              color: Colors.white,
+              height: 800,
+              child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 9,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Card(
+                            elevation: 4,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: ListTile(
+                                leading: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text("Donation Received".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500)),
+                                    Text("By Nihal ji".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400)),
+                                    Text("12 June".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400)),
+                                  ],
+                                ),
+                                trailing: Column(
+                                  children: [
+                                    Text("₹ 300".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ));
+                  }),
             ),
+        GestureDetector(
+            onTap: (){
+              setState((){
+                v=!v;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 17),
+              child: Text(v==true?"SEE MORE...":"SEE LESS...",style: TextStyle(fontSize: 18),),
+            )),
             Container(
               color: Colors.white,
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(15),
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -119,13 +179,13 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                             child: Text(
                               "Recieved Donation".toUpperCase(),
                               style: const TextStyle(
-                                color: Colors.amber,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),
                             )),
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.amber,
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
@@ -155,8 +215,9 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
       ):Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Container(
+            v==true?Container(
               color: Colors.white,
               height: 370,
               child: ListView.builder(
@@ -203,11 +264,68 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                           ),
                         ));
                   }),
+            ):Container(
+              color: Colors.white,
+              height: 800,
+              child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 9,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Card(
+                            elevation: 4,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: ListTile(
+                                leading: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text("Expenses spent".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500)),
+                                    Text("By ishan ji".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400)),
+                                    Text("17 August".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400)),
+                                  ],
+                                ),
+                                trailing: Column(
+                                  children: [
+                                    Text("₹ 20".toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ));
+                  }),
             ),
+            GestureDetector(
+                onTap: (){
+                  setState((){
+                    v=!v;
+                  });
+                },
+                child: Padding(
+                  padding:  const EdgeInsets.symmetric(vertical: 15,horizontal: 17),
+                  child: Text(v==true?"SEE MORE...":"SEE LESS...",style: TextStyle(fontSize: 18),),
+                )),
             Container(
               color: Colors.white,
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(15),
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -219,13 +337,13 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample> {
                             child: Text(
                               "Paid Expenses".toUpperCase(),
                               style: const TextStyle(
-                                color: Colors.amber,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),
                             )),
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.amber,
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
