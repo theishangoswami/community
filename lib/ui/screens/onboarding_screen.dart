@@ -136,11 +136,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         },
                         controller: _addressController,
                         decoration: buildInputDecoration(
-                            "Date of birth".toUpperCase(),
-                            "03/02/2001",
-                            const Icon(
-                              FontAwesomeIcons.calendarWeek,
-                            ),),
+                          "Date of birth".toUpperCase(),
+                          "03/02/2001",
+                          const Icon(
+                            FontAwesomeIcons.calendarWeek,
+                          ),
+                        ),
                       ),
                     ),
                     Padding(

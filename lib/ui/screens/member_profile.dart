@@ -60,7 +60,8 @@ class MemberProfileScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Messaging(),),
+                              builder: (context) => Messaging(),
+                            ),
                           );
                         },
                         child: const CustomCard(
@@ -76,7 +77,9 @@ class MemberProfileScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Profile()),
+                            MaterialPageRoute(
+                              builder: (context) => const Profile(),
+                            ),
                           );
                         },
                         child: const CustomCard(

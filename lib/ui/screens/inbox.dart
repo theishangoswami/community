@@ -54,11 +54,13 @@ class _ChatBoxState extends State<ChatBox> {
                 ),
                 const CircleAvatar(
                   backgroundColor: Colors.white,
-                  child: Text("S",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  child: Text(
+                    "S",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                   backgroundImage: NetworkImage(
-                      "<https://randomuser.me/api/portraits/men/5.jpg>",),
+                    "<https://randomuser.me/api/portraits/men/5.jpg>",
+                  ),
                   maxRadius: 20,
                 ),
                 const SizedBox(
@@ -72,7 +74,9 @@ class _ChatBoxState extends State<ChatBox> {
                       const Text(
                         "Shivam",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600,),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       const SizedBox(
                         height: 6,
@@ -80,7 +84,9 @@ class _ChatBoxState extends State<ChatBox> {
                       Text(
                         "Online",
                         style: TextStyle(
-                            color: Colors.grey.shade600, fontSize: 13,),
+                          color: Colors.grey.shade600,
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
@@ -108,7 +114,11 @@ class _ChatBoxState extends State<ChatBox> {
                 itemBuilder: (context, index) {
                   return Container(
                     padding: const EdgeInsets.only(
-                        left: 14, right: 14, top: 10, bottom: 10,),
+                      left: 14,
+                      right: 14,
+                      top: 10,
+                      bottom: 10,
+                    ),
                     child: Column(
                       children: [
                         Center(
@@ -134,8 +144,7 @@ class _ChatBoxState extends State<ChatBox> {
                                     style: const TextStyle(fontSize: 15),
                                   ),
                                   const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 4),
+                                    padding: EdgeInsets.symmetric(vertical: 4),
                                     child: Text("7:08 pm"),
                                   )
                                 ],
@@ -181,9 +190,10 @@ class _ChatBoxState extends State<ChatBox> {
                   const Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                          hintText: "Write message...",
-                          hintStyle: TextStyle(color: Colors.black54),
-                          border: InputBorder.none,),
+                        hintText: "Write message...",
+                        hintStyle: TextStyle(color: Colors.black54),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                   const SizedBox(

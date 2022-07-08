@@ -68,7 +68,6 @@ class _MembersScreenState extends State<MembersScreen>
           indicatorColor: Colors.white70,
           indicatorWeight: 0.3,
           controller: _controller,
-       
           indicator: const BoxDecoration(
             color: Colors.black12,
             borderRadius: BorderRadius.all(

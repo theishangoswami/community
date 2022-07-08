@@ -41,10 +41,10 @@ class JobRepository {
         Constants.baseUrl + "jobs/add",
         data: formData,
       );
-
-      Fluttertoast.showToast(msg: response.data.toString());
+      debugPrint("Jon add response:${response.data}\nUrl:${response.realUri}");
       return response.statusCode == 200;
     } on DioError catch (e) {
+      debugPrint("Dio error :$e");
       Fluttertoast.showToast(msg: e.message);
     } catch (e) {
       debugPrint("$e");

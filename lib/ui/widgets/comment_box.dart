@@ -62,18 +62,21 @@ class CommentBox extends StatelessWidget {
                   maxLines: 10,
                   style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
-                      suffix: _DoneButton(
-                        textEditorFocusNode: focusNode,
-                        textEditingController: textEditingController,
-                        onSubmitted: onSubmitted,
-                      ),
-                      hintText: 'Add a comment...',
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12,),
-                      focusedBorder: border,
-                      border: border,
-                      enabledBorder: border,),
+                    suffix: _DoneButton(
+                      textEditorFocusNode: focusNode,
+                      textEditingController: textEditingController,
+                      onSubmitted: onSubmitted,
+                    ),
+                    hintText: 'Add a comment...',
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    focusedBorder: border,
+                    border: border,
+                    enabledBorder: border,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -102,7 +105,8 @@ class CommentBox extends StatelessWidget {
         focusNode.requestFocus();
         textEditingController.text = textEditingController.text + emoji;
         textEditingController.selection = TextSelection.fromPosition(
-            TextPosition(offset: textEditingController.text.length),);
+          TextPosition(offset: textEditingController.text.length),
+        );
       },
       child: Text(
         emoji,

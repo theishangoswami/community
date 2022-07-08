@@ -76,7 +76,6 @@ class PostRepository {
         data: formData,
       );
 
-      Fluttertoast.showToast(msg: response.data.toString());
       return response.statusCode == 200;
     } on DioError catch (e) {
       Fluttertoast.showToast(msg: e.message);

@@ -7,6 +7,7 @@ import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CreateJobForum extends StatefulWidget {
   const CreateJobForum({Key? key}) : super(key: key);
@@ -100,6 +101,7 @@ class CreateJobForumState extends State<CreateJobForum> {
       });
       if (res) {
         Navigator.pop(context, true);
+        Fluttertoast.showToast(msg: "Job Post added successfully");
       }
     }
   }

@@ -61,14 +61,11 @@ class _LedgerState extends State<Ledger> {
                   radius: 50,
                 ),
                 onTap: () async {
-                  var res = await Navigator.of(context).push(
+                  await Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const MemberProfileScreen(),
                     ),
                   );
-                  if (res == true) {
-                    fetchAllJobs();
-                  }
                 },
               ),
             )
@@ -78,12 +75,15 @@ class _LedgerState extends State<Ledger> {
             FloatingActionButtonLocation.miniCenterFloat,
         floatingActionButton: FloatingActionButton.extended(
           elevation: 7,
-          onPressed: () {
-            Navigator.of(context).push(
+          onPressed: () async {
+            var res = await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const CreateJobForum(),
               ),
             );
+            if (res == true) {
+              fetchAllJobs();
+            }
           },
           label: const Text(
             'POST JOB',
