@@ -50,130 +50,131 @@ class _ProfileState extends State<Profile> {
         title: Text("Profile Edit".toUpperCase()),
       ),
       backgroundColor: Colors.white,
-      body: Container(
-        child: ListView(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 17,
+      body: ListView(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 17,
+                  ),
+                  const CircleAvatar(
+                    backgroundColor: Colors.amber,
+                    radius: 30,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "S",
+                        style: TextStyle(color: Colors.black, fontSize: 30),
+                      ),
                     ),
-                    const CircleAvatar(
-                      backgroundColor: Colors.amber,
-                      radius: 30,
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          "S",
-                          style: TextStyle(color: Colors.black, fontSize: 30),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          "Shivam",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        Text(
+                          "ANDROID DEVELOPER",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          "GOOGLE",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 10,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 570,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 6,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    leading: icon[index],
+                                    title: Text(name[index]),
+                                    subtitle: const Text("user details"),
+                                    trailing: const Icon(Icons.edit),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 17,
+                                    ),
+                                    child: Divider(
+                                      thickness: 1.5,
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.black,
+                      ),
+                      child: RaisedButton(
+                        highlightElevation: 4,
+                        elevation: 5,
+                        color: Colors.white,
+                        child: const Text(
+                          "Other details",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {},
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Shivam",
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold,),
-                          ),
-                          Text(
-                            "ANDROID DEVELOPER",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w400,),
-                          ),
-                          Text(
-                            "GOOGLE",
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w400,),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 10,),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 570,
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 6,
-                                itemBuilder: (context, index) {
-                                  return Column(
-                                    children: [
-                                      ListTile(
-                                        leading: icon[index],
-                                        title: Text(name[index]),
-                                        subtitle: const Text("user details"),
-                                        trailing: const Icon(Icons.edit),
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 17,),
-                                        child: Divider(
-                                          thickness: 1.5,
-                                        ),
-                                      )
-                                    ],
-                                  );
-                                },),
-                          ),
-                          // Container(
-                          //   height: 50,
-                          //   width: 200,
-                          //   child: Center(child: Text("Edit Profile",style:TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white))),
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(25),
-                          //       color: Colors.black
-                          //   ),
-                          // )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.black,),
-                        child: RaisedButton(
-                            highlightElevation: 4,
-                            elevation: 5,
-                            color: Colors.white,
-                            child: const Text(
-                              "Other details",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            onPressed: () {},),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

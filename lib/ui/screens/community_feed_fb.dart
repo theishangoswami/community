@@ -32,9 +32,11 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
     postsList = (await _postRepository.getPosts())
         .where((element) => element.ads != "1")
         .toList();
-    setState(() {
-      isBusy = false;
-    });
+    if (mounted) {
+      setState(() {
+        isBusy = false;
+      });
+    }
   }
 
   @override

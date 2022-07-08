@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/models/post.model.dart';
 import 'package:community_internal/core/models/user.model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
@@ -9,6 +10,7 @@ import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/services/key_storage.service.dart';
 import '../widgets/user_avatar.dart';
 import 'member_profile.dart';
@@ -23,6 +25,7 @@ class CreatePost extends StatefulWidget {
 class _CreatePostState extends State<CreatePost> {
   final PostRepository _postRepository = PostRepository();
   final FilePickerService _filePickerService = FilePickerService();
+  final SharedPreferences _sharedPreferences = locator<SharedPreferences>();
   File? file;
   int? type;
   bool isAd = true;
@@ -41,9 +44,10 @@ class _CreatePostState extends State<CreatePost> {
       bool res = await _postRepository.createPost(
         PostModel(
           userId: user.id,
-          societyId: '1',
+          societyId: _sharedPreferences.getString('societyId'),
+          status: 'enable',
           typeOfPost: type?.toString(),
-          postLink: type == 4 ? messageTEC.text.trim() : "",
+          postLink: type == 4 ? messageTEC.text.trim() : "image",
           postDescription: descController.text,
           ads: isAd ? "1" : "0",
         ),

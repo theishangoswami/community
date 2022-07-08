@@ -66,15 +66,19 @@ class PostModel {
         date: (json["date"]),
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_id": userId,
-        "society_id": societyId,
-        "type_of_post": typeOfPost,
-        "post_link": postLink,
-        "post_description": postDescription,
-        "ads": ads,
-        "status": status,
-        "date": date,
-      };
+  Map<String, dynamic> toJson() {
+    var map = {
+      "id": id,
+      "user_id": userId,
+      "society_id": societyId,
+      "post_link": postLink,
+      "type_post": typeOfPost,
+      "post_links": postLink,
+      "post_description": postDescription,
+      "ads_id": ads,
+      "status": status,
+    };
+    map.removeWhere((key, value) => value == null);
+    return map;
+  }
 }

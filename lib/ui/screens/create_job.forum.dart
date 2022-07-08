@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:community_internal/core/models/job.model.dart';
 import 'package:community_internal/core/models/user.model.dart';
 import 'package:community_internal/core/repository/jobs.repository.dart';
+import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ class CreateJobForum extends StatefulWidget {
 }
 
 class CreateJobForumState extends State<CreateJobForum> {
+  final FilePickerService _filePickerService = FilePickerService();
   TextEditingController firmNameController = TextEditingController();
   TextEditingController jobTitleController = TextEditingController();
   TextEditingController lastname = TextEditingController();
@@ -54,6 +58,16 @@ class CreateJobForumState extends State<CreateJobForum> {
     '9-10 LPA',
     '10 LPA',
   ];
+  Uint8List? image;
+  pickImage() {
+    _filePickerService.pickImageFromGallery().then((value) async {
+      if (value != null) {
+        image = await value.readAsBytes();
+        setState(() {});
+      }
+    });
+  }
+
   String? genderValue;
   final formKey = GlobalKey<FormState>();
   final JobRepository _jobRepository = JobRepository();
@@ -61,7 +75,7 @@ class CreateJobForumState extends State<CreateJobForum> {
   bool isBusy = false;
   createJob() async {
     UserModel user = _storageService.getCurrentUser();
-    if (formKey.currentState?.validate() ?? false) {
+    if ((formKey.currentState?.validate() ?? false) && image != null) {
       setState(() {
         isBusy = true;
       });
@@ -76,9 +90,10 @@ class CreateJobForumState extends State<CreateJobForum> {
           education: education,
           location: jobLocationController.text.trim(),
           packages: salary,
-          status: "approved",
-          date: DateTime.now().toString(),
+          status: "enable",
+          date: DateTime.now(),
         ),
+        image!,
       );
       setState(() {
         isBusy = false;
@@ -210,6 +225,36 @@ class CreateJobForumState extends State<CreateJobForum> {
                 ),
                 const SizedBox(
                   height: 12,
+                ),
+                image != null
+                    ? ListTile(
+                        title: Image.memory(
+                          image!,
+                          height: 120,
+                        ),
+                        trailing: TextButton(
+                          child: const Text("Remove"),
+                          onPressed: () {
+                            image = null;
+                            setState(() {});
+                          },
+                        ),
+                      )
+                    : ListTile(
+                        subtitle: const Text("Upload company logo"),
+                        trailing: TextButton(
+                          onPressed: () {
+                            pickImage();
+                          },
+                          child: const Text("Upload"),
+                        ),
+                        title: const Text(
+                          "Pick image",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,

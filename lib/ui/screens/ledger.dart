@@ -29,9 +29,11 @@ class _LedgerState extends State<Ledger> {
       isBusy = true;
     });
     jobs = await JobRepository().getAllJobs();
-    setState(() {
-      isBusy = false;
-    });
+    if (mounted) {
+      setState(() {
+        isBusy = false;
+      });
+    }
   }
 
   bool isBusy = false;
@@ -159,7 +161,7 @@ class _LedgerState extends State<Ledger> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "Posted on ${job.date ?? "NA"}",
+                                "Posted on ${job.date?.toIso8601String() ?? "NA"}",
                                 style: const TextStyle(fontSize: 14),
                               ),
                             ),

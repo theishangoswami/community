@@ -5,9 +5,12 @@ import 'package:community_internal/app/constants.dart';
 import 'package:community_internal/core/models/comment.model.dart';
 import 'package:community_internal/core/models/like.model.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import '../models/post.model.dart';
+import 'package:http_parser/http_parser.dart';
 
 class PostRepository {
   Future<List<PostModel>> getPosts() async {
@@ -59,13 +62,27 @@ class PostRepository {
 
   Future<bool> createPost(PostModel postModel, {Uint8List? image}) async {
     try {
-      Uri uri = Uri.parse('social_media_post/add')
-          .replace(queryParameters: postModel.toJson());
-      var res = (await HttpBuilder.post(uri.toString()));
-      print("Response is:${res?.body}");
+      Dio dio = Dio();
+      var formData = FormData.fromMap({
+        ...postModel.toJson(),
+        'post_links_images': MultipartFile.fromBytes(
+          image ?? [],
+          filename: 'post_links_images',
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      });
+      var response = await dio.post(
+        Constants.baseUrl + "social_media_post/add",
+        data: formData,
+      );
 
-      return res != null;
-    } catch (e) {}
+      Fluttertoast.showToast(msg: response.data.toString());
+      return response.statusCode == 200;
+    } on DioError catch (e) {
+      Fluttertoast.showToast(msg: e.message);
+    } catch (e) {
+      debugPrint("$e");
+    }
     return false;
   }
 

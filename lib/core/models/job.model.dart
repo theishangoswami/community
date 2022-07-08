@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final jobModel = jobModelFromJson(jsonString?);
-
 import 'dart:convert';
 
 JobModel jobModelFromJson(String str) => JobModel.fromJson(json.decode(str));
@@ -20,6 +16,7 @@ class JobModel {
     required this.education,
     required this.location,
     required this.packages,
+    this.companyLogo,
     required this.status,
     required this.date,
   });
@@ -34,8 +31,9 @@ class JobModel {
   final String? education;
   final String? location;
   final String? packages;
+  final String? companyLogo;
   final String? status;
-  final String? date;
+  final DateTime? date;
 
   JobModel copyWith({
     String? id,
@@ -48,8 +46,9 @@ class JobModel {
     String? education,
     String? location,
     String? packages,
+    String? companyLogo,
     String? status,
-    String? date,
+    DateTime? date,
   }) =>
       JobModel(
         id: id ?? this.id,
@@ -62,11 +61,12 @@ class JobModel {
         education: education ?? this.education,
         location: location ?? this.location,
         packages: packages ?? this.packages,
+        companyLogo: companyLogo ?? this.companyLogo,
         status: status ?? this.status,
         date: date ?? this.date,
       );
 
-  factory JobModel.fromJson(Map<String?, dynamic> json) => JobModel(
+  factory JobModel.fromJson(Map<String, dynamic> json) => JobModel(
         id: json["id"],
         userId: json["user_id"],
         jobsTitle: json["jobs_title"],
@@ -77,22 +77,28 @@ class JobModel {
         education: json["education"],
         location: json["location"],
         packages: json["packages"],
+        companyLogo: json["company_logo"],
         status: json["status"],
-        date: json["date"],
+        date: DateTime.parse(json["date"]),
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_id": userId,
-        "jobs_title": jobsTitle,
-        "description": description,
-        "company_name": companyName,
-        "gender": gender,
-        "experience": experience,
-        "education": education,
-        "location": location,
-        "packages": packages,
-        "status": status,
-        "date": date,
-      };
+  Map<String, dynamic> toJson() {
+    var map = {
+      "id": id,
+      "user_id": userId,
+      "jobs_title": jobsTitle,
+      "description": description,
+      "company_name": companyName,
+      "gender": gender,
+      "experience": experience,
+      "education": education,
+      "location": location,
+      "packages": packages,
+      "company_logo": companyLogo,
+      "status": status,
+      "date": date?.toIso8601String(),
+    };
+    map.removeWhere((key, value) => value == null);
+    return map;
+  }
 }
