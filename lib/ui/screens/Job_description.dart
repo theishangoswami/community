@@ -170,234 +170,229 @@
 //     );
 //   }
 // }
-import 'package:community_internal/ui/screens/messaging.dart';
+import 'package:community_internal/core/models/job.model.dart';
 import 'package:flutter/material.dart';
 
-class Job extends StatefulWidget {
+class JobDetails extends StatefulWidget {
+  final JobModel jobModel;
+
+  const JobDetails({Key? key, required this.jobModel}) : super(key: key);
   @override
-  _JobState createState() => _JobState();
+  _JobDetailsState createState() => _JobDetailsState();
 }
 
-class _JobState extends State<Job> {
+class _JobDetailsState extends State<JobDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Row(
-        children: [
-          Container(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(60),
               ),
               height: 40,
               width: 50,
-              child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6YPdq33xIQpx_EY_eCrU95tVOJT3I4cJCnw&usqp=CAU")),
-          SizedBox(
-            width: 8,
-          ),
-          Text("Cosax Studios",style: TextStyle(fontWeight: FontWeight.w500),)
-        ],
-      ),
-        actions: [
+              child: Image.network(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6YPdq33xIQpx_EY_eCrU95tVOJT3I4cJCnw&usqp=CAU",
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Text(
+              "${widget.jobModel.jobsTitle}".toUpperCase(),
+              style: const TextStyle(fontWeight: FontWeight.w500),
+            )
+          ],
+        ),
+        actions: const [
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             child: Icon(Icons.more_vert),
           )
-        ],),
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                'Job Description',
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w400,
-                ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 40,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(13),
-              child: Container(
-                  color: Colors.black,
-                  height:3 ,
-                  width:154
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-              child: Text("Avoid internal jargon that may confuse the job seeker. Stick to standard levels of experience like “Senior” rather than “Grade 6” or other terms people are less likely to look for",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w300,color: Colors.black)),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 14),
-              child: Text(
-                'Requirements',
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 14),
-            //   child: Text("Requirements" ,style: TextStyle(
-            //     fontSize: 24,
-            //     fontWeight: FontWeight.w600,
-            //   ),),
-            // ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-              child: Text("While you may be tempted to list every requirement you expect from for your ideal candidate, if you include too many qualifications and skills this could dissuade potential applicants.",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w300,color: Colors.black)),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Icon(Icons.done,color: Colors.white,size: 13,)),
-                ),
-                Text("Sed ut",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black))
-              ],
-            ),
-            SizedBox(
-              height: 18,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Icon(Icons.done,color: Colors.white,size: 13,)),
-                ),
-                Text("Sed ut Second",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black))
-              ],
-            ),
-            SizedBox(
-              height: 18,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Icon(Icons.done,color: Colors.white,size: 13,)),
-                ),
-                Text("Sed ut third",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black))
-              ],
-            ),
-            SizedBox(
-              height: 18,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Icon(Icons.done,color: Colors.white,size: 13,)),
-                ),
-                Text("Sed ut four",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black))
-              ],
-            ),
-            SizedBox(
-              height: 18,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Icon(Icons.done,color: Colors.white,size: 13,)),
-                ),
-                Text("Sed ut fifth",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black))
-              ],
-            ),
-            SizedBox(
-              height: 21,
-            ),
-            Row(
-              children: [
-
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Container(
-                    height: 70,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(11),
-                    ),
-                    child: Center(
-                      child: Icon(Icons.local_activity,color: Colors.white,),
-                    ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  'Job Description'.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                GestureDetector(
-                  onTap: (){
-                  },
-                  child: Container(
-                    height: 70,
-                    width: 250,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(11),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 14),
-                        child: Text(
-                          'Apply for job',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black
+              ),
+              Padding(
+                padding: const EdgeInsets.all(13),
+                child: Container(color: Colors.black, height: 3, width: 154),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: Text(
+                  widget.jobModel.description ?? "NA",
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                child: Text(
+                  'Requirements'.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  "While you may be tempted to list every requirement you expect from for your ideal candidate, if you include too many qualifications and skills this could dissuade potential applicants.",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              ...{
+                "Gender": widget.jobModel.gender,
+                "Education": widget.jobModel.education,
+                "Experience": widget.jobModel.experience,
+                "Location": widget.jobModel.location
+              }
+                  .entries
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Container(
+                              height: 15,
+                              width: 15,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Icon(
+                                Icons.done,
+                                color: Colors.white,
+                                size: 13,
+                              ),
+                            ),
                           ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    e.key,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                const Text(":  "),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    (e.value?.isNotEmpty ?? false)
+                                        ? (e.value ?? "NA")
+                                        : "NA",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
+              const SizedBox(
+                height: 21,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Container(
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(11),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.local_activity,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
-            )
-          ],
-        ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 50,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(11),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 14,
+                          ),
+                          child: Text(
+                            'Apply for job'.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

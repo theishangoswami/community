@@ -1,10 +1,8 @@
-import 'package:community_internal/data/services/member_service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../utils/input_decoration.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -52,7 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         fontSize: 20,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     // Padding(
@@ -83,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         decoration: buildInputDecoration(
                           "Name".toUpperCase(),
                           "Praveen Varma",
-                          Icon(Icons.drive_file_rename_outline),
+                          const Icon(Icons.drive_file_rename_outline),
                         ),
                       ),
                     ),
@@ -138,11 +136,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         },
                         controller: _addressController,
                         decoration: buildInputDecoration(
-                            "Date of birth".toUpperCase(),
-                            "03/02/2001",
-                            Icon(
-                              FontAwesomeIcons.calendarWeek,
-                            )),
+                          "Date of birth".toUpperCase(),
+                          "03/02/2001",
+                          const Icon(
+                            FontAwesomeIcons.calendarWeek,
+                          ),
+                        ),
                       ),
                     ),
                     Padding(
@@ -157,7 +156,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         decoration: buildInputDecoration(
                           "Aadhaar".toUpperCase(),
                           "1234 5678 9321",
-                          Icon(
+                          const Icon(
                             FontAwesomeIcons.fingerprint,
                           ),
                         ),
@@ -175,7 +174,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         decoration: buildInputDecoration(
                           "Passport Number".toUpperCase(),
                           "1234 5678 9321",
-                          Icon(
+                          const Icon(
                             FontAwesomeIcons.addressCard,
                           ),
                         ),
@@ -193,7 +192,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         decoration: buildInputDecoration(
                           "Caste".toUpperCase(),
                           "Kshatriya",
-                          Icon(Icons.group),
+                          const Icon(Icons.group),
                         ),
                       ),
                     ),

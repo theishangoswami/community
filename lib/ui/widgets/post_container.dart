@@ -1,23 +1,27 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:community_internal/app/constants.dart';
+import 'package:community_internal/core/models/comment.model.dart';
+import 'package:community_internal/core/models/like.model.dart';
+import 'package:community_internal/core/models/user.model.dart';
+import 'package:community_internal/core/repository/post_repository.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../data/models/post_model.dart';
+import 'package:community_internal/core/models/post.model.dart';
+import '../../core/repository/users.repository.dart';
 
 class PostContainer extends StatelessWidget {
   final PostModel post;
 
-  const PostContainer({
-    required this.post,
-  });
+  const PostContainer({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isDesktop = false;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
       child: Card(
@@ -38,19 +42,25 @@ class PostContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _PostHeader(
-                      post: post,
-                    ),
-                    const SizedBox(height: 8.0),
-                    Text(post.caption.toUpperCase()),
-                    if (post.imageUrl != null) const SizedBox(height: 10.0),
+                    const SizedBox(height: 5.0),
+                    _PostHeader(post: post),
+                    const SizedBox(height: 10.0),
+                    Text("${post.postDescription}"),
+                    const SizedBox(height: 10.0),
+                    if (post.postLink != null) const SizedBox(height: 10.0),
                   ],
                 ),
               ),
-              if (post.imageUrl != null)
-                _PostPhotoContainer(
-                  postImageUrl: post.imageUrl,
-                ),
+              if (post.postLink != null)
+                post.typeOfPost == "4"
+                    ? Text("${post.typeOfPost}")
+                    : post.postLink.toString().isEmpty
+                        ? const SizedBox()
+                        : _PostPhotoContainer(
+                            postImageUrl: [
+                              Constants.imageBaseUrl + (post.postLink ?? "")
+                            ],
+                          ),
               _PostStats(
                 post: post,
               ),
@@ -62,7 +72,7 @@ class PostContainer extends StatelessWidget {
   }
 }
 
-class _PostHeader extends StatelessWidget {
+class _PostHeader extends StatefulWidget {
   final PostModel post;
 
   const _PostHeader({
@@ -70,49 +80,82 @@ class _PostHeader extends StatelessWidget {
   });
 
   @override
+  State<_PostHeader> createState() => _PostHeaderState();
+}
+
+class _PostHeaderState extends State<_PostHeader> {
+  UserModel? userModel;
+  bool isUserDetailsfetching = false;
+  @override
+  void initState() {
+    super.initState();
+    fetchUserDetails();
+  }
+
+  fetchUserDetails() async {
+    setState(() {
+      isUserDetailsfetching = true;
+    });
+    userModel = await UserRepository().getUser(widget.post.userId!);
+    setState(() {
+      isUserDetailsfetching = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        UserAvatar(
-          radius: 35,
-          imgUrl: post.user.profileImageUrl,
-        ),
-        const SizedBox(width: 8.0),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return userModel == null
+        ? isUserDetailsfetching
+            ? SizedBox(
+                height: 10,
+                width: MediaQuery.of(context).size.width,
+                child: const LinearProgressIndicator(),
+              )
+            : SizedBox(
+                child: Text(
+                  "Posted " + (widget.post.date!),
+                ),
+              )
+        : Row(
             children: [
-              Text(
-                post.user.name.toUpperCase(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
+              UserAvatar(
+                radius: 35,
+                imgUrl: userModel?.profile ?? "",
+              ),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userModel?.userName ?? "",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '${(widget.post.date!)} • '.toUpperCase(),
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        Icon(
+                          Icons.public,
+                          color: Colors.grey[600],
+                          size: 12.0,
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    '${post.timeAgo} • '.toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12.0,
-                    ),
-                  ),
-                  Icon(
-                    Icons.public,
-                    color: Colors.grey[600],
-                    size: 12.0,
-                  )
-                ],
-              )
             ],
-          ),
-        ),
-        // IconButton(
-        //   icon: const Icon(Icons.more_horiz),
-        //   onPressed: () => print('More'),
-        // ),
-      ],
-    );
+          );
   }
 }
 
@@ -128,7 +171,7 @@ class _PostPhotoContainer extends StatelessWidget {
     if (postImageUrl!.length == 1) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.5,
           child: CachedNetworkImage(
@@ -163,7 +206,7 @@ class _PostPhotoContainer extends StatelessWidget {
   }
 }
 
-class _PostStats extends StatelessWidget {
+class _PostStats extends StatefulWidget {
   final PostModel post;
 
   const _PostStats({
@@ -171,7 +214,45 @@ class _PostStats extends StatelessWidget {
   });
 
   @override
+  State<_PostStats> createState() => _PostStatsState();
+}
+
+class _PostStatsState extends State<_PostStats>
+    with AutomaticKeepAliveClientMixin {
+  final PostRepository _postRepository = PostRepository();
+  List<LikeModel> likes = [];
+  bool isLikesFetched = false;
+  List<CommentModel> comments = [];
+  bool isCommentsFetched = false;
+  int shares = 0;
+  bool isSharesFetched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchLikes();
+    _fetchComments();
+  }
+
+  void _fetchLikes() async {
+    likes = await _postRepository.fetchLikes(widget.post.id!);
+    if (mounted) {
+      setState(() {
+        isLikesFetched = true;
+      });
+    }
+  }
+
+  void _fetchComments() async {
+    comments = await _postRepository.fetchComments(widget.post.id!);
+    setState(() {
+      isCommentsFetched = true;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
@@ -193,22 +274,40 @@ class _PostStats extends StatelessWidget {
               ),
               const SizedBox(width: 4.0),
               Expanded(
-                child: Text(
-                  '${post.likes}',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                  ),
-                ),
+                child: isLikesFetched
+                    ? Text(
+                        '${likes.length} likes',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                        ),
+                      )
+                    : const Align(
+                        alignment: Alignment.centerLeft,
+                        child: SizedBox(
+                          child: CircularProgressIndicator(),
+                          width: 10,
+                          height: 10,
+                        ),
+                      ),
               ),
-              Text(
-                '${post.comments} Comments'.toUpperCase(),
-                style: TextStyle(
-                  color: Colors.grey[600],
-                ),
-              ),
+              isCommentsFetched
+                  ? Text(
+                      '${comments.length} Comments'.toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                      ),
+                    )
+                  : const Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        child: CircularProgressIndicator(),
+                        width: 10,
+                        height: 10,
+                      ),
+                    ),
               const SizedBox(width: 8.0),
               Text(
-                '${post.shares} Shares'.toUpperCase(),
+                '${1} Shares'.toUpperCase(),
                 style: TextStyle(
                   color: Colors.grey[600],
                 ),
@@ -226,9 +325,7 @@ class _PostStats extends StatelessWidget {
                 ),
                 label: 'Like'.toUpperCase(),
                 lableColor: Colors.black87,
-                onTap: () {
-                  print('Like');
-                },
+                onTap: () {},
               ),
               _PostButton(
                 icon: Icon(
@@ -239,7 +336,9 @@ class _PostStats extends StatelessWidget {
                 label: 'Comment'.toUpperCase(),
                 onTap: () {
                   _commentBox(context);
-                  print('Comment');
+                  if (kDebugMode) {
+                    print('Comment');
+                  }
                 },
               ),
               _PostButton(
@@ -266,47 +365,51 @@ class _PostStats extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           insetAnimationCurve: Curves.easeInOut,
-          insetAnimationDuration: Duration(milliseconds: 200),
-          child: Container(
-              height: notDesktop
-                  ? MediaQuery.of(context).size.height * 0.12
-                  : MediaQuery.of(context).size.height * 0.45,
-              width: notDesktop
-                  ? MediaQuery.of(context).size.width * 0.98
-                  : MediaQuery.of(context).size.width * 0.45,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    Spacer(),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Write your comment ...',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.send),
-                          onPressed: () {},
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                          ),
+          insetAnimationDuration: const Duration(milliseconds: 200),
+          child: SizedBox(
+            height: notDesktop
+                ? MediaQuery.of(context).size.height * 0.12
+                : MediaQuery.of(context).size.height * 0.45,
+            width: notDesktop
+                ? MediaQuery.of(context).size.width * 0.98
+                : MediaQuery.of(context).size.width * 0.45,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  const Spacer(),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Write your comment ...',
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: () {},
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                          color: Colors.blue,
                         ),
                       ),
-                    )
-                  ],
-                ),
-              )),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         );
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _PostButton extends StatelessWidget {

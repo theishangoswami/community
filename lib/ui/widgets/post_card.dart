@@ -3,9 +3,7 @@ import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class PostCard extends StatelessWidget {
-  const PostCard({
-    Key? key,
-  }) : super(key: key);
+  const PostCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,8 +132,8 @@ class _Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 6),
       child: Text.rich(
         TextSpan(
           children: <TextSpan>[
@@ -145,7 +143,7 @@ class _Description extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const TextSpan(text: ' '),
+            TextSpan(text: ' '),
             TextSpan(
               text: 'I am going to Delhi, this weekend!',
             ),
@@ -265,11 +263,11 @@ class _InteractiveCommentSlabState extends State<_InteractiveCommentSlab> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 4),
+        const Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 4),
           child: Text(
             '2d ago',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 13,

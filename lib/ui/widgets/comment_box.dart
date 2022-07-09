@@ -20,7 +20,7 @@ class CommentBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final border = _border(context);
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           top: BorderSide(
@@ -62,18 +62,21 @@ class CommentBox extends StatelessWidget {
                   maxLines: 10,
                   style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
-                      suffix: _DoneButton(
-                        textEditorFocusNode: focusNode,
-                        textEditingController: textEditingController,
-                        onSubmitted: onSubmitted,
-                      ),
-                      hintText: 'Add a comment...',
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      focusedBorder: border,
-                      border: border,
-                      enabledBorder: border),
+                    suffix: _DoneButton(
+                      textEditorFocusNode: focusNode,
+                      textEditingController: textEditingController,
+                      onSubmitted: onSubmitted,
+                    ),
+                    hintText: 'Add a comment...',
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    focusedBorder: border,
+                    border: border,
+                    enabledBorder: border,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -87,8 +90,8 @@ class CommentBox extends StatelessWidget {
   }
 
   OutlineInputBorder _border(BuildContext context) {
-    return OutlineInputBorder(
-      borderRadius: const BorderRadius.all(Radius.circular(24)),
+    return const OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(24)),
       borderSide: BorderSide(
         color: Colors.grey,
         width: 0.5,
@@ -102,7 +105,8 @@ class CommentBox extends StatelessWidget {
         focusNode.requestFocus();
         textEditingController.text = textEditingController.text + emoji;
         textEditingController.selection = TextSelection.fromPosition(
-            TextPosition(offset: textEditingController.text.length));
+          TextPosition(offset: textEditingController.text.length),
+        );
       },
       child: Text(
         emoji,
@@ -129,7 +133,7 @@ class _DoneButton extends StatefulWidget {
 }
 
 class _DoneButtonState extends State<_DoneButton> {
-  final fadedTextStyle = TextStyle(color: Colors.grey);
+  final fadedTextStyle = const TextStyle(color: Colors.grey);
   late TextStyle textStyle = fadedTextStyle;
 
   @override
@@ -137,7 +141,7 @@ class _DoneButtonState extends State<_DoneButton> {
     super.initState();
     widget.textEditingController.addListener(() {
       if (widget.textEditingController.text.isNotEmpty) {
-        textStyle = TextStyle(color: Colors.grey);
+        textStyle = const TextStyle(color: Colors.grey);
       } else {
         textStyle = fadedTextStyle;
       }

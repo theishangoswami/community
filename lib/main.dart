@@ -1,26 +1,23 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:community_internal/data/models/post_model.dart';
-import 'package:community_internal/data/models/user_model.dart';
+import 'package:community_internal/app/locator.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/onboarding/login_page.dart';
-import 'package:community_internal/ui/screens/ads.dart';
-import 'package:community_internal/ui/screens/community_feed.dart';
+import 'package:community_internal/ui/screens/ads_screen.dart';
 import 'package:community_internal/ui/screens/community_feed_fb.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/create_post.dart';
 import 'package:community_internal/ui/screens/ledger.dart';
-import 'package:community_internal/ui/screens/member_profile.dart';
 import 'package:community_internal/ui/screens/members_screen.dart';
-import 'package:community_internal/ui/screens/onboarding_screen.dart';
-import 'package:community_internal/ui/screens/transactions.dart';
-import 'package:community_internal/ui/widgets/post_container.dart';
-import 'package:community_internal/ui/screens/screen_demo.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp()
-      .then((value) => print("Connected to Firebase"));
+  await setupLocator();
+  try {
+    await Firebase.initializeApp()
+        .then((value) => print("Connected to Firebase"));
+  } catch (e) {}
+
   runApp(const MyApp());
 }
 
@@ -37,7 +34,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Caladea',
       ),
       // home: const OnboardingScreen(),
-      home: const LoginPage(),
+      home: StorageService().isUserLoggedIn()
+          ? const CommunityList()
+          : const LoginPage(),
     );
   }
 }
@@ -78,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           MembersScreen(),
           CreatePost(),
           Ledger(),
-          AdsPage(),
+          AdsScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -95,8 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home,
-                color: _selectedIndex == 0 ? Colors.amber : Colors.grey),
+            icon: Icon(
+              Icons.home,
+              color: _selectedIndex == 0 ? Colors.amber : Colors.grey,
+            ),
             label: "Home".toUpperCase(),
           ),
           BottomNavigationBarItem(
@@ -107,18 +108,24 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Members'.toUpperCase(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.post_add,
-                color: _selectedIndex == 2 ? Colors.amber : Colors.grey),
+            icon: Icon(
+              Icons.post_add,
+              color: _selectedIndex == 2 ? Colors.amber : Colors.grey,
+            ),
             label: 'Post'.toUpperCase(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag,
-                color: _selectedIndex == 3 ? Colors.amber : Colors.grey),
+            icon: Icon(
+              Icons.shopping_bag,
+              color: _selectedIndex == 3 ? Colors.amber : Colors.grey,
+            ),
             label: 'Jobs'.toUpperCase(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_balance_wallet_rounded,
-                color: _selectedIndex == 4 ? Colors.amber : Colors.grey),
+            icon: Icon(
+              Icons.account_balance_wallet_rounded,
+              color: _selectedIndex == 4 ? Colors.amber : Colors.grey,
+            ),
             label: 'Ads'.toUpperCase(),
           ),
         ],

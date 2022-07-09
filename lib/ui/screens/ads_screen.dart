@@ -1,21 +1,20 @@
+import 'package:community_internal/core/models/post.model.dart';
+import 'package:community_internal/core/repository/post_repository.dart';
+import 'package:community_internal/ui/screens/member_profile.dart';
+import 'package:community_internal/ui/widgets/dummy_drawer.dart';
 import 'package:community_internal/ui/widgets/post_container.dart';
+import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/models/post.model.dart';
-import '../../core/repository/post_repository.dart';
-import '../widgets/dummy_drawer.dart';
-import '../widgets/user_avatar.dart';
-import 'member_profile.dart';
-
-class CommunityFeedFb extends StatefulWidget {
-  const  CommunityFeedFb({Key? key}) : super(key: key);
+class AdsScreen extends StatefulWidget {
+  const AdsScreen({Key? key}) : super(key: key);
 
   @override
-  _CommunityFeedFbState createState() => _CommunityFeedFbState();
+  State<AdsScreen> createState() => _AdsScreenState();
 }
 
-class _CommunityFeedFbState extends State<CommunityFeedFb> {
+class _AdsScreenState extends State<AdsScreen> {
   final PostRepository _postRepository = PostRepository();
   List<PostModel> postsList = [];
   bool isBusy = false;
@@ -30,13 +29,11 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
       isBusy = true;
     });
     postsList = (await _postRepository.getPosts())
-        .where((element) => element.ads != "1")
+        .where((element) => element.ads == "1")
         .toList();
-    if (mounted) {
-      setState(() {
-        isBusy = false;
-      });
-    }
+    setState(() {
+      isBusy = false;
+    });
   }
 
   @override
@@ -47,7 +44,7 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
         drawer: const DummyDrawer(),
         appBar: AppBar(
           title: Text(
-            "Home".toUpperCase(),
+            "Advertisements".toUpperCase(),
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.white,
@@ -72,13 +69,12 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             )
           ],
         ),
-        body: ListView.separated(
+        body: ListView.builder(
           itemBuilder: (context, index) {
             return PostContainer(
               post: postsList.elementAt(index),
             );
           },
-          separatorBuilder: (ctx, i) => Container(),
           itemCount: postsList.length,
         ),
       ),

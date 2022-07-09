@@ -52,7 +52,7 @@ class MemberProfileScreen extends StatelessWidget {
                             ),
                           ),
                         },
-                        child: CustomCard(
+                        child: const CustomCard(
                           icon: (FontAwesomeIcons.addressBook),
                           tag: 'ledger',
                         ),
@@ -62,15 +62,17 @@ class MemberProfileScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
+
                                 builder: (context) => Messaging()),
+                            ),
                           );
                         },
-                        child: CustomCard(
+                        child: const CustomCard(
                           icon: (FontAwesomeIcons.message),
                           tag: 'message',
                         ),
                       ),
-                      CustomCard(
+                      const CustomCard(
                         icon: (FontAwesomeIcons.userGroup),
                         tag: 'member',
                       ),
@@ -78,10 +80,12 @@ class MemberProfileScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Profile()),
+                            MaterialPageRoute(
+                              builder: (context) => const Profile(),
+                            ),
                           );
                         },
-                        child: CustomCard(
+                        child: const CustomCard(
                           icon: (FontAwesomeIcons.person),
                           tag: 'profile',
                         ),
@@ -110,6 +114,13 @@ class MemberProfileScreen extends StatelessWidget {
                           icon: (FontAwesomeIcons.personCirclePlus),
                           tag: 'member add ',
                         ),
+                      const CustomCard(
+                        icon: (Icons.settings),
+                        tag: 'settings',
+                      ),
+                      const CustomCard(
+                        icon: (FontAwesomeIcons.personCirclePlus),
+                        tag: 'member add ',
                       ),
                     ],
                   ),
@@ -134,7 +145,7 @@ class CustomCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Material(
         elevation: 10,
-        shadowColor: Colors.yellow,
+        shadowColor: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

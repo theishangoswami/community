@@ -18,38 +18,39 @@ class OTPTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: Padding(
-      padding: const EdgeInsets.all(4),
-      child: TextFormField(
-        autofocus: autofocus,
-        controller: controller,
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
-        onChanged: (v) => onChanged(),
-        obscureText: true,
-        onFieldSubmitted: (v) => onChanged(),
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly,
-        ],
-        decoration: decoration ??
-            InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: TextFormField(
+          autofocus: autofocus,
+          controller: controller,
+          keyboardType: TextInputType.number,
+          textAlign: TextAlign.center,
+          onChanged: (v) => onChanged(),
+          obscureText: true,
+          onFieldSubmitted: (v) => onChanged(),
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(1),
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+          decoration: decoration ??
+              InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: BorderSide(
+                    color:
+                        controller.text.isNotEmpty ? Colors.black : Colors.grey,
+                  ),
+                ),
+                hintText: '0',
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: BorderSide(
-                    color: controller.text.isNotEmpty
-                        ? Colors.black
-                        : Colors.grey),
-              ),
-              hintText: '0',
-            ),
+        ),
       ),
-    ));
+    );
   }
 }

@@ -19,7 +19,7 @@ class DummyDrawer extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                UserAvatar(radius: 115),
+                const UserAvatar(radius: 115),
                 const SizedBox(
                   width: 10.0,
                 ),

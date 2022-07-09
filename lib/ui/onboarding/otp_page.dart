@@ -1,52 +1,89 @@
-import 'package:community_internal/ui/onboarding/otp_fields.dart';
+import 'package:community_internal/core/repository/auth.repository.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/onboarding_screen.dart';
 import 'package:community_internal/ui/screens/user_details.dart';
+import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
-class CodeVerificationPage extends StatelessWidget {
-  const CodeVerificationPage({Key? key}) : super(key: key);
+class CodeVerificationPage extends StatefulWidget {
+  final String phonenumber;
+  const CodeVerificationPage({Key? key, required this.phonenumber})
+      : super(key: key);
 
   @override
+  State<CodeVerificationPage> createState() => _CodeVerificationPageState();
+}
+
+class _CodeVerificationPageState extends State<CodeVerificationPage> {
+  bool isBusy = false;
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const Spacer(),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'OTP VERIFICATION',
-                  style: Theme.of(context).textTheme.headline5,
+    return LoadingHelper(
+      isLoading: isBusy,
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              const Spacer(),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    'OTP VERIFICATION',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                 ),
               ),
-            ),
-            const Spacer(),
-            const OtpInput(),
-            const Spacer(flex: 5),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Need Help?',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              const Spacer(),
+              OtpInput(
+                phoneNumber: widget.phonenumber,
+                isBusy: isBusy,
+                setBusy: (value) {
+                  setState(() {
+                    isBusy = value;
+                  });
+                },
               ),
-            ),
-          ],
+              const Spacer(flex: 5),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Need Help?',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class OtpInput extends StatelessWidget {
+class OtpInput extends StatefulWidget {
+  final bool isBusy;
+  final String phoneNumber;
+  final Function(bool value) setBusy;
   const OtpInput({
     Key? key,
+    required this.isBusy,
+    required this.setBusy,
+    required this.phoneNumber,
   }) : super(key: key);
 
+  @override
+  State<OtpInput> createState() => _OtpInputState();
+}
+
+class _OtpInputState extends State<OtpInput> {
+  String pincode = '';
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,26 +92,66 @@ class OtpInput extends StatelessWidget {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
-            child: const OTPFields(),
+            child: PinCodeTextField(
+              onChanged: (value) {
+                setState(() {
+                  pincode = value;
+                });
+              },
+              enableActiveFill: true,
+              boxShadows: const [
+                BoxShadow(color: Colors.black12, blurRadius: 8)
+              ],
+              obscureText: true,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              keyboardType: TextInputType.number,
+              length: 6,
+              pinTheme: PinTheme(
+                fieldOuterPadding: const EdgeInsets.only(left: 8),
+                selectedColor: Theme.of(context).primaryColor,
+                inactiveColor: Colors.white,
+                activeFillColor: Colors.white,
+                selectedFillColor: Colors.white,
+                activeColor: Colors.white,
+                shape: PinCodeFieldShape.box,
+                fieldWidth: 40,
+                inactiveFillColor: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+                disabledColor: Colors.white,
+              ),
+              appContext: context,
+            ),
           ),
           const SizedBox(height: 15),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.5,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const UserDetails(),
-                  ),
-                );
+              onPressed: () async {
+                if (pincode.length == 6) {
+                  widget.setBusy(true);
+                  bool res = await AuthRepository()
+                      .verifyOtp(widget.phoneNumber, pincode);
+                  if (res) {
+                    await StorageService().saveUser(widget.phoneNumber);
+                  }
+                  widget.setBusy(false);
+                  if (res) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CommunityList(),
+                      ),
+                    );
+                  }
+                }
               },
               child: const Text(
                 'VERIFICATION',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -88,7 +165,9 @@ class OtpInput extends StatelessWidget {
                 child: Text(
                   'Re-send (32)',
                   style: Theme.of(context).textTheme.button?.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                 ),
               )
             ],
