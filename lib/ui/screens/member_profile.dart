@@ -1,3 +1,4 @@
+import 'package:community_internal/ui/screens/members_details.dart';
 import 'package:community_internal/ui/screens/messaging.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:community_internal/ui/screens/settings.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/user_avatar.dart';
-
 
 class MemberProfileScreen extends StatelessWidget {
   const MemberProfileScreen({Key? key}) : super(key: key);
@@ -58,10 +58,11 @@ class MemberProfileScreen extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Messaging()),
+                            MaterialPageRoute(
+                                builder: (context) => Messaging()),
                           );
                         },
                         child: CustomCard(
@@ -74,7 +75,7 @@ class MemberProfileScreen extends StatelessWidget {
                         tag: 'member',
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => Profile()),
@@ -86,7 +87,7 @@ class MemberProfileScreen extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => Setting()),
@@ -97,9 +98,18 @@ class MemberProfileScreen extends StatelessWidget {
                           tag: 'settings',
                         ),
                       ),
-                      CustomCard(
-                        icon: (FontAwesomeIcons.personCirclePlus),
-                        tag: 'member add ',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MultiForm()),
+                          );
+                        },
+                        child: CustomCard(
+                          icon: (FontAwesomeIcons.personCirclePlus),
+                          tag: 'member add ',
+                        ),
                       ),
                     ],
                   ),

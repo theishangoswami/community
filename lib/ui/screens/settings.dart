@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import 'language_choose.dart';
+
 
 class Setting extends StatefulWidget {
   const Setting ({Key? key}) : super(key: key);
@@ -23,7 +25,14 @@ class _SettingState extends State<Setting> {
                 tiles: <SettingsTile>[
                   SettingsTile.navigation(
                     leading: Icon(Icons.language),
-                    title: Text('Change Language'.toUpperCase(),style: TextStyle(fontSize: 17,),),
+                    title: GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => language()),
+                          );
+                        },
+                        child: Text('Change Language'.toUpperCase(),style: TextStyle(fontSize: 17,),)),
                     value: Text('English'),
                   ),
                   SettingsTile.navigation(

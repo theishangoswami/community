@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'image.dart';
+import 'language_choose.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -46,12 +47,20 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   width: 17,
                 ),
-                CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  radius: 45,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text("S",style: TextStyle(color: Colors.black,fontSize: 30),),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => language()),
+                    );
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.amber,
+                    radius: 45,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text("S",style: TextStyle(color: Colors.black,fontSize: 30),),
+                    ),
                   ),
                 ),
                 Padding(

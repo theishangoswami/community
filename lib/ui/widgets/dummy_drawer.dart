@@ -25,7 +25,7 @@ class DummyDrawer extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    'Sunil Pandey'.toUpperCase(),
+                    'shivam'.toUpperCase(),
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,

@@ -5,6 +5,7 @@ import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_form_field/image_form_field.dart';
 
+import '../widgets/dummy_drawer.dart';
 import 'image.dart';
 
 List gender = ["Male", "Female", "Other"];
@@ -211,7 +212,7 @@ class _UserDetailsState extends State<UserDetails> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MultiForm()),
+                    MaterialPageRoute(builder: (context) => CommunityList()),
                   );
                 },
                 child: Padding(
