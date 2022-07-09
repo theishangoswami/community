@@ -64,7 +64,7 @@ class PostRepository {
     try {
       Dio dio = Dio();
       var formData = FormData.fromMap({
-        ...postModel.toJson(),
+        ...postModel.toPostMap(),
         'post_links_images': MultipartFile.fromBytes(
           image ?? [],
           filename: 'post_links_images',

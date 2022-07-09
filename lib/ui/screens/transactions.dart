@@ -109,7 +109,7 @@ class _TransactionsState extends State<Transactions> {
                 child: Text(
                   "Transactions".toUpperCase(),
                   style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.w500),
+                      fontSize: 22, fontWeight: FontWeight.w500,),
                 ),
               ),
               const SizedBox(

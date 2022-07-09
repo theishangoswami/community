@@ -1,12 +1,12 @@
 // To parse this JSON data, do
 //
-//     final postModel = postModelFromJson(jsonString);
+//     final jobModel = jobModelFromJson(jsonString);
 
 import 'dart:convert';
 
-PostModel postModelFromJson(String str) => PostModel.fromJson(json.decode(str));
+PostModel jobModelFromJson(String str) => PostModel.fromJson(json.decode(str));
 
-String postModelToJson(PostModel data) => json.encode(data.toJson());
+String jobModelToJson(PostModel data) => json.encode(data.toJson());
 
 class PostModel {
   PostModel({
@@ -15,9 +15,10 @@ class PostModel {
     required this.societyId,
     required this.typeOfPost,
     required this.postLink,
+    this.postImage,
     required this.postDescription,
     required this.ads,
-    this.status,
+    required this.status,
     this.date,
   });
 
@@ -25,11 +26,12 @@ class PostModel {
   final String? userId;
   final String? societyId;
   final String? typeOfPost;
-  final dynamic postLink;
+  final String? postLink;
+  final String? postImage;
   final String? postDescription;
   final String? ads;
   final String? status;
-  final String? date;
+  final DateTime? date;
 
   PostModel copyWith({
     String? id,
@@ -37,10 +39,11 @@ class PostModel {
     String? societyId,
     String? typeOfPost,
     String? postLink,
+    String? postImage,
     String? postDescription,
     String? ads,
     String? status,
-    String? date,
+    DateTime? date,
   }) =>
       PostModel(
         id: id ?? this.id,
@@ -48,6 +51,7 @@ class PostModel {
         societyId: societyId ?? this.societyId,
         typeOfPost: typeOfPost ?? this.typeOfPost,
         postLink: postLink ?? this.postLink,
+        postImage: postImage ?? this.postImage,
         postDescription: postDescription ?? this.postDescription,
         ads: ads ?? this.ads,
         status: status ?? this.status,
@@ -60,13 +64,27 @@ class PostModel {
         societyId: json["society_id"],
         typeOfPost: json["type_of_post"],
         postLink: json["post_link"],
+        postImage: json["post_image"],
         postDescription: json["post_description"],
         ads: json["ads"],
         status: json["status"],
-        date: (json["date"]),
+        date: DateTime.parse(json["date"]),
       );
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "society_id": societyId,
+        "type_of_post": typeOfPost,
+        "post_link": postLink,
+        "post_image": postImage,
+        "post_description": postDescription,
+        "ads": ads,
+        "status": status,
+        "date": date?.toIso8601String(),
+      };
+
+  Map<String, dynamic> toPostMap() {
     var map = {
       "id": id,
       "user_id": userId,

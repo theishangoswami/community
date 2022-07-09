@@ -7,6 +7,7 @@ import 'package:community_internal/core/models/comment.model.dart';
 import 'package:community_internal/core/models/like.model.dart';
 import 'package:community_internal/core/models/user.model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
+import 'package:community_internal/core/utils/date.utils.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +16,38 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:community_internal/core/models/post.model.dart';
 import '../../core/repository/users.repository.dart';
 
-class PostContainer extends StatelessWidget {
+class PostContainer extends StatefulWidget {
   final PostModel post;
 
   const PostContainer({Key? key, required this.post}) : super(key: key);
 
   @override
+  State<PostContainer> createState() => _PostContainerState();
+}
+
+class _PostContainerState extends State<PostContainer>
+    with AutomaticKeepAliveClientMixin {
+  UserModel? userModel;
+  bool isUserDetailsfetching = false;
+  @override
+  void initState() {
+    super.initState();
+    fetchUserDetails();
+  }
+
+  fetchUserDetails() async {
+    setState(() {
+      isUserDetailsfetching = true;
+    });
+    userModel = await UserRepository().getUser(widget.post.userId!);
+    setState(() {
+      isUserDetailsfetching = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
       child: Card(
@@ -43,26 +69,83 @@ class PostContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 5.0),
-                    _PostHeader(post: post),
+                    userModel == null
+                        ? isUserDetailsfetching
+                            ? SizedBox(
+                                height: 10,
+                                width: MediaQuery.of(context).size.width,
+                                child: const LinearProgressIndicator(),
+                              )
+                            : SizedBox(
+                                child: Text(
+                                  "Posted " +
+                                      (DateTimeUtils.convertToAgo(
+                                        widget.post.date!,
+                                      )),
+                                ),
+                              )
+                        : Row(
+                            children: [
+                              UserAvatar(
+                                radius: 35,
+                                imgUrl: userModel?.profile ?? "",
+                              ),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      userModel?.userName ?? "",
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          '${(widget.post.date!)} • '
+                                              .toUpperCase(),
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.public,
+                                          color: Colors.grey[600],
+                                          size: 12.0,
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                     const SizedBox(height: 10.0),
-                    Text("${post.postDescription}"),
+                    Text("${widget.post.postDescription}"),
                     const SizedBox(height: 10.0),
-                    if (post.postLink != null) const SizedBox(height: 10.0),
+                    if (widget.post.postLink != null)
+                      const SizedBox(height: 10.0),
                   ],
                 ),
               ),
-              if (post.postLink != null)
-                post.typeOfPost == "4"
-                    ? Text("${post.typeOfPost}")
-                    : post.postLink.toString().isEmpty
+              if (widget.post.postLink != null)
+                widget.post.typeOfPost == "4"
+                    ? Text("${widget.post.typeOfPost}")
+                    : widget.post.postLink.toString().isEmpty
                         ? const SizedBox()
                         : _PostPhotoContainer(
                             postImageUrl: [
-                              Constants.imageBaseUrl + (post.postLink ?? "")
+                              Constants.imageBaseUrl +
+                                  (widget.post.postImage ?? "")
                             ],
                           ),
               _PostStats(
-                post: post,
+                post: widget.post,
               ),
             ],
           ),
@@ -70,93 +153,9 @@ class PostContainer extends StatelessWidget {
       ),
     );
   }
-}
-
-class _PostHeader extends StatefulWidget {
-  final PostModel post;
-
-  const _PostHeader({
-    required this.post,
-  });
 
   @override
-  State<_PostHeader> createState() => _PostHeaderState();
-}
-
-class _PostHeaderState extends State<_PostHeader> {
-  UserModel? userModel;
-  bool isUserDetailsfetching = false;
-  @override
-  void initState() {
-    super.initState();
-    fetchUserDetails();
-  }
-
-  fetchUserDetails() async {
-    setState(() {
-      isUserDetailsfetching = true;
-    });
-    userModel = await UserRepository().getUser(widget.post.userId!);
-    setState(() {
-      isUserDetailsfetching = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return userModel == null
-        ? isUserDetailsfetching
-            ? SizedBox(
-                height: 10,
-                width: MediaQuery.of(context).size.width,
-                child: const LinearProgressIndicator(),
-              )
-            : SizedBox(
-                child: Text(
-                  "Posted " + (widget.post.date!),
-                ),
-              )
-        : Row(
-            children: [
-              UserAvatar(
-                radius: 35,
-                imgUrl: userModel?.profile ?? "",
-              ),
-              const SizedBox(width: 8.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      userModel?.userName ?? "",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '${(widget.post.date!)} • '.toUpperCase(),
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 12.0,
-                          ),
-                        ),
-                        Icon(
-                          Icons.public,
-                          color: Colors.grey[600],
-                          size: 12.0,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          );
-  }
+  bool get wantKeepAlive => true;
 }
 
 class _PostPhotoContainer extends StatelessWidget {
@@ -217,8 +216,7 @@ class _PostStats extends StatefulWidget {
   State<_PostStats> createState() => _PostStatsState();
 }
 
-class _PostStatsState extends State<_PostStats>
-    with AutomaticKeepAliveClientMixin {
+class _PostStatsState extends State<_PostStats> {
   final PostRepository _postRepository = PostRepository();
   List<LikeModel> likes = [];
   bool isLikesFetched = false;
@@ -252,7 +250,6 @@ class _PostStatsState extends State<_PostStats>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
@@ -407,9 +404,6 @@ class _PostStatsState extends State<_PostStats>
       },
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class _PostButton extends StatelessWidget {

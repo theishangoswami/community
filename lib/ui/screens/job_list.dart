@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:community_internal/app/constants.dart';
 import 'package:community_internal/core/models/job.model.dart';
 import 'package:community_internal/core/repository/jobs.repository.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
@@ -9,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'Job_description.dart';
 import 'create_job.forum.dart';
 
-class Ledger extends StatefulWidget {
-  const Ledger({Key? key}) : super(key: key);
+class JobList extends StatefulWidget {
+  const JobList({Key? key}) : super(key: key);
 
   @override
-  _LedgerState createState() => _LedgerState();
+  _JobListState createState() => _JobListState();
 }
 
-class _LedgerState extends State<Ledger> {
+class _JobListState extends State<JobList> with AutomaticKeepAliveClientMixin {
   List<JobModel> jobs = [];
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _LedgerState extends State<Ledger> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -131,9 +134,17 @@ class _LedgerState extends State<Ledger> {
                             topLeft: Radius.circular(10.0),
                             bottomLeft: Radius.circular(10.0),
                           ),
-                          child: Image.network(
-                            "https://bigstep.com/assets/images/blog/webservers.jpg",
-                            fit: BoxFit.fitHeight,
+                          child: CachedNetworkImage(
+                            imageUrl: Constants.imageBaseUrl +
+                                (job.companyLogo ?? ""),
+                            errorWidget: (_, __, ___) => Image.network(
+                              "https://bigstep.com/assets/images/blog/webservers.jpg",
+                              fit: BoxFit.fitHeight,
+                            ),
+                            placeholder: (_, __) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            fit: BoxFit.cover,
                           ),
                         ),
                         decoration: BoxDecoration(
@@ -189,4 +200,7 @@ class _LedgerState extends State<Ledger> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

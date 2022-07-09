@@ -72,13 +72,12 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             )
           ],
         ),
-        body: ListView.separated(
+        body: ListView.builder(
           itemBuilder: (context, index) {
             return PostContainer(
               post: postsList.elementAt(index),
             );
           },
-          separatorBuilder: (ctx, i) => Container(),
           itemCount: postsList.length,
         ),
       ),
