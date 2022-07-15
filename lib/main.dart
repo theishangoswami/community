@@ -5,7 +5,7 @@ import 'package:community_internal/ui/screens/ads_screen.dart';
 import 'package:community_internal/ui/screens/community_feed_fb.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/create_post.dart';
-import 'package:community_internal/ui/screens/ledger.dart';
+import 'package:community_internal/ui/screens/job_list.dart';
 import 'package:community_internal/ui/screens/members_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
           CommunityFeedFb(),
           MembersScreen(),
           CreatePost(),
-          Ledger(),
+          JobList(),
           AdsScreen(),
         ],
       ),
