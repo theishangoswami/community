@@ -23,7 +23,7 @@ dependencies:
   fluttertoast: ^8.0.9
   font_awesome_flutter: ^10.1.0
   get_it: ^7.2.0
-  image_picker: ^0.8.5+3
+  image_picker: ^0.8.5+1
   pin_code_fields: ^7.4.0
   shared_preferences: ^2.0.15
 

@@ -35,8 +35,9 @@ class _MembersScreenState extends State<MembersScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DummyDrawer(),
+      // drawer: const DummyDrawer(),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "Members".toUpperCase(),
           style: const TextStyle(fontWeight: FontWeight.bold),

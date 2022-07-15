@@ -41,8 +41,9 @@ class _AdsScreenState extends State<AdsScreen> {
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
-        drawer: const DummyDrawer(),
+        // drawer: const DummyDrawer(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
             "Advertisements".toUpperCase(),
             style: const TextStyle(fontWeight: FontWeight.bold),
