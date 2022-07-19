@@ -1,5 +1,6 @@
 import 'package:community_internal/ui/widgets/post_container.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/models/post.model.dart';
@@ -39,6 +40,18 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
     }
   }
 
+  int sharedValue = 0;
+  final Map<int, Widget> slidingwidgets = const <int, Widget>{
+    0: Text(
+      "All",
+      style: TextStyle(fontSize: 16),
+    ),
+    1: Text(
+      "President",
+      style: TextStyle(fontSize: 16),
+    ),
+  };
+
   @override
   Widget build(BuildContext context) {
     return LoadingHelper(
@@ -73,13 +86,42 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             )
           ],
         ),
-        body: ListView.builder(
-          itemBuilder: (context, index) {
-            return PostContainer(
-              post: postsList.elementAt(index),
-            );
-          },
-          itemCount: postsList.length,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: CupertinoSlidingSegmentedControl<int>(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 7.0, vertical: 7.0),
+                  backgroundColor: Color.fromARGB(255, 226, 226, 226),
+                  groupValue: sharedValue,
+                  children: slidingwidgets,
+                  onValueChanged: (int? val) {
+                    setState(() {
+                      sharedValue = val!;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return PostContainer(
+                    post: postsList.elementAt(index),
+                  );
+                },
+                itemCount: postsList.length,
+              ),
+            ),
+          ],
         ),
       ),
     );

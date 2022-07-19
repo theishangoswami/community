@@ -1,6 +1,7 @@
 import 'package:community_internal/core/repository/auth.repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
+import 'package:community_internal/ui/screens/settings%20module/user.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -137,7 +138,7 @@ class _OtpInputState extends State<OtpInput> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CommunityList(),
+                        builder: (context) => const UserDetails(),
                       ),
                     );
                   }

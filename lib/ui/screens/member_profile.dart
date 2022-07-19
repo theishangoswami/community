@@ -1,5 +1,9 @@
+import 'package:community_internal/ui/screens/ledger%20module/ledger_page.dart';
 import 'package:community_internal/ui/screens/messaging.dart';
 import 'package:community_internal/ui/screens/profile.dart';
+import 'package:community_internal/ui/screens/settings%20module/member_details.dart';
+import 'package:community_internal/ui/screens/settings%20module/settings.dart';
+import 'package:community_internal/ui/screens/settings%20module/user.dart';
 import 'package:community_internal/ui/screens/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,7 +50,7 @@ class MemberProfileScreen extends StatelessWidget {
                         onTap: () => {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const Transactions(),
+                              builder: (context) => const ledger_page(),
                             ),
                           ),
                         },
@@ -69,9 +73,19 @@ class MemberProfileScreen extends StatelessWidget {
                           tag: 'message',
                         ),
                       ),
-                      const CustomCard(
-                        icon: (FontAwesomeIcons.userGroup),
-                        tag: 'member',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MultiForm(),
+                            ),
+                          );
+                        },
+                        child: const CustomCard(
+                          icon: (FontAwesomeIcons.userGroup),
+                          tag: 'member',
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -87,9 +101,19 @@ class MemberProfileScreen extends StatelessWidget {
                           tag: 'profile',
                         ),
                       ),
-                      const CustomCard(
-                        icon: (Icons.settings),
-                        tag: 'settings',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Setting(),
+                            ),
+                          );
+                        },
+                        child: const CustomCard(
+                          icon: (Icons.settings),
+                          tag: 'settings',
+                        ),
                       ),
                       const CustomCard(
                         icon: (FontAwesomeIcons.personCirclePlus),
