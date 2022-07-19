@@ -44,8 +44,9 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
-        drawer: const DummyDrawer(),
+        // drawer: const DummyDrawer(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
             "Home".toUpperCase(),
             style: const TextStyle(fontWeight: FontWeight.bold),

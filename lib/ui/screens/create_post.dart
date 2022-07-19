@@ -109,8 +109,9 @@ class _CreatePostState extends State<CreatePost> {
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
-        drawer: const DummyDrawer(),
+        // drawer: const DummyDrawer(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
             "Post".toUpperCase(),
             style: const TextStyle(fontWeight: FontWeight.bold),

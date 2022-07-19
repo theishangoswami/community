@@ -44,8 +44,8 @@ class _CommunityListState extends State<CommunityList> {
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
-        drawer: const DummyDrawer(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
             "All Communities".toUpperCase(),
             style: const TextStyle(fontWeight: FontWeight.bold),
