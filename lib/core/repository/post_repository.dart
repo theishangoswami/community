@@ -60,7 +60,10 @@ class PostRepository {
     return [];
   }
 
-  Future<bool> createPost(PostModel postModel, {Uint8List? image}) async {
+  Future<bool> createPost(
+    PostModel postModel, {
+    Uint8List? image,
+  }) async {
     try {
       Dio dio = Dio();
       var formData = FormData.fromMap({
@@ -68,7 +71,9 @@ class PostRepository {
         'post_links_images': MultipartFile.fromBytes(
           image ?? [],
           filename: 'post_links_images',
-          contentType: MediaType('image', 'jpeg'),
+          contentType: postModel.typeOfPost == "3"
+              ? MediaType("video", 'mp4')
+              : MediaType('image', 'jpeg'),
         ),
       });
       var response = await dio.post(

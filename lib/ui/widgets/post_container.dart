@@ -136,14 +136,16 @@ class _PostContainerState extends State<PostContainer>
               if (widget.post.postLink != null)
                 widget.post.typeOfPost == "4"
                     ? Text("${widget.post.typeOfPost}")
-                    : widget.post.postLink.toString().isEmpty
-                        ? const SizedBox()
-                        : _PostPhotoContainer(
-                            postImageUrl: [
-                              Constants.imageBaseUrl +
-                                  (widget.post.postImage ?? "")
-                            ],
-                          ),
+                    : widget.post.typeOfPost == "3"
+                        ? Text("Video:${widget.post.postImage}")
+                        : widget.post.postLink.toString().isEmpty
+                            ? const SizedBox()
+                            : _PostPhotoContainer(
+                                postImageUrl: [
+                                  Constants.imageBaseUrl +
+                                      (widget.post.postImage ?? "")
+                                ],
+                              ),
               _PostStats(
                 post: widget.post,
               ),
