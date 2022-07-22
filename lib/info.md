@@ -2,9 +2,9 @@ uuid: package use for generate Unique ID(String).
 
 SOME CHANGES
 
-addPost 
-addComment
-addLike
+addPost,
+addComment,
+addLike,
 updateUserProfile [required UserModel rether then List of strings , image should be declared as a List<int> (Uint8List)]
 
 In each Data Model like (JobModel, CommunityModel.. other) 'id' is required & NOT nullable parameter. i suggest to remove '?'.😉
