@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:community_internal/app/constants.dart';
 import 'package:community_internal/core/models/comment.model.dart';
 import 'package:community_internal/core/models/like.model.dart';
@@ -109,4 +108,12 @@ class PostRepository {
     } catch (e) {}
     return false;
   }
+
+  Future<void> addLike(LikeModel likeModel) async =>
+      await HttpBuilder.post(Constants.baseUrl + 'likes/add',
+          body: likeModel.toJson());
+
+  Future<void> addComment(CommentModel commentModel) async =>
+      await HttpBuilder.post(Constants.baseUrl + 'comment/add',
+          body: commentModel.toJson());
 }

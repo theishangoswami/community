@@ -36,4 +36,7 @@ class UserRepository {
     }
     return null;
   }
+
+  Future<void> updateUserProfile(UserModel userModel) async =>
+      await HttpBuilder.post('user/update_profile', body: userModel.toJson());
 }

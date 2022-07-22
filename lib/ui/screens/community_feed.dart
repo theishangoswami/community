@@ -1,6 +1,8 @@
+import 'package:community_internal/core/repository/post_repository.dart';
 import 'package:community_internal/ui/widgets/comment_box.dart';
 import 'package:community_internal/ui/widgets/post_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../widgets/dummy_drawer.dart';
 import '../widgets/user_avatar.dart';
@@ -17,12 +19,12 @@ class _CommunityFeedState extends State<CommunityFeed> {
   final ValueNotifier<bool> _showCommentBox = ValueNotifier(false);
   final TextEditingController _commentTextController = TextEditingController();
   final FocusNode _commentFocusNode = FocusNode();
+  final PostRepository _postRepository = PostRepository();
 
   void openCommentBox({String? message}) {
     _commentTextController.text = message ?? '';
     _commentTextController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _commentTextController.text.length),
-    );
+        TextPosition(offset: _commentTextController.text.length));
     _showCommentBox.value = true;
     _commentFocusNode.requestFocus();
   }
@@ -40,6 +42,12 @@ class _CommunityFeedState extends State<CommunityFeed> {
     _commentTextController.dispose();
     _commentFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override

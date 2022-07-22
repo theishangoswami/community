@@ -1,3 +1,4 @@
+import 'package:community_internal/core/repository/post_repository.dart';
 import 'package:community_internal/ui/widgets/like_button.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class _PictureCarousal extends StatefulWidget {
 }
 
 class __PictureCarousalState extends State<_PictureCarousal> {
+  PostRepository _postRepository = PostRepository();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,7 +74,9 @@ class __PictureCarousalState extends State<_PictureCarousal> {
             padding: iconPadding,
             child: LikeButton(
               isLiked: true,
-              onTap: (liked) {},
+              onTap: (liked) {
+                // _postRepository.addLike();
+              },
             ),
           ),
           Padding(

@@ -1,3 +1,4 @@
+import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class _UserDetailsState extends State<UserDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User Details"),
+        title: const Text("User Details"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -451,15 +452,17 @@ class _ProfileState extends State<Profile> {
                         RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ))),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CommunityList()),
-                  );
+                onPressed: () async {
+// Update User Profile
+                  // UserRepository().updateUserProfile()
+                  Navigator.pop(context);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => const CommunityList()),
+                  // );
                 },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 120),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 120),
                   child: Text(
                     "SAVE",
                     style: TextStyle(
