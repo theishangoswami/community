@@ -6,13 +6,13 @@ import 'dart:convert';
 
 import 'package:community_internal/app/constants.dart';
 
-CommunityModel communityModelFromJson(String str) =>
-    CommunityModel.fromJson(json.decode(str));
+SocietyModel communityModelFromJson(String str) =>
+    SocietyModel.fromJson(json.decode(str));
 
-String communityModelToJson(CommunityModel data) => json.encode(data.toJson());
+String communityModelToJson(SocietyModel data) => json.encode(data.toJson());
 
-class CommunityModel {
-  CommunityModel({
+class SocietyModel {
+  SocietyModel({
     required this.id,
     required this.userId,
     required this.societyName,
@@ -26,7 +26,7 @@ class CommunityModel {
     required this.date,
   });
 
-  final String? id;
+  final String id;
   final String? userId;
   final String? societyName;
   final String? societyCityId;
@@ -38,7 +38,7 @@ class CommunityModel {
   final String? status;
   final DateTime? date;
 
-  CommunityModel copyWith({
+  SocietyModel copyWith({
     String? id,
     String? userId,
     String? societyName,
@@ -51,7 +51,7 @@ class CommunityModel {
     String? status,
     DateTime? date,
   }) =>
-      CommunityModel(
+      SocietyModel(
         id: id ?? this.id,
         userId: userId ?? this.userId,
         societyName: societyName ?? this.societyName,
@@ -65,7 +65,7 @@ class CommunityModel {
         date: date ?? this.date,
       );
 
-  factory CommunityModel.fromJson(Map<String, dynamic> json) => CommunityModel(
+  factory SocietyModel.fromJson(Map<String, dynamic> json) => SocietyModel(
         id: json["id"],
         userId: json["user_id"],
         societyName: json["society_name"],

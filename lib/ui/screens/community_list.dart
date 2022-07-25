@@ -121,9 +121,9 @@ class _CommunityListState extends State<CommunityList> {
               padding: const EdgeInsets.all(18),
               child: FloatingActionButton(
                   onPressed: () async {
-                    var url = "https://www.youtube.com/";
-                    if (await canLaunch(url)) {
-                      await launch(url);
+                    var url = Uri.parse("https://www.youtube.com/");
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
                     } else {
                       throw 'Could not launch $url';
                     }

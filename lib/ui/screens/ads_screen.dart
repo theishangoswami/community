@@ -1,7 +1,6 @@
 import 'package:community_internal/core/models/post.model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
-import 'package:community_internal/ui/widgets/dummy_drawer.dart';
 import 'package:community_internal/ui/widgets/post_container.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:community_internal/widgets/loading_helper.dart';

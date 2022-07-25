@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:community_internal/core/models/post.model.dart';
+import 'package:uuid/uuid.dart';
 import '../../core/repository/users.repository.dart';
 
 class PostContainer extends StatefulWidget {
@@ -324,7 +325,17 @@ class _PostStatsState extends State<_PostStats> {
                 ),
                 label: 'Like'.toUpperCase(),
                 lableColor: Colors.black87,
-                onTap: () {},
+                onTap: () {
+// Add Like ->
+                  _postRepository.addLike(
+                    LikeModel(
+                      id: const Uuid().v1(),
+                      postId: widget.post.id!,
+                      soceityId: widget.post.societyId!,
+                      userId: widget.post.userId!,
+                    ),
+                  );
+                },
               ),
               _PostButton(
                 icon: Icon(
@@ -358,7 +369,7 @@ class _PostStatsState extends State<_PostStats> {
 
   void _commentBox(BuildContext context) {
     bool notDesktop = true;
-
+    TextEditingController _controller = TextEditingController();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -378,11 +389,23 @@ class _PostStatsState extends State<_PostStats> {
                 children: [
                   const Spacer(),
                   TextFormField(
+                    controller: _controller,
                     decoration: InputDecoration(
                       hintText: 'Write your comment ...',
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.send),
-                        onPressed: () {},
+                        onPressed: () {
+// Add Comment ->
+                          _postRepository.addComment(
+                            CommentModel(
+                              id: const Uuid().v1(),
+                              comment: _controller.text,
+                              postId: widget.post.id!,
+                              userId: widget.post.userId!,
+                              societyId: widget.post.societyId!,
+                            ),
+                          );
+                        },
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
