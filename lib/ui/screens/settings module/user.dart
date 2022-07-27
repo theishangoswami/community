@@ -118,6 +118,16 @@ class _UserDetailsState extends State<UserDetails> {
                   Icons.add_card_outlined,
                   color: Colors.black,
                 ),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  String text = (value ?? "").trim();
+                  if (text.isEmpty) {
+                    return "Please enter your aadhaar number";
+                  } else if (text.length != 12) {
+                    return "Please enter a valid aadhaar number";
+                  }
+                  return null;
+                },
                 displaytText: 'aadhaar card number'.toUpperCase(),
                 controller: _aadhaarCardController,
                 keyboardType: TextInputType.number,
