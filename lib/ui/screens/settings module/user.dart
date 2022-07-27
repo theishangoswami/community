@@ -1,4 +1,5 @@
 import 'package:community_internal/core/models/city.dart';
+import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
@@ -54,6 +55,19 @@ class _UserDetailsState extends State<UserDetails> {
   ];
   Pincode _selectedPincode =
       Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
+
+  final List<Community> _communityList = [
+    Community(
+      id: '-1',
+      communityName: 'Select Community',
+      status: 'active',
+    )
+  ];
+  Community _selectedCommunity = Community(
+    id: '-1',
+    communityName: 'Select Community',
+    status: 'active',
+  );
 
   void refreshDistrictList() {
     _districtList = [
@@ -123,6 +137,7 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   void fetchPincodeList(String cityId) async {
+    refreshPincodeList();
     setState(() {
       _isLoading = true;
     });
@@ -138,11 +153,23 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
+  void fetchCommunityList() async {
+    await UserRepository().getCommunity().then((value) {
+      print(value);
+      if (value?.isNotEmpty ?? false) {
+        setState(() {
+          _communityList.addAll(value!);
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _phoneController.text = widget.phoneNumber;
     fetchStateList();
+    fetchCommunityList();
   }
 
   @override
@@ -251,12 +278,19 @@ class _UserDetailsState extends State<UserDetails> {
                 pincodeList: _pincodeList,
                 selectedPincode: _selectedPincode,
               ),
-              // const ProfileFieldDropDown(
-              //   icon: Icon(
-              //     Icons.vertical_split,
-              //     color: Colors.black,
-              //   ),
-              // ),
+              CommunityProfileFieldDropDown(
+                icon: const Icon(
+                  Icons.vertical_split,
+                  color: Colors.black,
+                ),
+                communityList: _communityList,
+                selectedCommunity: _selectedCommunity,
+                onChanged: (Community? newValue) {
+                  setState(() {
+                    _selectedCommunity = newValue!;
+                  });
+                },
+              ),
               ProfileTextFeild(
                 icon: const Icon(
                   Icons.add_card_outlined,

@@ -1,4 +1,5 @@
 import 'package:community_internal/core/models/city.dart';
+import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
@@ -227,6 +228,65 @@ class _PincodeProfileFieldDropDownState
                   (pincode) => DropdownMenuItem<Pincode>(
                     value: pincode,
                     child: Text(pincode.pinCode),
+                  ),
+                )
+                .toList(),
+            onChanged: widget.onChanged,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class CommunityProfileFieldDropDown extends StatefulWidget {
+  final Icon icon;
+  final List<Community> communityList;
+  final Community selectedCommunity;
+  final void Function(Community?)? onChanged;
+  const CommunityProfileFieldDropDown({
+    Key? key,
+    required this.icon,
+    required this.communityList,
+    required this.selectedCommunity,
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  State<CommunityProfileFieldDropDown> createState() =>
+      _CommunityProfileFieldDropDownState();
+}
+
+class _CommunityProfileFieldDropDownState
+    extends State<CommunityProfileFieldDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          height: 70,
+          width: 30,
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(3),
+            ),
+          ),
+          child: widget.icon,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: DropdownButton<Community>(
+            isExpanded: true,
+            value: widget.selectedCommunity,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: widget.communityList
+                .map(
+                  (community) => DropdownMenuItem<Community>(
+                    value: community,
+                    child: Text(community.communityName),
                   ),
                 )
                 .toList(),

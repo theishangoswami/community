@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:community_internal/core/models/city.dart';
+import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
@@ -106,6 +107,25 @@ class UserRepository {
         if (body.isNotEmpty) {
           return List<Pincode>.from(
             body.map((pincode) => Pincode.fromJson(pincode)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<Community>?> getCommunity() async {
+    try {
+      var res = await HttpBuilder.get('community/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<Community>.from(
+            body.map((community) => Community.fromJson(community)),
           );
         }
       }
