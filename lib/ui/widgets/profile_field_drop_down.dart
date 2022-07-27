@@ -1,3 +1,4 @@
+import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:flutter/material.dart';
@@ -108,6 +109,63 @@ class _DistrictProfileFieldDropDownState
                   (district) => DropdownMenuItem<District>(
                     value: district,
                     child: Text(district.districtName),
+                  ),
+                )
+                .toList(),
+            onChanged: widget.onChanged,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class CityProfileFieldDropDown extends StatefulWidget {
+  final Icon icon;
+  final List<City> cityList;
+  final City selectedCity;
+  final void Function(City?)? onChanged;
+  const CityProfileFieldDropDown({
+    Key? key,
+    required this.icon,
+    required this.cityList,
+    required this.selectedCity,
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  State<CityProfileFieldDropDown> createState() => _CityProfileFieldDropDownState();
+}
+
+class _CityProfileFieldDropDownState extends State<CityProfileFieldDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          height: 70,
+          width: 30,
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(3),
+            ),
+          ),
+          child: widget.icon,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: DropdownButton<City>(
+            isExpanded: true,
+            value: widget.selectedCity,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: widget.cityList
+                .map(
+                  (city) => DropdownMenuItem<City>(
+                    value: city,
+                    child: Text(city.cityName),
                   ),
                 )
                 .toList(),

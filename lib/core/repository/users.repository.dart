@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/models/user.model.dart';
@@ -66,6 +67,25 @@ class UserRepository {
         if (body.isNotEmpty) {
           return List<District>.from(
             body.map((district) => District.fromJson(district)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<City>?> getCity() async {
+    try {
+      var res = await HttpBuilder.get('city/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<City>.from(
+            body.map((city) => City.fromJson(city)),
           );
         }
       }

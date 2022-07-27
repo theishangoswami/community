@@ -1,3 +1,4 @@
+import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
@@ -41,6 +42,12 @@ class _UserDetailsState extends State<UserDetails> {
   District _selectedDistrict =
       District(id: '-1', districtName: 'Select District', stateId: '-1');
 
+  List<City> _cityList = [
+    City(id: '-1', cityName: 'Select City', districtId: '-1')
+  ];
+  City _selectedCity =
+      City(id: '-1', cityName: 'Select City', districtId: '-1');
+
   void fetchStateList() async {
     await UserRepository().getState().then((value) {
       if (value?.isNotEmpty ?? false) {
@@ -55,6 +62,10 @@ class _UserDetailsState extends State<UserDetails> {
     _districtList = [
       District(id: '-1', districtName: 'Select District', stateId: '-1')
     ];
+    _selectedDistrict =
+        District(id: '-1', districtName: 'Select District', stateId: '-1');
+    _cityList = [City(id: '-1', cityName: 'Select City', districtId: '-1')];
+    _selectedCity = City(id: '-1', cityName: 'Select City', districtId: '-1');
     setState(() {
       _isLoading = true;
     });
@@ -63,6 +74,22 @@ class _UserDetailsState extends State<UserDetails> {
         setState(() {
           _districtList
               .addAll(value!.where((element) => element.stateId == stateId));
+          _isLoading = false;
+        });
+      }
+    });
+  }
+
+  void fetchCityList(String districtId) async {
+    _cityList = [City(id: '-1', cityName: 'Select City', districtId: '-1')];
+    setState(() {
+      _isLoading = true;
+    });
+    await UserRepository().getCity().then((value) {
+      if (value?.isNotEmpty ?? false) {
+        setState(() {
+          _cityList.addAll(
+              value!.where((element) => element.districtId == districtId));
           _isLoading = false;
         });
       }
@@ -152,14 +179,22 @@ class _UserDetailsState extends State<UserDetails> {
                   setState(() {
                     _selectedDistrict = newValue!;
                   });
+                  fetchCityList(_selectedDistrict.id);
                 },
               ),
-              // const ProfileFieldDropDown(
-              //   icon: Icon(
-              //     Icons.location_on_sharp,
-              //     color: Colors.black,
-              //   ),
-              // ),
+              CityProfileFieldDropDown(
+                icon: const Icon(
+                  Icons.location_on_sharp,
+                  color: Colors.black,
+                ),
+                selectedCity: _selectedCity,
+                cityList: _cityList,
+                onChanged: (City? newValue) {
+                  setState(() {
+                    _selectedCity = newValue!;
+                  });
+                },
+              ),
               // const ProfileFieldDropDown(
               //   icon: Icon(
               //     Icons.book_outlined,
