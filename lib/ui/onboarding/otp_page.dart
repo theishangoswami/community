@@ -138,7 +138,9 @@ class _OtpInputState extends State<OtpInput> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const UserDetails(),
+                        builder: (context) => UserDetails(
+                          phoneNumber: widget.phoneNumber,
+                        ),
                       ),
                     );
                   }

@@ -11,7 +11,8 @@ List gender = ["Male", "Female", "Other"];
 late String select;
 
 class UserDetails extends StatefulWidget {
-  const UserDetails({Key? key}) : super(key: key);
+  final String phoneNumber;
+  const UserDetails({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<UserDetails> createState() => _UserDetailsState();
@@ -84,6 +85,9 @@ class _UserDetailsState extends State<UserDetails> {
             child: ListView.builder(
               itemCount: 11,
               itemBuilder: (context, index) {
+                if (index == 2) {
+                  _controller[index].text = widget.phoneNumber;
+                }
                 return index == 0
                     ? Stack(
                         children: [
@@ -219,14 +223,16 @@ class _UserDetailsState extends State<UserDetails> {
                               Row(
                                 children: [
                                   Container(
-                                      height: 70,
-                                      width: 30,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: BorderRadius.horizontal(
-                                            left: Radius.circular(3)),
+                                    height: 70,
+                                    width: 30,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(3),
                                       ),
-                                      child: icons[index]),
+                                    ),
+                                    child: icons[index],
+                                  ),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -238,7 +244,8 @@ class _UserDetailsState extends State<UserDetails> {
                                         Text(
                                           data[index].toUpperCase(),
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.w400),
+                                            fontWeight: FontWeight.w400,
+                                          ),
                                         ),
                                         TextField(
                                           controller: _controller[index],
