@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ProfileFeild extends StatefulWidget {
+class ProfileTextFeild extends StatefulWidget {
   final Icon icon;
   final String displaytText;
   final TextEditingController controller;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
-  const ProfileFeild({
+  const ProfileTextFeild({
     Key? key,
     required this.icon,
     required this.displaytText,
@@ -19,10 +19,10 @@ class ProfileFeild extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProfileFeild> createState() => _ProfileFeildState();
+  State<ProfileTextFeild> createState() => _ProfileTextFeildState();
 }
 
-class _ProfileFeildState extends State<ProfileFeild> {
+class _ProfileTextFeildState extends State<ProfileTextFeild> {
   @override
   Widget build(BuildContext context) {
     return Row(

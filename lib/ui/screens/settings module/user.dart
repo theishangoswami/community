@@ -45,7 +45,7 @@ class _UserDetailsState extends State<UserDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ProfileImage(),
-              ProfileFeild(
+              ProfileTextFeild(
                 icon: const Icon(
                   Icons.person,
                   color: Colors.black,
@@ -54,7 +54,7 @@ class _UserDetailsState extends State<UserDetails> {
                 controller: _nameController,
                 keyboardType: TextInputType.name,
               ),
-              ProfileFeild(
+              ProfileTextFeild(
                 icon: const Icon(
                   Icons.phone_android,
                   color: Colors.black,
@@ -73,7 +73,7 @@ class _UserDetailsState extends State<UserDetails> {
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
               ),
-              ProfileFeild(
+              ProfileTextFeild(
                 icon: const Icon(
                   Icons.attach_email,
                   color: Colors.black,
@@ -113,7 +113,7 @@ class _UserDetailsState extends State<UserDetails> {
                   color: Colors.black,
                 ),
               ),
-              ProfileFeild(
+              ProfileTextFeild(
                 icon: const Icon(
                   Icons.add_card_outlined,
                   color: Colors.black,
@@ -132,7 +132,7 @@ class _UserDetailsState extends State<UserDetails> {
                 controller: _aadhaarCardController,
                 keyboardType: TextInputType.number,
               ),
-              ProfileFeild(
+              ProfileTextFeild(
                 icon: const Icon(
                   Icons.airplanemode_active,
                   color: Colors.black,
