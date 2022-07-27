@@ -137,6 +137,20 @@ class UserRepository {
     return null;
   }
 
+  Future<void> userRegistration(Map<String, String> formBody, image) async {
+    try {
+      await HttpBuilder.postFormData(
+        'first_user/registation',
+        body: formBody,
+        image: image,
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
   Future<void> updateUserProfile(UserModel userModel) async =>
       await HttpBuilder.post('user/update_profile', body: userModel.toJson());
 }

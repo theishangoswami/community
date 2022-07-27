@@ -1,9 +1,13 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
+import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/widgets/gender_selection.dart';
 import 'package:community_internal/ui/widgets/profile_field.dart';
@@ -32,6 +36,8 @@ class _UserDetailsState extends State<UserDetails> {
   final TextEditingController _aadhaarCardController = TextEditingController();
   final TextEditingController _passPortController = TextEditingController();
   bool _isLoading = false;
+  File? _selectedImage;
+  String _selectedGender = 'male';
 
   final List<StateDetail> _stateList = [
     StateDetail(id: '-1', stateName: 'Select State')
@@ -155,7 +161,6 @@ class _UserDetailsState extends State<UserDetails> {
 
   void fetchCommunityList() async {
     await UserRepository().getCommunity().then((value) {
-      print(value);
       if (value?.isNotEmpty ?? false) {
         setState(() {
           _communityList.addAll(value!);
@@ -184,7 +189,21 @@ class _UserDetailsState extends State<UserDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProfileImage(),
+              ProfileImage(
+                selectedImage: _selectedImage,
+                onTap: () {
+                  final FilePickerService _filePickerService =
+                      FilePickerService();
+                  final pickedImage = _filePickerService.pickImageFromGallery();
+                  pickedImage.then((value) {
+                    if (value?.path.isNotEmpty ?? false) {
+                      setState(() {
+                        _selectedImage = value;
+                      });
+                    }
+                  });
+                },
+              ),
               ProfileTextFeild(
                 icon: const Icon(
                   Icons.person,
@@ -222,7 +241,14 @@ class _UserDetailsState extends State<UserDetails> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
-              const GenderSelection(),
+              GenderSelection(
+                selectedGender: _selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value!;
+                  });
+                },
+              ),
               StateProfileFieldDropDown(
                 icon: const Icon(
                   Icons.countertops,
@@ -330,11 +356,36 @@ class _UserDetailsState extends State<UserDetails> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      await UserRepository().userRegistration(
+                        {
+                          'name': _nameController.text.trim(),
+                          'mobile_number': _phoneController.text.trim(),
+                          'email': _emailController.text.trim(),
+                          'adhar_card': _aadhaarCardController.text.trim(),
+                          'passport_no': _passPortController.text.trim(),
+                          'state_id': _selectedState.id,
+                          'district_id': _selectedDistrict.id,
+                          'city_id': _selectedCity.id,
+                          'pincode_id': _selectedPincode.id,
+                          'community_id': _selectedCommunity.id,
+                          'gender': _selectedGender,
+                          'address': '',
+                          'country_id': '1'
+                        },
+                        _selectedImage,
+                      );
+                      setState(() {
+                        _isLoading = false;
+                      });
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CommunityList()),
+                          builder: (context) => const CommunityList(),
+                        ),
                       );
                     },
                     child: const Text(

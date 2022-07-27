@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 class GenderSelection extends StatefulWidget {
-  const GenderSelection({Key? key}) : super(key: key);
+  final String selectedGender;
+  final void Function(String?)? onChanged;
+  const GenderSelection({
+    Key? key,
+    required this.selectedGender,
+    this.onChanged,
+  }) : super(key: key);
 
   @override
   State<GenderSelection> createState() => _GenderSelectionState();
 }
 
 class _GenderSelectionState extends State<GenderSelection> {
-  String _selectedGender = 'male';
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,12 +32,8 @@ class _GenderSelectionState extends State<GenderSelection> {
               ),
               Radio<String>(
                 value: 'male',
-                groupValue: _selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value!;
-                  });
-                },
+                groupValue: widget.selectedGender,
+                onChanged: widget.onChanged,
               ),
               const Text("MALE"),
               const SizedBox(
@@ -40,12 +41,8 @@ class _GenderSelectionState extends State<GenderSelection> {
               ),
               Radio<String>(
                 value: 'female',
-                groupValue: _selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value!;
-                  });
-                },
+                groupValue: widget.selectedGender,
+                onChanged: widget.onChanged,
               ),
               const Text('FEMALE'),
             ],
