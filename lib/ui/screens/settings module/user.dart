@@ -57,18 +57,18 @@ class _UserDetailsState extends State<UserDetails> {
     Icon(Icons.add_card_outlined, color: Colors.black),
     Icon(Icons.airplanemode_active, color: Colors.black),
   ];
-  List<String> datas = [
+  List<String> data = [
     "",
     "Name",
-    "pHONE Number",
+    "Phone Number",
     "Email",
     "State",
     "District",
-    "town",
+    "Town",
     "Address",
     "Religion",
     "Aadhar card number",
-    "passport number"
+    "Passport Number"
   ];
 
   @override
@@ -81,64 +81,142 @@ class _UserDetailsState extends State<UserDetails> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              child: ListView.builder(
-                  itemCount: 11,
-                  itemBuilder: (context, index) {
-                    return index == 0
-                        ? Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: CircleAvatar(
-                                    radius: 70,
-                                    backgroundColor: Colors.black,
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 67,
-                                      backgroundImage: _selectedImage
-                                                  ?.path.isNotEmpty ??
-                                              false
+            child: ListView.builder(
+              itemCount: 11,
+              itemBuilder: (context, index) {
+                return index == 0
+                    ? Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: CircleAvatar(
+                                radius: 70,
+                                backgroundColor: Colors.black,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 67,
+                                  backgroundImage:
+                                      _selectedImage?.path.isNotEmpty ?? false
                                           ? Image.file(_selectedImage!).image
                                           : const NetworkImage(
                                               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU",
                                             ),
-                                    ),
-                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 85, horizontal: 130),
-                                child: InkWell(
-                                  onTap: () {
-                                    final FilePickerService _filePickerService =
-                                        FilePickerService();
-                                    final pickedImage = _filePickerService
-                                        .pickImageFromGallery();
-                                    pickedImage.then((value) {
-                                      if (value?.path.isNotEmpty ?? false) {
-                                        setState(() {
-                                          _selectedImage = value;
-                                        });
-                                      }
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 85, horizontal: 130),
+                            child: InkWell(
+                              onTap: () {
+                                final FilePickerService _filePickerService =
+                                    FilePickerService();
+                                final pickedImage =
+                                    _filePickerService.pickImageFromGallery();
+                                pickedImage.then((value) {
+                                  if (value?.path.isNotEmpty ?? false) {
+                                    setState(() {
+                                      _selectedImage = value;
                                     });
-                                  },
-                                  child: const CircleAvatar(
-                                      radius: 15,
-                                      backgroundColor: Colors.black,
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 20,
-                                        color: Colors.white,
-                                      )),
-                                ),
+                                  }
+                                });
+                              },
+                              child: const CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.black,
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                          ),
+                        ],
+                      )
+                    : index != 4
+                        ? Row(
+                            children: [
+                              Container(
+                                  height: 70,
+                                  width: 30,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(3)),
+                                  ),
+                                  child: icons[index]),
+                              const SizedBox(
+                                width: 10,
                               ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data[index].toUpperCase(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    TextField(
+                                      controller: _controller[index],
+                                      keyboardType: index == 2
+                                          ? TextInputType.number
+                                          : TextInputType.text,
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           )
-                        : index != 4
-                            ? Row(
+                        : Column(
+                            children: [
+                              SizedBox(
+                                height: 80,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3, horizontal: 37),
+                                      child: Text(' GENDER:'),
+                                    ),
+                                    Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 24,
+                                        ),
+                                        Radio<String>(
+                                          value: 'male',
+                                          groupValue: _selectedGender,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _selectedGender = value!;
+                                            });
+                                          },
+                                        ),
+                                        const Text("MALE"),
+                                        const SizedBox(
+                                          width: 70,
+                                        ),
+                                        Radio<String>(
+                                          value: 'female',
+                                          groupValue: _selectedGender,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _selectedGender = value!;
+                                            });
+                                          },
+                                        ),
+                                        const Text('FEMALE'),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Row(
                                 children: [
                                   Container(
                                       height: 70,
@@ -158,7 +236,7 @@ class _UserDetailsState extends State<UserDetails> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          datas[index].toUpperCase(),
+                                          data[index].toUpperCase(),
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w400),
                                         ),
@@ -173,54 +251,11 @@ class _UserDetailsState extends State<UserDetails> {
                                   )
                                 ],
                               )
-                            : Container(
-                                height: 80,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3, horizontal: 37),
-                                      child: Text(' GENDER:'),
-                                    ),
-                                    Row(
-                                      children: [
-                                        const SizedBox(
-                                          width: 24,
-                                        ),
-                                        Container(
-                                          child: Radio<String>(
-                                            value: 'male',
-                                            groupValue: _selectedGender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _selectedGender = value!;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        const Text("MALE"),
-                                        const SizedBox(
-                                          width: 70,
-                                        ),
-                                        Container(
-                                          child: Radio<String>(
-                                            value: 'female',
-                                            groupValue: _selectedGender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _selectedGender = value!;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        const Text('FEMALE'),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              );
-                  })),
+                            ],
+                          );
+              },
+            ),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -343,7 +378,7 @@ class _ProfileState extends State<Profile> {
                                     child: CircleAvatar(
                                       backgroundColor: Colors.white,
                                       radius: 67,
-                                      child: Container(
+                                      child: SizedBox(
                                           height: 74,
                                           width: 60,
                                           child: Image.network(
@@ -410,7 +445,7 @@ class _ProfileState extends State<Profile> {
                                   )
                                 ],
                               )
-                            : Container(
+                            : SizedBox(
                                 height: 80,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
