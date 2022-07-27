@@ -55,6 +55,27 @@ class _UserDetailsState extends State<UserDetails> {
   Pincode _selectedPincode =
       Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
 
+  void refreshDistrictList() {
+    _districtList = [
+      District(id: '-1', districtName: 'Select District', stateId: '-1')
+    ];
+    _selectedDistrict =
+        District(id: '-1', districtName: 'Select District', stateId: '-1');
+  }
+
+  void refreshCityList() {
+    _cityList = [City(id: '-1', cityName: 'Select City', districtId: '-1')];
+    _selectedCity = City(id: '-1', cityName: 'Select City', districtId: '-1');
+  }
+
+  void refreshPincodeList() {
+    _pincodeList = [
+      Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode'),
+    ];
+    _selectedPincode =
+        Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
+  }
+
   void fetchStateList() async {
     await UserRepository().getState().then((value) {
       if (value?.isNotEmpty ?? false) {
@@ -66,18 +87,9 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   void fetchDistrictList(String stateId) async {
-    _districtList = [
-      District(id: '-1', districtName: 'Select District', stateId: '-1')
-    ];
-    _selectedDistrict =
-        District(id: '-1', districtName: 'Select District', stateId: '-1');
-    _cityList = [City(id: '-1', cityName: 'Select City', districtId: '-1')];
-    _selectedCity = City(id: '-1', cityName: 'Select City', districtId: '-1');
-    _pincodeList = [
-      Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode'),
-    ];
-    _selectedPincode =
-        Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
+    refreshDistrictList();
+    refreshCityList();
+    refreshPincodeList();
     setState(() {
       _isLoading = true;
     });
@@ -93,13 +105,8 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   void fetchCityList(String districtId) async {
-    _cityList = [City(id: '-1', cityName: 'Select City', districtId: '-1')];
-    _selectedCity = City(id: '-1', cityName: 'Select City', districtId: '-1');
-    _pincodeList = [
-      Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode'),
-    ];
-    _selectedPincode =
-        Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
+    refreshCityList();
+    refreshPincodeList();
     setState(() {
       _isLoading = true;
     });
