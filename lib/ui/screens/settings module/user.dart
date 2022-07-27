@@ -5,6 +5,7 @@ import 'package:community_internal/ui/widgets/profile_field_drop_down.dart';
 import 'package:community_internal/ui/widgets/profile_image.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 List<TextEditingController> _controller = [
   for (int i = 1; i < 13; i++) TextEditingController()
@@ -58,6 +59,16 @@ class _UserDetailsState extends State<UserDetails> {
                   Icons.phone_android,
                   color: Colors.black,
                 ),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  String text = (value ?? "").trim();
+                  if (text.isEmpty) {
+                    return "Please enter your mobile number";
+                  } else if (text.length != 10) {
+                    return "Please enter a valid mobile number";
+                  }
+                  return null;
+                },
                 displaytText: 'phone number'.toUpperCase(),
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,

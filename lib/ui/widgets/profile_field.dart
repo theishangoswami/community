@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ProfileFeild extends StatefulWidget {
   final Icon icon;
   final String displaytText;
   final TextEditingController controller;
   final TextInputType keyboardType;
-  const ProfileFeild(
-      {Key? key,
-      required this.icon,
-      required this.displaytText,
-      required this.controller,
-      required this.keyboardType})
-      : super(key: key);
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  const ProfileFeild({
+    Key? key,
+    required this.icon,
+    required this.displaytText,
+    required this.controller,
+    required this.keyboardType,
+    this.validator,
+    this.inputFormatters,
+  }) : super(key: key);
 
   @override
   State<ProfileFeild> createState() => _ProfileFeildState();
@@ -44,7 +49,9 @@ class _ProfileFeildState extends State<ProfileFeild> {
                 widget.displaytText.toUpperCase(),
                 style: const TextStyle(fontWeight: FontWeight.w400),
               ),
-              TextField(
+              TextFormField(
+                inputFormatters: widget.inputFormatters,
+                validator: widget.validator,
                 controller: widget.controller,
                 keyboardType: widget.keyboardType,
               ),
