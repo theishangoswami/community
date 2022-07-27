@@ -1,3 +1,4 @@
+import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
@@ -34,11 +35,35 @@ class _UserDetailsState extends State<UserDetails> {
   ];
   StateDetail _selectedState = StateDetail(id: '-1', stateName: 'Select State');
 
+  List<District> _districtList = [
+    District(id: '-1', districtName: 'Select District', stateId: '-1')
+  ];
+  District _selectedDistrict =
+      District(id: '-1', districtName: 'Select District', stateId: '-1');
+
   void fetchStateList() async {
-    UserRepository().getState().then((value) {
+    await UserRepository().getState().then((value) {
       if (value?.isNotEmpty ?? false) {
         setState(() {
           _stateList.addAll(value!);
+        });
+      }
+    });
+  }
+
+  void fetchDistrictList(String stateId) async {
+    _districtList = [
+      District(id: '-1', districtName: 'Select District', stateId: '-1')
+    ];
+    setState(() {
+      _isLoading = true;
+    });
+    await UserRepository().getDistrict().then((value) {
+      if (value?.isNotEmpty ?? false) {
+        setState(() {
+          _districtList
+              .addAll(value!.where((element) => element.stateId == stateId));
+          _isLoading = false;
         });
       }
     });
@@ -107,20 +132,28 @@ class _UserDetailsState extends State<UserDetails> {
                   Icons.countertops,
                   color: Colors.black,
                 ),
-                statelist: _stateList,
+                stateList: _stateList,
                 selectedState: _selectedState,
                 onChanged: (StateDetail? newValue) {
                   setState(() {
                     _selectedState = newValue!;
                   });
+                  fetchDistrictList(_selectedState.id);
                 },
               ),
-              // const ProfileFieldDropDown(
-              //   icon: Icon(
-              //     Icons.map_outlined,
-              //     color: Colors.black,
-              //   ),
-              // ),
+              DistrictProfileFieldDropDown(
+                icon: const Icon(
+                  Icons.map_outlined,
+                  color: Colors.black,
+                ),
+                districtList: _districtList,
+                selectedDistrict: _selectedDistrict,
+                onChanged: (District? newValue) {
+                  setState(() {
+                    _selectedDistrict = newValue!;
+                  });
+                },
+              ),
               // const ProfileFieldDropDown(
               //   icon: Icon(
               //     Icons.location_on_sharp,
