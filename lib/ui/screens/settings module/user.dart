@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:community_internal/core/repository/users.repository.dart';
+import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ class UserDetails extends StatefulWidget {
 }
 
 class _UserDetailsState extends State<UserDetails> {
+  File? _selectedImage;
   String _selectedGender = 'male';
   List<Icon> icons = const [
     Icon(
@@ -95,28 +99,43 @@ class _UserDetailsState extends State<UserDetails> {
                                     child: CircleAvatar(
                                       backgroundColor: Colors.white,
                                       radius: 67,
-                                      child: Container(
-                                          height: 74,
-                                          width: 60,
-                                          child: Image.network(
-                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU",
-                                            fit: BoxFit.cover,
-                                          )),
+                                      backgroundImage: _selectedImage
+                                                  ?.path.isNotEmpty ??
+                                              false
+                                          ? Image.file(_selectedImage!).image
+                                          : const NetworkImage(
+                                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU",
+                                            ),
                                     ),
                                   ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 85, horizontal: 130),
-                                child: CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: Colors.black,
-                                    child: Icon(
-                                      Icons.edit,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )),
+                                child: InkWell(
+                                  onTap: () {
+                                    final FilePickerService _filePickerService =
+                                        FilePickerService();
+                                    final pickedImage = _filePickerService
+                                        .pickImageFromGallery();
+                                    pickedImage.then((value) {
+                                      if (value?.path.isNotEmpty ?? false) {
+                                        setState(() {
+                                          _selectedImage = value;
+                                        });
+                                      }
+                                    });
+                                  },
+                                  child: const CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor: Colors.black,
+                                      child: Icon(
+                                        Icons.edit,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )),
+                                ),
                               ),
                             ],
                           )
@@ -132,7 +151,7 @@ class _UserDetailsState extends State<UserDetails> {
                                             left: Radius.circular(3)),
                                       ),
                                       child: icons[index]),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
@@ -142,7 +161,7 @@ class _UserDetailsState extends State<UserDetails> {
                                       children: [
                                         Text(
                                           datas[index].toUpperCase(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.w400),
                                         ),
                                         TextField(
@@ -161,14 +180,14 @@ class _UserDetailsState extends State<UserDetails> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
                                           vertical: 3, horizontal: 37),
-                                      child: const Text(' GENDER:'),
+                                      child: Text(' GENDER:'),
                                     ),
                                     Row(
                                       children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 24,
                                         ),
                                         Container(
@@ -182,8 +201,8 @@ class _UserDetailsState extends State<UserDetails> {
                                             },
                                           ),
                                         ),
-                                        Text("MALE"),
-                                        SizedBox(
+                                        const Text("MALE"),
+                                        const SizedBox(
                                           width: 70,
                                         ),
                                         Container(
@@ -197,7 +216,7 @@ class _UserDetailsState extends State<UserDetails> {
                                             },
                                           ),
                                         ),
-                                        Text('FEMALE'),
+                                        const Text('FEMALE'),
                                       ],
                                     )
                                   ],
@@ -217,12 +236,12 @@ class _UserDetailsState extends State<UserDetails> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CommunityList()),
+                    MaterialPageRoute(
+                        builder: (context) => const CommunityList()),
                   );
                 },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 120),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 120),
                   child: Text(
                     "NEXT",
                     style: TextStyle(
@@ -304,7 +323,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User Details"),
+        title: const Text("User Details"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,7 +383,7 @@ class _ProfileState extends State<Profile> {
                                             left: Radius.circular(3)),
                                       ),
                                       child: icons[index]),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
@@ -372,7 +391,7 @@ class _ProfileState extends State<Profile> {
                                       children: [
                                         Text(
                                           datas[index].toUpperCase(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.w400),
                                         ),
                                         Padding(
@@ -380,12 +399,12 @@ class _ProfileState extends State<Profile> {
                                               vertical: 26),
                                           child: Text(
                                             _controller[index].text,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.w400),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 300, vertical: 10),
                                           child: Icon(Icons.edit),
                                         ),
@@ -399,14 +418,14 @@ class _ProfileState extends State<Profile> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
                                           vertical: 3, horizontal: 37),
-                                      child: const Text(' GENDER:'),
+                                      child: Text(' GENDER:'),
                                     ),
                                     Row(
                                       children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 24,
                                         ),
                                         Container(
@@ -420,8 +439,8 @@ class _ProfileState extends State<Profile> {
                                             },
                                           ),
                                         ),
-                                        Text("MALE"),
-                                        SizedBox(
+                                        const Text("MALE"),
+                                        const SizedBox(
                                           width: 70,
                                         ),
                                         Container(
@@ -435,7 +454,7 @@ class _ProfileState extends State<Profile> {
                                             },
                                           ),
                                         ),
-                                        Text('FEMALE'),
+                                        const Text('FEMALE'),
                                       ],
                                     )
                                   ],
