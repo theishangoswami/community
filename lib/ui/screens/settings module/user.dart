@@ -1,3 +1,5 @@
+import 'package:community_internal/core/models/state_detail.dart';
+import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/widgets/gender_selection.dart';
 import 'package:community_internal/ui/widgets/profile_field.dart';
@@ -26,10 +28,27 @@ class _UserDetailsState extends State<UserDetails> {
   final TextEditingController _aadhaarCardController = TextEditingController();
   final TextEditingController _passPortController = TextEditingController();
   bool _isLoading = false;
+
+  final List<StateDetail> _stateList = [
+    StateDetail(id: '-1', stateName: 'Select State')
+  ];
+  StateDetail _selectedState = StateDetail(id: '-1', stateName: 'Select State');
+
+  void fetchStateList() async {
+    UserRepository().getState().then((value) {
+      if (value?.isNotEmpty ?? false) {
+        setState(() {
+          _stateList.addAll(value!);
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _phoneController.text = widget.phoneNumber;
+    fetchStateList();
   }
 
   @override
@@ -83,36 +102,43 @@ class _UserDetailsState extends State<UserDetails> {
                 keyboardType: TextInputType.emailAddress,
               ),
               const GenderSelection(),
-              const ProfileFieldDropDown(
-                icon: Icon(
+              StateProfileFieldDropDown(
+                icon: const Icon(
                   Icons.countertops,
                   color: Colors.black,
                 ),
+                statelist: _stateList,
+                selectedState: _selectedState,
+                onChanged: (StateDetail? newValue) {
+                  setState(() {
+                    _selectedState = newValue!;
+                  });
+                },
               ),
-              const ProfileFieldDropDown(
-                icon: Icon(
-                  Icons.map_outlined,
-                  color: Colors.black,
-                ),
-              ),
-              const ProfileFieldDropDown(
-                icon: Icon(
-                  Icons.location_on_sharp,
-                  color: Colors.black,
-                ),
-              ),
-              const ProfileFieldDropDown(
-                icon: Icon(
-                  Icons.book_outlined,
-                  color: Colors.black,
-                ),
-              ),
-              const ProfileFieldDropDown(
-                icon: Icon(
-                  Icons.vertical_split,
-                  color: Colors.black,
-                ),
-              ),
+              // const ProfileFieldDropDown(
+              //   icon: Icon(
+              //     Icons.map_outlined,
+              //     color: Colors.black,
+              //   ),
+              // ),
+              // const ProfileFieldDropDown(
+              //   icon: Icon(
+              //     Icons.location_on_sharp,
+              //     color: Colors.black,
+              //   ),
+              // ),
+              // const ProfileFieldDropDown(
+              //   icon: Icon(
+              //     Icons.book_outlined,
+              //     color: Colors.black,
+              //   ),
+              // ),
+              // const ProfileFieldDropDown(
+              //   icon: Icon(
+              //     Icons.vertical_split,
+              //     color: Colors.black,
+              //   ),
+              // ),
               ProfileTextFeild(
                 icon: const Icon(
                   Icons.add_card_outlined,

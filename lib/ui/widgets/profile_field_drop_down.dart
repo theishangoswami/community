@@ -1,27 +1,25 @@
+import 'package:community_internal/core/models/state_detail.dart';
 import 'package:flutter/material.dart';
 
-class ProfileFieldDropDown extends StatefulWidget {
+class StateProfileFieldDropDown extends StatefulWidget {
   final Icon icon;
-  const ProfileFieldDropDown({Key? key, required this.icon}) : super(key: key);
+  final List<StateDetail> statelist;
+  final StateDetail selectedState;
+  final void Function(StateDetail?)? onChanged;
+  const StateProfileFieldDropDown({
+    Key? key,
+    required this.icon,
+    required this.statelist,
+    this.onChanged,
+    required this.selectedState,
+  }) : super(key: key);
 
   @override
-  State<ProfileFieldDropDown> createState() => _ProfileFieldDropDownState();
+  State<StateProfileFieldDropDown> createState() =>
+      _StateProfileFieldDropDownState();
 }
 
-class _ProfileFieldDropDownState extends State<ProfileFieldDropDown> {
-  List<String> data = [
-    "",
-    "Name",
-    "Phone Number",
-    "Email",
-    "State",
-    "District",
-    "Town",
-    "Address",
-    "Religion",
-    "Aadhar card number",
-    "Passport Number"
-  ];
+class _StateProfileFieldDropDownState extends State<StateProfileFieldDropDown> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -41,19 +39,19 @@ class _ProfileFieldDropDownState extends State<ProfileFieldDropDown> {
           width: 10,
         ),
         Expanded(
-          child: DropdownButton(
+          child: DropdownButton<StateDetail>(
             isExpanded: true,
-            value: 'Name',
+            value: widget.selectedState,
             icon: const Icon(Icons.keyboard_arrow_down),
-            items: data
+            items: widget.statelist
                 .map(
-                  (courseItem) => DropdownMenuItem(
-                    value: courseItem,
-                    child: Text(courseItem),
+                  (state) => DropdownMenuItem<StateDetail>(
+                    value: state,
+                    child: Text(state.stateName),
                   ),
                 )
                 .toList(),
-            onChanged: (newValue) {},
+            onChanged: widget.onChanged,
           ),
         )
       ],

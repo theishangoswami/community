@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/models/user.model.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
 import 'package:flutter/foundation.dart';
@@ -27,6 +28,25 @@ class UserRepository {
         var body = jsonDecode(res.body)['resp'] as List;
         if (body.isNotEmpty) {
           return UserModel.fromJson(body.first);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<StateDetail>?> getState() async {
+    try {
+      var res = await HttpBuilder.get('state/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<StateDetail>.from(
+            body.map((state) => StateDetail.fromJson(state)),
+          );
         }
       }
     } catch (e) {
