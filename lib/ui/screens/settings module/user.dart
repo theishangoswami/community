@@ -1,5 +1,6 @@
 import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/district.dart';
+import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
@@ -48,6 +49,12 @@ class _UserDetailsState extends State<UserDetails> {
   City _selectedCity =
       City(id: '-1', cityName: 'Select City', districtId: '-1');
 
+  List<Pincode> _pincodeList = [
+    Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode'),
+  ];
+  Pincode _selectedPincode =
+      Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
+
   void fetchStateList() async {
     await UserRepository().getState().then((value) {
       if (value?.isNotEmpty ?? false) {
@@ -66,6 +73,11 @@ class _UserDetailsState extends State<UserDetails> {
         District(id: '-1', districtName: 'Select District', stateId: '-1');
     _cityList = [City(id: '-1', cityName: 'Select City', districtId: '-1')];
     _selectedCity = City(id: '-1', cityName: 'Select City', districtId: '-1');
+    _pincodeList = [
+      Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode'),
+    ];
+    _selectedPincode =
+        Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
     setState(() {
       _isLoading = true;
     });
@@ -82,6 +94,12 @@ class _UserDetailsState extends State<UserDetails> {
 
   void fetchCityList(String districtId) async {
     _cityList = [City(id: '-1', cityName: 'Select City', districtId: '-1')];
+    _selectedCity = City(id: '-1', cityName: 'Select City', districtId: '-1');
+    _pincodeList = [
+      Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode'),
+    ];
+    _selectedPincode =
+        Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
     setState(() {
       _isLoading = true;
     });
@@ -89,7 +107,24 @@ class _UserDetailsState extends State<UserDetails> {
       if (value?.isNotEmpty ?? false) {
         setState(() {
           _cityList.addAll(
-              value!.where((element) => element.districtId == districtId));
+            value!.where((element) => element.districtId == districtId),
+          );
+          _isLoading = false;
+        });
+      }
+    });
+  }
+
+  void fetchPincodeList(String cityId) async {
+    setState(() {
+      _isLoading = true;
+    });
+    await UserRepository().getPincode().then((value) {
+      if (value?.isNotEmpty ?? false) {
+        setState(() {
+          _pincodeList.addAll(
+            value!.where((element) => element.cityId == cityId),
+          );
           _isLoading = false;
         });
       }
@@ -193,14 +228,22 @@ class _UserDetailsState extends State<UserDetails> {
                   setState(() {
                     _selectedCity = newValue!;
                   });
+                  fetchPincodeList(_selectedCity.id);
                 },
               ),
-              // const ProfileFieldDropDown(
-              //   icon: Icon(
-              //     Icons.book_outlined,
-              //     color: Colors.black,
-              //   ),
-              // ),
+              PincodeProfileFieldDropDown(
+                icon: const Icon(
+                  Icons.book_outlined,
+                  color: Colors.black,
+                ),
+                onChanged: (Pincode? newValue) {
+                  setState(() {
+                    _selectedPincode = newValue!;
+                  });
+                },
+                pincodeList: _pincodeList,
+                selectedPincode: _selectedPincode,
+              ),
               // const ProfileFieldDropDown(
               //   icon: Icon(
               //     Icons.vertical_split,

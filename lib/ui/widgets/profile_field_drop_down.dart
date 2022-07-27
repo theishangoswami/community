@@ -1,5 +1,6 @@
 import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/district.dart';
+import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -134,7 +135,8 @@ class CityProfileFieldDropDown extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CityProfileFieldDropDown> createState() => _CityProfileFieldDropDownState();
+  State<CityProfileFieldDropDown> createState() =>
+      _CityProfileFieldDropDownState();
 }
 
 class _CityProfileFieldDropDownState extends State<CityProfileFieldDropDown> {
@@ -166,6 +168,65 @@ class _CityProfileFieldDropDownState extends State<CityProfileFieldDropDown> {
                   (city) => DropdownMenuItem<City>(
                     value: city,
                     child: Text(city.cityName),
+                  ),
+                )
+                .toList(),
+            onChanged: widget.onChanged,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class PincodeProfileFieldDropDown extends StatefulWidget {
+  final Icon icon;
+  final List<Pincode> pincodeList;
+  final Pincode selectedPincode;
+  final void Function(Pincode?)? onChanged;
+  const PincodeProfileFieldDropDown(
+      {Key? key,
+      required this.icon,
+      required this.pincodeList,
+      required this.selectedPincode,
+      this.onChanged})
+      : super(key: key);
+
+  @override
+  State<PincodeProfileFieldDropDown> createState() =>
+      _PincodeProfileFieldDropDownState();
+}
+
+class _PincodeProfileFieldDropDownState
+    extends State<PincodeProfileFieldDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          height: 70,
+          width: 30,
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(3),
+            ),
+          ),
+          child: widget.icon,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: DropdownButton<Pincode>(
+            isExpanded: true,
+            value: widget.selectedPincode,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: widget.pincodeList
+                .map(
+                  (pincode) => DropdownMenuItem<Pincode>(
+                    value: pincode,
+                    child: Text(pincode.pinCode),
                   ),
                 )
                 .toList(),
