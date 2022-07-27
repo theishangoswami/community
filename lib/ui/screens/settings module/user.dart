@@ -1,9 +1,7 @@
+import 'dart:ui';
 import 'dart:io';
-
-import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
-import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 List<TextEditingController> _controller = [
@@ -228,11 +226,12 @@ class _UserDetailsState extends State<UserDetails> {
             child: Padding(
               padding: const EdgeInsets.all(25),
               child: ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ))),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.maxFinite, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -240,14 +239,12 @@ class _UserDetailsState extends State<UserDetails> {
                         builder: (context) => const CommunityList()),
                   );
                 },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 120),
-                  child: Text(
-                    "NEXT",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 19),
+                child: const Text(
+                  "NEXT",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 19,
                   ),
                 ),
               ),
