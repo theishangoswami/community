@@ -39,6 +39,8 @@ class _UserDetailsState extends State<UserDetails> {
   bool _isLoading = false;
   File? _selectedImage;
   String _selectedGender = 'male';
+  final _formKey = GlobalKey<FormState>();
+  bool imageError = false;
 
   final List<StateDetail> _stateList = [
     StateDetail(id: '-1', stateName: 'Select State')
@@ -182,241 +184,299 @@ class _UserDetailsState extends State<UserDetails> {
   Widget build(BuildContext context) {
     return LoadingHelper(
       isLoading: _isLoading,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("User Details"),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileImage(
-                selectedImage: _selectedImage,
-                onTap: () {
-                  final FilePickerService _filePickerService =
-                      FilePickerService();
-                  final pickedImage = _filePickerService.pickImageFromGallery();
-                  pickedImage.then((value) {
-                    if (value?.path.isNotEmpty ?? false) {
-                      setState(() {
-                        _selectedImage = value;
+      child: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus!.unfocus();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("User Details"),
+          ),
+          body: Form(
+            key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ProfileImage(
+                    selectedImage: _selectedImage,
+                    onTap: () {
+                      final FilePickerService _filePickerService =
+                          FilePickerService();
+                      final pickedImage =
+                          _filePickerService.pickImageFromGallery();
+                      pickedImage.then((value) {
+                        if (value?.path.isNotEmpty ?? false) {
+                          setState(() {
+                            _selectedImage = value;
+                            imageError = false;
+                          });
+                        }
                       });
-                    }
-                  });
-                },
-              ),
-              ProfileTextFeild(
-                icon: const Icon(
-                  Icons.person,
-                  color: Colors.black,
-                ),
-                displaytText: 'name'.toUpperCase(),
-                controller: _nameController,
-                keyboardType: TextInputType.name,
-              ),
-              ProfileTextFeild(
-                icon: const Icon(
-                  Icons.phone_android,
-                  color: Colors.black,
-                ),
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (value) {
-                  String text = (value ?? "").trim();
-                  if (text.isEmpty) {
-                    return "Please enter your mobile number";
-                  } else if (text.length != 10) {
-                    return "Please enter a valid mobile number";
-                  }
-                  return null;
-                },
-                displaytText: 'phone number'.toUpperCase(),
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-              ),
-              ProfileTextFeild(
-                icon: const Icon(
-                  Icons.attach_email,
-                  color: Colors.black,
-                ),
-                displaytText: 'email'.toUpperCase(),
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              GenderSelection(
-                selectedGender: _selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value!;
-                  });
-                },
-              ),
-              StateProfileFieldDropDown(
-                icon: const Icon(
-                  Icons.countertops,
-                  color: Colors.black,
-                ),
-                stateList: _stateList,
-                selectedState: _selectedState,
-                onChanged: (StateDetail? newValue) {
-                  setState(() {
-                    _selectedState = newValue!;
-                  });
-                  fetchDistrictList(_selectedState.id);
-                },
-              ),
-              DistrictProfileFieldDropDown(
-                icon: const Icon(
-                  Icons.map_outlined,
-                  color: Colors.black,
-                ),
-                districtList: _districtList,
-                selectedDistrict: _selectedDistrict,
-                onChanged: (District? newValue) {
-                  setState(() {
-                    _selectedDistrict = newValue!;
-                  });
-                  fetchCityList(_selectedDistrict.id);
-                },
-              ),
-              CityProfileFieldDropDown(
-                icon: const Icon(
-                  Icons.location_on_sharp,
-                  color: Colors.black,
-                ),
-                selectedCity: _selectedCity,
-                cityList: _cityList,
-                onChanged: (City? newValue) {
-                  setState(() {
-                    _selectedCity = newValue!;
-                  });
-                  fetchPincodeList(_selectedCity.id);
-                },
-              ),
-              PincodeProfileFieldDropDown(
-                icon: const Icon(
-                  Icons.book_outlined,
-                  color: Colors.black,
-                ),
-                onChanged: (Pincode? newValue) {
-                  setState(() {
-                    _selectedPincode = newValue!;
-                  });
-                },
-                pincodeList: _pincodeList,
-                selectedPincode: _selectedPincode,
-              ),
-              CommunityProfileFieldDropDown(
-                icon: const Icon(
-                  Icons.vertical_split,
-                  color: Colors.black,
-                ),
-                communityList: _communityList,
-                selectedCommunity: _selectedCommunity,
-                onChanged: (Community? newValue) {
-                  setState(() {
-                    _selectedCommunity = newValue!;
-                  });
-                },
-              ),
-              ProfileTextFeild(
-                icon: const Icon(
-                  Icons.add_card_outlined,
-                  color: Colors.black,
-                ),
-                validator: (value) {
-                  String text = (value ?? "").trim();
-                  if (text.isEmpty) {
-                    return "Please enter your address";
-                  }
-                  return null;
-                },
-                displaytText: 'address'.toUpperCase(),
-                controller: _addressController,
-                keyboardType: TextInputType.streetAddress,
-              ),
-              ProfileTextFeild(
-                icon: const Icon(
-                  Icons.add_card_outlined,
-                  color: Colors.black,
-                ),
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (value) {
-                  String text = (value ?? "").trim();
-                  if (text.isEmpty) {
-                    return "Please enter your aadhaar number";
-                  } else if (text.length != 12) {
-                    return "Please enter a valid aadhaar number";
-                  }
-                  return null;
-                },
-                displaytText: 'aadhaar card number'.toUpperCase(),
-                controller: _aadhaarCardController,
-                keyboardType: TextInputType.number,
-              ),
-              ProfileTextFeild(
-                icon: const Icon(
-                  Icons.airplanemode_active,
-                  color: Colors.black,
-                ),
-                displaytText: 'passport number'.toUpperCase(),
-                controller: _passPortController,
-                keyboardType: TextInputType.text,
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.maxFinite, 60),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                    onPressed: () async {
-                      setState(() {
-                        _isLoading = true;
-                      });
-                      await UserRepository().userRegistration(
-                        {
-                          'name': _nameController.text.trim(),
-                          'mobile_number': _phoneController.text.trim(),
-                          'email': _emailController.text.trim(),
-                          'adhar_card': _aadhaarCardController.text.trim(),
-                          'passport_no': _passPortController.text.trim(),
-                          'state_id': _selectedState.id,
-                          'district_id': _selectedDistrict.id,
-                          'city_id': _selectedCity.id,
-                          'pincode_id': _selectedPincode.id,
-                          'community_id': _selectedCommunity.id,
-                          'gender': _selectedGender,
-                          'address': _addressController.text.trim(),
-                          'country_id': '1'
-                        },
-                        _selectedImage,
-                      );
-                      setState(() {
-                        _isLoading = false;
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CommunityList(),
-                        ),
-                      );
                     },
-                    child: const Text(
-                      "NEXT",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 19,
+                  ),
+                  imageError
+                      ? const Text(
+                          'Please select a image',
+                          style: TextStyle(color: Colors.red, fontSize: 15),
+                        )
+                      : const SizedBox(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ProfileTextFeild(
+                    icon: const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
+                    displaytText: 'name'.toUpperCase(),
+                    controller: _nameController,
+                    keyboardType: TextInputType.name,
+                  ),
+                  ProfileTextFeild(
+                    icon: const Icon(
+                      Icons.phone_android,
+                      color: Colors.black,
+                    ),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      String text = (value ?? "").trim();
+                      if (text.isEmpty) {
+                        return "Please enter your mobile number";
+                      } else if (text.length != 10) {
+                        return "Please enter a valid mobile number";
+                      }
+                      return null;
+                    },
+                    displaytText: 'phone number'.toUpperCase(),
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  ProfileTextFeild(
+                    icon: const Icon(
+                      Icons.attach_email,
+                      color: Colors.black,
+                    ),
+                    validator: (value) {
+                      String p =
+                          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+                      RegExp regExp = RegExp(p);
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your email';
+                      } else if (!regExp.hasMatch(value?.trim() ?? '')) {
+                        return 'Enter a valid email';
+                      }
+                      return null;
+                    },
+                    displaytText: 'email'.toUpperCase(),
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  GenderSelection(
+                    selectedGender: _selectedGender,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedGender = value!;
+                      });
+                    },
+                  ),
+                  StateProfileFieldDropDown(
+                    icon: const Icon(
+                      Icons.countertops,
+                      color: Colors.black,
+                    ),
+                    stateList: _stateList,
+                    selectedState: _selectedState,
+                    onChanged: (StateDetail? newValue) {
+                      setState(() {
+                        _selectedState = newValue!;
+                      });
+                      fetchDistrictList(_selectedState.id);
+                    },
+                  ),
+                  DistrictProfileFieldDropDown(
+                    icon: const Icon(
+                      Icons.map_outlined,
+                      color: Colors.black,
+                    ),
+                    districtList: _districtList,
+                    selectedDistrict: _selectedDistrict,
+                    onChanged: (District? newValue) {
+                      setState(() {
+                        _selectedDistrict = newValue!;
+                      });
+                      fetchCityList(_selectedDistrict.id);
+                    },
+                  ),
+                  CityProfileFieldDropDown(
+                    icon: const Icon(
+                      Icons.location_on_sharp,
+                      color: Colors.black,
+                    ),
+                    selectedCity: _selectedCity,
+                    cityList: _cityList,
+                    onChanged: (City? newValue) {
+                      setState(() {
+                        _selectedCity = newValue!;
+                      });
+                      fetchPincodeList(_selectedCity.id);
+                    },
+                  ),
+                  PincodeProfileFieldDropDown(
+                    icon: const Icon(
+                      Icons.book_outlined,
+                      color: Colors.black,
+                    ),
+                    onChanged: (Pincode? newValue) {
+                      setState(() {
+                        _selectedPincode = newValue!;
+                      });
+                    },
+                    pincodeList: _pincodeList,
+                    selectedPincode: _selectedPincode,
+                  ),
+                  CommunityProfileFieldDropDown(
+                    icon: const Icon(
+                      Icons.vertical_split,
+                      color: Colors.black,
+                    ),
+                    communityList: _communityList,
+                    selectedCommunity: _selectedCommunity,
+                    onChanged: (Community? newValue) {
+                      setState(() {
+                        _selectedCommunity = newValue!;
+                      });
+                    },
+                  ),
+                  ProfileTextFeild(
+                    icon: const Icon(
+                      Icons.add_card_outlined,
+                      color: Colors.black,
+                    ),
+                    validator: (value) {
+                      String text = (value ?? "").trim();
+                      if (text.isEmpty) {
+                        return "Please enter your address";
+                      }
+                      return null;
+                    },
+                    displaytText: 'address'.toUpperCase(),
+                    controller: _addressController,
+                    keyboardType: TextInputType.streetAddress,
+                  ),
+                  ProfileTextFeild(
+                    icon: const Icon(
+                      Icons.add_card_outlined,
+                      color: Colors.black,
+                    ),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      String text = (value ?? "").trim();
+                      if (text.isEmpty) {
+                        return "Please enter your aadhaar number";
+                      } else if (text.length != 12) {
+                        return "Please enter a valid aadhaar number";
+                      }
+                      return null;
+                    },
+                    displaytText: 'aadhaar card number'.toUpperCase(),
+                    controller: _aadhaarCardController,
+                    keyboardType: TextInputType.number,
+                  ),
+                  ProfileTextFeild(
+                    icon: const Icon(
+                      Icons.airplanemode_active,
+                      color: Colors.black,
+                    ),
+                    validator: (value) {
+                      String p = r'(?!^0+$)[a-zA-Z0-9]{6,9}$';
+
+                      RegExp regExp = RegExp(p);
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your passport number';
+                      } else if (!regExp.hasMatch(value?.trim() ?? "") ||
+                          value!.length != 8) {
+                        return 'Enter a valid passport number';
+                      }
+                      return null;
+                    },
+                    displaytText: 'passport number'.toUpperCase(),
+                    controller: _passPortController,
+                    keyboardType: TextInputType.text,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.maxFinite, 60),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                        onPressed: () async {
+                          setState(() {
+                            if (_selectedImage?.path.isEmpty ?? true) {
+                              imageError = true;
+                            }
+                          });
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            await UserRepository().userRegistration(
+                              {
+                                'name': _nameController.text.trim(),
+                                'mobile_number': _phoneController.text.trim(),
+                                'email': _emailController.text.trim(),
+                                'adhar_card':
+                                    _aadhaarCardController.text.trim(),
+                                'passport_no': _passPortController.text.trim(),
+                                'state_id': _selectedState.id,
+                                'district_id': _selectedDistrict.id,
+                                'city_id': _selectedCity.id,
+                                'pincode_id': _selectedPincode.id,
+                                'community_id': _selectedCommunity.id,
+                                'gender': _selectedGender,
+                                'address': _addressController.text.trim(),
+                                'country_id': '1'
+                              },
+                              _selectedImage,
+                            );
+                            setState(() {
+                              _isLoading = false;
+                            });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CommunityList(),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text(
+                          "NEXT",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 19,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              )
-            ],
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

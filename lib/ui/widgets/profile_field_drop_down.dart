@@ -43,7 +43,9 @@ class _StateProfileFieldDropDownState extends State<StateProfileFieldDropDown> {
           width: 10,
         ),
         Expanded(
-          child: DropdownButton<StateDetail>(
+          child: DropdownButtonFormField<StateDetail>(
+            validator: (value) =>
+                value!.id == '-1' ? 'Please select a state' : null,
             isExpanded: true,
             value: widget.selectedState,
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -102,7 +104,9 @@ class _DistrictProfileFieldDropDownState
           width: 10,
         ),
         Expanded(
-          child: DropdownButton<District>(
+          child: DropdownButtonFormField<District>(
+            validator: (value) =>
+                value!.id == '-1' ? 'Please select a district' : null,
             isExpanded: true,
             value: widget.selectedDistrict,
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -160,7 +164,9 @@ class _CityProfileFieldDropDownState extends State<CityProfileFieldDropDown> {
           width: 10,
         ),
         Expanded(
-          child: DropdownButton<City>(
+          child: DropdownButtonFormField<City>(
+            validator: (value) =>
+                value!.id == '-1' ? 'Please select a city' : null,
             isExpanded: true,
             value: widget.selectedCity,
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -219,7 +225,9 @@ class _PincodeProfileFieldDropDownState
           width: 10,
         ),
         Expanded(
-          child: DropdownButton<Pincode>(
+          child: DropdownButtonFormField<Pincode>(
+            validator: (value) =>
+                value!.id == '-1' ? 'Please select a pincode' : null,
             isExpanded: true,
             value: widget.selectedPincode,
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -278,7 +286,9 @@ class _CommunityProfileFieldDropDownState
           width: 10,
         ),
         Expanded(
-          child: DropdownButton<Community>(
+          child: DropdownButtonFormField<Community>(
+            validator: (value) =>
+                value!.id == '-1' ? 'Please select a community' : null,
             isExpanded: true,
             value: widget.selectedCommunity,
             icon: const Icon(Icons.keyboard_arrow_down),
