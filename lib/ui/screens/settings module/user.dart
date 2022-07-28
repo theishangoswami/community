@@ -35,6 +35,7 @@ class _UserDetailsState extends State<UserDetails> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _aadhaarCardController = TextEditingController();
   final TextEditingController _passPortController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   bool _isLoading = false;
   File? _selectedImage;
   String _selectedGender = 'male';
@@ -322,6 +323,22 @@ class _UserDetailsState extends State<UserDetails> {
                   Icons.add_card_outlined,
                   color: Colors.black,
                 ),
+                validator: (value) {
+                  String text = (value ?? "").trim();
+                  if (text.isEmpty) {
+                    return "Please enter your address";
+                  }
+                  return null;
+                },
+                displaytText: 'address'.toUpperCase(),
+                controller: _addressController,
+                keyboardType: TextInputType.streetAddress,
+              ),
+              ProfileTextFeild(
+                icon: const Icon(
+                  Icons.add_card_outlined,
+                  color: Colors.black,
+                ),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (value) {
                   String text = (value ?? "").trim();
@@ -373,7 +390,7 @@ class _UserDetailsState extends State<UserDetails> {
                           'pincode_id': _selectedPincode.id,
                           'community_id': _selectedCommunity.id,
                           'gender': _selectedGender,
-                          'address': '',
+                          'address': _addressController.text.trim(),
                           'country_id': '1'
                         },
                         _selectedImage,
