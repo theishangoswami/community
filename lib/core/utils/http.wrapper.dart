@@ -235,7 +235,7 @@ StatusCode:${res.statusCode}
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
       Fluttertoast.showToast(
-        msg: "Your details have been uodated.",
+        msg: "Your details have been updated.",
       );
       return res;
     } else {

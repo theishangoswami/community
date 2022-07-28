@@ -194,7 +194,7 @@ class _UserDetailsState extends State<UserDetails> {
           ),
           body: Form(
             key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autovalidateMode: AutovalidateMode.disabled,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -429,7 +429,8 @@ class _UserDetailsState extends State<UserDetails> {
                               imageError = true;
                             }
                           });
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate() &&
+                              !imageError) {
                             setState(() {
                               _isLoading = true;
                             });
