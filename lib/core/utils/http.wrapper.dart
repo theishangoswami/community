@@ -235,7 +235,7 @@ StatusCode:${res.statusCode}
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
       Fluttertoast.showToast(
-        msg: "Your art has been published successfully.",
+        msg: "Your details have been uodated.",
       );
       return res;
     } else {
