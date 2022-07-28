@@ -1,5 +1,10 @@
 import 'dart:convert';
 
+import 'package:community_internal/core/models/city.dart';
+import 'package:community_internal/core/models/community.dart';
+import 'package:community_internal/core/models/district.dart';
+import 'package:community_internal/core/models/pincode.dart';
+import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/models/user.model.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
 import 'package:flutter/foundation.dart';
@@ -35,6 +40,115 @@ class UserRepository {
       }
     }
     return null;
+  }
+
+  Future<List<StateDetail>?> getState() async {
+    try {
+      var res = await HttpBuilder.get('state/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<StateDetail>.from(
+            body.map((state) => StateDetail.fromJson(state)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<District>?> getDistrict() async {
+    try {
+      var res = await HttpBuilder.get('district/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<District>.from(
+            body.map((district) => District.fromJson(district)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<City>?> getCity() async {
+    try {
+      var res = await HttpBuilder.get('city/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<City>.from(
+            body.map((city) => City.fromJson(city)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<Pincode>?> getPincode() async {
+    try {
+      var res = await HttpBuilder.get('pincode/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<Pincode>.from(
+            body.map((pincode) => Pincode.fromJson(pincode)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<Community>?> getCommunity() async {
+    try {
+      var res = await HttpBuilder.get('community/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<Community>.from(
+            body.map((community) => Community.fromJson(community)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<void> userRegistration(Map<String, String> formBody, image) async {
+    try {
+      await HttpBuilder.postFormData(
+        'first_user/registation',
+        body: formBody,
+        image: image,
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 
   Future<void> updateUserProfile(UserModel userModel) async =>

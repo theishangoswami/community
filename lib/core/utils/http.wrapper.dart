@@ -207,7 +207,7 @@ Response Body:${res.body}
   static Future<http.Response?> postFormData(
     String url, {
     required Map<String, String> body,
-    required Uint8List image,
+    required File image,
   }) async {
     Uri uri = Uri.parse(
       Constants.baseUrl + url,
@@ -215,11 +215,10 @@ Response Body:${res.body}
 
     var request = http.MultipartRequest("POST", uri);
     request.fields.addAll(body);
-    request.fields['filename'] = 'image.jpeg';
     request.files.add(
-      http.MultipartFile.fromBytes(
-        'file',
-        image,
+      await http.MultipartFile.fromPath(
+        'profile',
+        image.path,
         contentType: MediaType('image', 'jpeg'),
       ),
     );
@@ -236,7 +235,7 @@ StatusCode:${res.statusCode}
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
       Fluttertoast.showToast(
-        msg: "Your art has been published successfully.",
+        msg: "Your details have been uodated.",
       );
       return res;
     } else {
