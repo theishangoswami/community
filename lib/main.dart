@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
-import 'package:community_internal/ui/onboarding/login_page.dart';
 import 'package:community_internal/ui/screens/ads_screen.dart';
 import 'package:community_internal/ui/screens/community_feed_fb.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
@@ -37,61 +36,45 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.amber,
         fontFamily: 'Caladea',
       ),
-      // home: const OnboardingScreen(),
-      home: StorageService().isUserLoggedIn() ? MyHomee() : MyHometwo(),
+      home: const SplashScreen(),
     );
   }
 }
 
-class MyHometwo extends StatefulWidget {
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
-  State<MyHometwo> createState() => _MyHometwoState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _MyHometwoState extends State<MyHometwo> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => language())));
+      const Duration(seconds: 3),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StorageService().isUserLoggedIn()
+              ? const CommunityList()
+              : const LanguagePage(),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        color: Colors.amber,
-        child: Center(
-            child: Icon(Icons.ac_unit_sharp, color: Colors.white, size: 90)));
-  }
-}
-
-class MyHomee extends StatefulWidget {
-  @override
-  State<MyHomee> createState() => _MyHomeeState();
-}
-
-class _MyHomeeState extends State<MyHomee> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-        Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => CommunityList())));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        color: Colors.amber,
-        child: Center(
-            child: Icon(Icons.ac_unit_sharp, color: Colors.white, size: 90)));
+      height: MediaQuery.of(context).size.height,
+      width: double.infinity,
+      color: Colors.amber,
+      child: const Center(
+        child: Icon(Icons.ac_unit_sharp, color: Colors.white, size: 90),
+      ),
+    );
   }
 }
 
