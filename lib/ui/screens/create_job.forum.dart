@@ -75,7 +75,7 @@ class CreateJobForumState extends State<CreateJobForum> {
   final StorageService _storageService = StorageService();
   bool isBusy = false;
   createJob() async {
-    UserModel user = _storageService.getCurrentUser();
+    UserModel user = _storageService.getCurrentUser()!;
     if ((formKey.currentState?.validate() ?? false) && image != null) {
       setState(() {
         isBusy = true;

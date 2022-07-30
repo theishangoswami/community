@@ -8,8 +8,10 @@ import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/create_post.dart';
 import 'package:community_internal/ui/screens/job_list.dart';
 import 'package:community_internal/ui/screens/members_screen.dart';
+import 'package:community_internal/ui/screens/verification_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ui/screens/app start module/language.dart';
 
@@ -49,17 +51,31 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  void fetchCurrentUser() async {
+    if (StorageService().isUserLoggedIn()) {
+      final SharedPreferences _sharedPreference = locator<SharedPreferences>();
+      await StorageService()
+          .saveUser(_sharedPreference.getString('phoneNumber').toString());
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchCurrentUser();
+    final user = StorageService().getCurrentUser();
     Timer(
       const Duration(seconds: 3),
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => StorageService().isUserLoggedIn()
-              ? const CommunityList()
-              : const LanguagePage(),
+          builder: (context) {
+            return StorageService().isUserLoggedIn()
+                ? user!.status == 'enable'
+                    ? const CommunityList()
+                    : VerifyPage(phonenumber: user.mobileNumber.toString())
+                : const LanguagePage();
+          },
         ),
       ),
     );

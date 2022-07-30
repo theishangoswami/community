@@ -28,10 +28,10 @@ class StorageService {
     return false;
   }
 
-  UserModel getCurrentUser() {
+  UserModel? getCurrentUser() {
     var user = _sharedPreferences.getString(
       'currentUser',
-    )!;
-    return UserModel.fromJson(jsonDecode(user));
+    );
+    return user!=null?UserModel.fromJson(jsonDecode(user)):null;
   }
 }

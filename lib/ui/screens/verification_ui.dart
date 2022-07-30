@@ -55,7 +55,7 @@ class _VerifyPageState extends State<VerifyPage> {
                   setState(() {
                     _isloading = false;
                   });
-                  if (user.status == 'enable') {
+                  if (user!.status == 'enable') {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

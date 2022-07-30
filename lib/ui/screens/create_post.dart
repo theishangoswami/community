@@ -33,7 +33,7 @@ class _CreatePostState extends State<CreatePost> {
   final StorageService _storageService = StorageService();
   bool isBusy = false;
   createPost() async {
-    UserModel user = _storageService.getCurrentUser();
+    UserModel user = _storageService.getCurrentUser()!;
 
     try {
       setState(() {
