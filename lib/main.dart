@@ -72,8 +72,8 @@ class _SplashScreenState extends State<SplashScreen> {
           builder: (context) {
             return StorageService().isUserLoggedIn()
                 ? user!.status == 'enable'
-                    ? const CommunityList()
-                    : VerifyPage(phonenumber: user.mobileNumber.toString())
+                    ? VerifyPage(phonenumber: user.mobileNumber.toString())
+                    : const CommunityList()
                 : const LanguagePage();
           },
         ),

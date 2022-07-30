@@ -139,11 +139,11 @@ class UserRepository {
 
   Future<void> userRegistration(Map<String, String> formBody, image) async {
     try {
-      await HttpBuilder.postFormData(
-        'first_user/registation',
-        body: formBody,
-        image: image,
-      );
+      await HttpBuilder.postFormData('first_user/registation',
+          body: formBody,
+          image: image,
+          imageParameterName: 'profile',
+          successMessage: "Your details have been updated.");
     } catch (e) {
       if (kDebugMode) {
         print(e);
