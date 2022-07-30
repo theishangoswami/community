@@ -9,6 +9,7 @@ import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
+import 'package:community_internal/ui/screens/verification_ui.dart';
 import 'package:community_internal/ui/widgets/gender_selection.dart';
 import 'package:community_internal/ui/widgets/profile_field.dart';
 import 'package:community_internal/ui/widgets/profile_field_drop_down.dart';
@@ -459,7 +460,7 @@ class _UserDetailsState extends State<UserDetails> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const CommunityList(),
+                                builder: (context) => const VerifyPage(),
                               ),
                             );
                           }
