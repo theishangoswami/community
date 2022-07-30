@@ -466,7 +466,9 @@ class _UserDetailsState extends State<UserDetails> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const VerifyPage(),
+                                builder: (context) => VerifyPage(
+                                  phonenumber: widget.phoneNumber,
+                                ),
                               ),
                             );
                           }
