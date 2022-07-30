@@ -5,7 +5,7 @@ import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
-import 'package:community_internal/core/models/user.model.dart';
+import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
 import 'package:flutter/foundation.dart';
 

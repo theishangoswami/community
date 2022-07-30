@@ -1,8 +1,7 @@
+import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/gen/assets.gen.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/models/user.model.dart';
 import '../../core/repository/users.repository.dart';
 
 class MembersGridList extends StatefulWidget {
