@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:community_internal/app/locator.dart';
+import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/user.model.dart';
 
 class StorageService {
   final SharedPreferences _sharedPreferences = locator<SharedPreferences>();
@@ -29,10 +28,10 @@ class StorageService {
     return false;
   }
 
-  UserModel getCurrentUser() {
+  UserModel? getCurrentUser() {
     var user = _sharedPreferences.getString(
       'currentUser',
-    )!;
-    return UserModel.fromJson(jsonDecode(user));
+    );
+    return user!=null?UserModel.fromJson(jsonDecode(user)):null;
   }
 }

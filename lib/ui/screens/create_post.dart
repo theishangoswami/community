@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/models/post.model.dart';
-import 'package:community_internal/core/models/user.model.dart';
+import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
 import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
@@ -33,7 +33,7 @@ class _CreatePostState extends State<CreatePost> {
   final StorageService _storageService = StorageService();
   bool isBusy = false;
   createPost() async {
-    UserModel user = _storageService.getCurrentUser();
+    UserModel user = _storageService.getCurrentUser()!;
 
     try {
       setState(() {

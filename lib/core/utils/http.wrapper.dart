@@ -207,7 +207,9 @@ Response Body:${res.body}
   static Future<http.Response?> postFormData(
     String url, {
     required Map<String, String> body,
-    required File image,
+    File? image,
+    String? imageParameterName,
+    required String successMessage,
   }) async {
     Uri uri = Uri.parse(
       Constants.baseUrl + url,
@@ -215,13 +217,15 @@ Response Body:${res.body}
 
     var request = http.MultipartRequest("POST", uri);
     request.fields.addAll(body);
-    request.files.add(
-      await http.MultipartFile.fromPath(
-        'profile',
-        image.path,
-        contentType: MediaType('image', 'jpeg'),
-      ),
-    );
+    if (image != null && imageParameterName!.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          imageParameterName,
+          image.path,
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      );
+    }
     var streamRes = await request.send();
     var res = await http.Response.fromStream(streamRes);
     debugPrint(
@@ -235,7 +239,7 @@ StatusCode:${res.statusCode}
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
       Fluttertoast.showToast(
-        msg: "Your details have been updated.",
+        msg: successMessage,
       );
       return res;
     } else {

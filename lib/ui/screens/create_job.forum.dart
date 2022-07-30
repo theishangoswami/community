@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:community_internal/core/models/job.model.dart';
-import 'package:community_internal/core/models/user.model.dart';
+import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/core/repository/jobs.repository.dart';
 import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
@@ -75,7 +75,7 @@ class CreateJobForumState extends State<CreateJobForum> {
   final StorageService _storageService = StorageService();
   bool isBusy = false;
   createJob() async {
-    UserModel user = _storageService.getCurrentUser();
+    UserModel user = _storageService.getCurrentUser()!;
     if ((formKey.currentState?.validate() ?? false) && image != null) {
       setState(() {
         isBusy = true;

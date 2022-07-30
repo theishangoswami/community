@@ -1,6 +1,7 @@
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/models/community.model.dart';
 import 'package:community_internal/core/repository/community.repo.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/main.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,12 @@ class _CommunityListState extends State<CommunityList> {
 
   bool isBusy = false;
   fetchCommunityList() async {
+    final SharedPreferences _sharedPreferences = locator<SharedPreferences>();
+    final communityId = _sharedPreferences.getString('communityId');
     setState(() {
       isBusy = true;
     });
-    communityList = (await _communityRepository.getCommunityList())
+    communityList = (await _communityRepository.getCommunityList(communityId!))
         // .where((CommunityModel e) => e.status == 'apporoved')
         .toList();
     setState(() {
@@ -191,11 +194,17 @@ class _CommunityListState extends State<CommunityList> {
 //   }
 // }
 
-class CommunityTileCustom extends StatelessWidget {
+class CommunityTileCustom extends StatefulWidget {
   final CommunityModel communityModel;
   const CommunityTileCustom({Key? key, required this.communityModel})
       : super(key: key);
 
+  @override
+  State<CommunityTileCustom> createState() => _CommunityTileCustomState();
+}
+
+class _CommunityTileCustomState extends State<CommunityTileCustom> {
+  final CommunityRepository _communityRepository = CommunityRepository();
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -215,7 +224,7 @@ class CommunityTileCustom extends StatelessWidget {
           CircleAvatar(
             radius: 40,
             backgroundImage: NetworkImage(
-              communityModel.societyLogo ??
+              widget.communityModel.societyLogo ??
                   "https://media.istockphoto.com/vectors/crowd-of-young-and-elderly-men-and-women-in-trendy-hipster-clothes-vector-id1288712636?s=612x612",
               // height: MediaQuery.of(context).size.height * 0.15,
               // fit: BoxFit.fill,
@@ -227,7 +236,7 @@ class CommunityTileCustom extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Text(
-              communityModel.societyName?.toUpperCase() ?? "NA",
+              widget.communityModel.societyName?.toUpperCase() ?? "NA",
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -242,7 +251,7 @@ class CommunityTileCustom extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Text(
-              (communityModel.person ?? "0").toString() + " members",
+              (widget.communityModel.person ?? "0").toString() + " members",
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -264,7 +273,7 @@ class CommunityTileCustom extends StatelessWidget {
                 child: MaterialButton(
                   color: Colors.amber,
                   child: Text(
-                    "Join".toUpperCase(),
+                    'Join'.toUpperCase(),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w600,
@@ -273,7 +282,15 @@ class CommunityTileCustom extends StatelessWidget {
                   ),
                   onPressed: () async {
                     await locator<SharedPreferences>()
-                        .setString('societyId', communityModel.id ?? "");
+                        .setString('societyId', widget.communityModel.id ?? "");
+                    final response =
+                        await _communityRepository.updateJoinedSociety(
+                      formBody: {
+                        "societyId": widget.communityModel.id.toString(),
+                        "userId":
+                            StorageService().getCurrentUser()!.id.toString(),
+                      },
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(

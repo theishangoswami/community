@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:community_internal/app/constants.dart';
 import 'package:community_internal/core/models/comment.model.dart';
 import 'package:community_internal/core/models/like.model.dart';
-import 'package:community_internal/core/models/user.model.dart';
+import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
 import 'package:community_internal/core/utils/date.utils.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
