@@ -29,10 +29,12 @@ class _CommunityListState extends State<CommunityList> {
 
   bool isBusy = false;
   fetchCommunityList() async {
+    final SharedPreferences _sharedPreferences = locator<SharedPreferences>();
+    final communityId = _sharedPreferences.getString('communityId');
     setState(() {
       isBusy = true;
     });
-    communityList = (await _communityRepository.getCommunityList())
+    communityList = (await _communityRepository.getCommunityList(communityId!))
         // .where((CommunityModel e) => e.status == 'apporoved')
         .toList();
     setState(() {

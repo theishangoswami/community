@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import '../utils/http.wrapper.dart';
 
 class CommunityRepository {
-  Future<List<CommunityModel>> getCommunityList() async {
+  Future<List<CommunityModel>> getCommunityList(String communityId) async {
     try {
       var res = await HttpBuilder.get(
-        'society/view',
+        'society/view/$communityId',
       );
       if (res != null) {
         var body = jsonDecode(res.body)['result'];
