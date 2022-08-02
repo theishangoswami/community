@@ -7,7 +7,11 @@ import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 
 class AdsScreen extends StatefulWidget {
-  const AdsScreen({Key? key}) : super(key: key);
+  final String societyId;
+  final String societyName;
+  const AdsScreen(
+      {Key? key, required this.societyId, required this.societyName})
+      : super(key: key);
 
   @override
   State<AdsScreen> createState() => _AdsScreenState();
@@ -27,7 +31,7 @@ class _AdsScreenState extends State<AdsScreen> {
     setState(() {
       isBusy = true;
     });
-    postsList = (await _postRepository.getPosts())
+    postsList = (await _postRepository.getPosts(widget.societyId))
         .where((element) => element.ads == "1")
         .toList();
     setState(() {
@@ -72,6 +76,7 @@ class _AdsScreenState extends State<AdsScreen> {
         body: ListView.builder(
           itemBuilder: (context, index) {
             return PostContainer(
+              societyName: widget.societyName,
               post: postsList.elementAt(index),
             );
           },
