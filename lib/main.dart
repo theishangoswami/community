@@ -71,9 +71,9 @@ class _SplashScreenState extends State<SplashScreen> {
         MaterialPageRoute(
           builder: (context) {
             return StorageService().isUserLoggedIn()
-                ? user!.status == 'enable'
+                ? user?.status?.startsWith('e') ?? false
                     ? const CommunityList()
-                    : VerifyPage(phonenumber: user.mobileNumber.toString())
+                    : VerifyPage(phonenumber: user!.mobileNumber.toString())
                 : const LanguagePage();
           },
         ),
@@ -95,7 +95,11 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final String societyId;
+  final String societyName;
+  const MyHomePage(
+      {Key? key, required this.societyId, required this.societyName})
+      : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -103,12 +107,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-  late PageController _pageController;
-
+  final PageController _pageController = PageController();
+  List _pages = [];
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _pageController = PageController();
+    _pages = [
+      CommunityFeedFb(
+        societyId: widget.societyId,
+        societyName: widget.societyName,
+      ),
+      const MembersScreen(),
+      const CreatePost(),
+      const JobList(),
+      AdsScreen(
+        societyId: widget.societyId,
+        societyName: widget.societyName,
+      ),
+    ];
   }
 
   @override
@@ -120,19 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() => _selectedIndex = index);
-        },
-        children: const [
-          CommunityFeedFb(),
-          MembersScreen(),
-          CreatePost(),
-          JobList(),
-          AdsScreen(),
-        ],
-      ),
+      body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.amber,
         unselectedItemColor: Colors.grey,
@@ -142,8 +147,12 @@ class _MyHomePageState extends State<MyHomePage> {
             const TextStyle(color: Color.fromARGB(255, 54, 20, 20)),
         currentIndex: _selectedIndex,
         onTap: (index) {
-          setState(() => _selectedIndex = index);
-          _pageController.jumpToPage(index);
+          setState(() {
+            _selectedIndex = index;
+          });
+          _pageController.jumpToPage(
+            index,
+          );
         },
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

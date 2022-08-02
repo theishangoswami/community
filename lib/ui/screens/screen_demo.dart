@@ -18,7 +18,7 @@ class _ScreenDemoState extends State<ScreenDemo> {
   final List screens = [
     const CommunityList(),
     const OnboardingScreen(),
-    const CommunityFeedFb(),
+    // const CommunityFeedFb(),
     const CommunityFeed(),
     const CreatePost(),
     const MembersScreen(),
