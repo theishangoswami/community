@@ -1,6 +1,10 @@
+import 'package:community_internal/app/locator.dart';
+import 'package:community_internal/core/repository/ledger_repository.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // import '../widgets/dummy_drawer.dart';
 
@@ -17,6 +21,7 @@ class SameCom extends StatefulWidget {
 }
 
 class _SameComState extends State<SameCom> {
+  bool _isLoading = false;
   List<Icon> icons = const [
     Icon(
       Icons.person,
@@ -90,7 +95,7 @@ class _SameComState extends State<SameCom> {
                               ),
                               TextField(
                                 controller: _controller[index],
-                                keyboardType: index == 2
+                                keyboardType: index == 2 || index == 4
                                     ? TextInputType.number
                                     : TextInputType.text,
                               ),
@@ -111,11 +116,32 @@ class _SameComState extends State<SameCom> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  final SharedPreferences _sharedPreferences =
+                      locator<SharedPreferences>();
+                  final societyId = _sharedPreferences.getString('societyId');
+                  final userId = StorageService().getCurrentUser();
+                  await LedgerRepository().addDonation({
+                    'trusty_id': userId!.id,
+                    'user_name': _controller[0].text.trim(),
+                    'user_mobile': _controller[2].text.trim(),
+                    'user_email': _controller[1].text.trim(),
+                    'address': _controller[3].text.trim(),
+                    'society_id': societyId,
+                    'donation_amount': _controller[4].text.trim(),
+                    'status': ''
+                  });
+                  setState(() {
+                    _isLoading = false;
+                  });
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CommunityList()),
+                      builder: (context) => const CommunityList(),
+                    ),
                   );
                 },
                 child: const Text(
