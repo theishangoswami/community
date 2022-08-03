@@ -232,8 +232,6 @@
 // }
 import 'package:community_internal/ui/screens/member_profile.dart';
 import 'package:community_internal/ui/screens/ledger module/slider.dart';
-import 'package:community_internal/ui/widgets/dummy_drawer.dart';
-import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'slider.dart';
 
@@ -257,9 +255,9 @@ class _ledger_pageState extends State<ledger_page> {
           color: Colors.black,
         ),
       ),
-      body: ListView(
-        children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      body: SizedBox(
+        child: ListView(
+          children: [
             const SizedBox(
               height: 20,
             ),
@@ -355,8 +353,8 @@ class _ledger_pageState extends State<ledger_page> {
             const SizedBox(
               height: 30,
             ),
-          ]),
-        ],
+          ],
+        ),
       ),
     );
   }

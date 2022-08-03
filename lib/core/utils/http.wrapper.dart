@@ -14,13 +14,14 @@ class HttpBuilder {
   static const bool isDebug = kDebugMode;
   static Future<http.Response?> get(
     String url, {
+    bool baseUrl = true,
     bool includeToken = true,
     Map<String, dynamic>? queryParams,
     bool enableSnackBar = true,
   }) async {
     try {
       var headers = await getHeaders(includeToken);
-      Uri uri = Uri.parse(Constants.baseUrl + url);
+      Uri uri = Uri.parse(baseUrl ? Constants.baseUrl + url : url);
       if (queryParams != null) {
         uri = uri.replace(queryParameters: queryParams);
       }
