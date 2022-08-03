@@ -70,6 +70,7 @@ StatusCode:${res.statusCode}
 
   static Future<http.Response?> post(
     String url, {
+    bool baseUrl = true,
     bool includeToken = true,
     Map<String, dynamic>? body,
     bool showSnackbars = true,
@@ -79,7 +80,7 @@ StatusCode:${res.statusCode}
 
     try {
       Uri uri = Uri.parse(
-        Constants.baseUrl + url,
+        baseUrl ? Constants.baseUrl + url : url,
       );
       debugPrint("Uri is:$uri");
       var res = await http.post(
