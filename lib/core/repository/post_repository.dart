@@ -12,9 +12,9 @@ import '../models/post.model.dart';
 import 'package:http_parser/http_parser.dart';
 
 class PostRepository {
-  Future<List<PostModel>> getPosts() async {
+  Future<List<PostModel>> getPosts(String societyId) async {
     try {
-      var res = await HttpBuilder.get('social_media_post/view');
+      var res = await HttpBuilder.get('social_media_post/society_wise/$societyId');
       if (res != null) {
         var body = jsonDecode(res.body)['result'];
         return body.map<PostModel>((json) => PostModel.fromJson(json)).toList();

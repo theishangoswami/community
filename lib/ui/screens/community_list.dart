@@ -291,10 +291,13 @@ class _CommunityTileCustomState extends State<CommunityTileCustom> {
                             StorageService().getCurrentUser()!.id.toString(),
                       },
                     );
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MyHomePage(),
+                        builder: (context) => MyHomePage(
+                          societyName: widget.communityModel.societyName!,
+                          societyId: widget.communityModel.id!,
+                        ),
                       ),
                     );
                   },

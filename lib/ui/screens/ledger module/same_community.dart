@@ -1,6 +1,10 @@
+import 'package:community_internal/app/locator.dart';
+import 'package:community_internal/core/repository/ledger_repository.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // import '../widgets/dummy_drawer.dart';
 
@@ -17,6 +21,7 @@ class SameCom extends StatefulWidget {
 }
 
 class _SameComState extends State<SameCom> {
+  bool _isLoading = false;
   List<Icon> icons = const [
     Icon(
       Icons.person,
@@ -51,7 +56,7 @@ class _SameComState extends State<SameCom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Same Community"),
+        title: const Text("Same Community"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +69,7 @@ class _SameComState extends State<SameCom> {
                     print(_controller.length);
                     return Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                         ),
                         Container(
@@ -76,7 +81,7 @@ class _SameComState extends State<SameCom> {
                                   left: Radius.circular(3)),
                             ),
                             child: icons[index]),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
@@ -85,11 +90,12 @@ class _SameComState extends State<SameCom> {
                             children: [
                               Text(
                                 datas[index].toUpperCase(),
-                                style: TextStyle(fontWeight: FontWeight.w400),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400),
                               ),
                               TextField(
                                 controller: _controller[index],
-                                keyboardType: index == 2
+                                keyboardType: index == 2 || index == 4
                                     ? TextInputType.number
                                     : TextInputType.text,
                               ),
@@ -104,26 +110,46 @@ class _SameComState extends State<SameCom> {
             child: Padding(
               padding: const EdgeInsets.all(25),
               child: ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ))),
-                onPressed: () {
-                  Navigator.push(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.maxFinite, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                onPressed: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  final SharedPreferences _sharedPreferences =
+                      locator<SharedPreferences>();
+                  final societyId = _sharedPreferences.getString('societyId');
+                  final userId = StorageService().getCurrentUser();
+                  await LedgerRepository().addDonation({
+                    'trusty_id': userId!.id,
+                    'user_name': _controller[0].text.trim(),
+                    'user_mobile': _controller[2].text.trim(),
+                    'user_email': _controller[1].text.trim(),
+                    'address': _controller[3].text.trim(),
+                    'society_id': societyId,
+                    'donation_amount': _controller[4].text.trim(),
+                    'status': ''
+                  });
+                  setState(() {
+                    _isLoading = false;
+                  });
+                  Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => CommunityList()),
+                    MaterialPageRoute(
+                      builder: (context) => const CommunityList(),
+                    ),
                   );
                 },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 120),
-                  child: Text(
-                    "NEXT",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 19),
+                child: const Text(
+                  "SAVE",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 19,
                   ),
                 ),
               ),

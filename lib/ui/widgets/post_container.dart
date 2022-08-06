@@ -19,8 +19,10 @@ import '../../core/repository/users.repository.dart';
 
 class PostContainer extends StatefulWidget {
   final PostModel post;
+  final String societyName;
 
-  const PostContainer({Key? key, required this.post}) : super(key: key);
+  const PostContainer({Key? key, required this.post, required this.societyName})
+      : super(key: key);
 
   @override
   State<PostContainer> createState() => _PostContainerState();
@@ -41,6 +43,7 @@ class _PostContainerState extends State<PostContainer>
       isUserDetailsfetching = true;
     });
     userModel = await UserRepository().getUser(widget.post.userId!);
+    print(userModel);
     setState(() {
       isUserDetailsfetching = false;
     });
@@ -48,6 +51,9 @@ class _PostContainerState extends State<PostContainer>
 
   @override
   Widget build(BuildContext context) {
+    // print(userModel);
+    // print('User Profile - ${userModel?.profile ?? ''}');
+    // print('User Name - ${userModel?.userName ?? ''}');
     super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
@@ -107,7 +113,7 @@ class _PostContainerState extends State<PostContainer>
                                     Row(
                                       children: [
                                         Text(
-                                          '${(widget.post.date!)} • '
+                                          '${widget.societyName} • '
                                               .toUpperCase(),
                                           style: TextStyle(
                                             color: Colors.grey[600],

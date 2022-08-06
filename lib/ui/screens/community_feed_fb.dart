@@ -10,7 +10,11 @@ import '../widgets/user_avatar.dart';
 import 'member_profile.dart';
 
 class CommunityFeedFb extends StatefulWidget {
-  const CommunityFeedFb({Key? key}) : super(key: key);
+  final String societyId;
+  final String societyName;
+  const CommunityFeedFb(
+      {Key? key, required this.societyId, required this.societyName})
+      : super(key: key);
 
   @override
   _CommunityFeedFbState createState() => _CommunityFeedFbState();
@@ -20,17 +24,12 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
   final PostRepository _postRepository = PostRepository();
   List<PostModel> postsList = [];
   bool isBusy = false;
-  @override
-  void initState() {
-    super.initState();
-    fetchPostList();
-  }
 
-  Future fetchPostList() async {
+  Future<void> fetchPostList() async {
     setState(() {
       isBusy = true;
     });
-    postsList = (await _postRepository.getPosts())
+    postsList = (await _postRepository.getPosts(widget.societyId))
         .where((element) => element.ads != "1")
         .toList();
     if (mounted) {
@@ -51,6 +50,11 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
       style: TextStyle(fontSize: 16),
     ),
   };
+  @override
+  void initState() {
+    super.initState();
+    fetchPostList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +120,7 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
                 itemBuilder: (context, index) {
                   return PostContainer(
                     post: postsList.elementAt(index),
+                    societyName: widget.societyName,
                   );
                 },
                 itemCount: postsList.length,
