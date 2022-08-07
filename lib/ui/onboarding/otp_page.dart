@@ -1,11 +1,16 @@
+import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/repository/auth.repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
+import 'package:community_internal/main.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
+import 'package:community_internal/ui/screens/onboarding_screen.dart';
 import 'package:community_internal/ui/screens/settings%20module/user.dart';
+import 'package:community_internal/ui/screens/verification_ui.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CodeVerificationPage extends StatefulWidget {
   final String phonenumber;
@@ -135,12 +140,24 @@ class _OtpInputState extends State<OtpInput> {
                   }
                   widget.setBusy(false);
                   if (res) {
+                    final user = StorageService().getCurrentUser();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserDetails(
-                          phoneNumber: widget.phoneNumber,
-                        ),
+                        builder: (context) => user?.status?.startsWith('e') ??
+                                false
+                            ? user?.societyId?.isNotEmpty ?? false
+                                ? MyHomePage(
+                                    societyId: user!.societyId!,
+                                    societyName: locator<SharedPreferences>()
+                                        .getString('societyName')!,
+                                  )
+                                : const CommunityList()
+                            : user?.registrationDate == null
+                                ? UserDetails(phoneNumber: widget.phoneNumber)
+                                : VerifyPage(
+                                    phonenumber: widget.phoneNumber,
+                                  ),
                       ),
                     );
                   }
