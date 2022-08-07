@@ -53,7 +53,7 @@ class _CommunityListState extends State<CommunityList> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text(
-                "All Societies".toUpperCase(),
+                "All Communities".toUpperCase(),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               backgroundColor: Colors.white,
@@ -85,7 +85,7 @@ class _CommunityListState extends State<CommunityList> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15.0, vertical: 30),
                     child: Text(
-                      'Join your Society'.toUpperCase(),
+                      'Join your community'.toUpperCase(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 24,
@@ -124,7 +124,7 @@ class _CommunityListState extends State<CommunityList> {
               padding: const EdgeInsets.all(18),
               child: FloatingActionButton(
                   onPressed: () async {
-                    var url = Uri.parse("https://mydemoweb.online/community_app/admin/new_society_aps.php");
+                    var url = Uri.parse("https://www.youtube.com/");
                     if (await canLaunchUrl(url)) {
                       await launchUrl(url);
                     } else {
@@ -283,6 +283,8 @@ class _CommunityTileCustomState extends State<CommunityTileCustom> {
                   onPressed: () async {
                     await locator<SharedPreferences>()
                         .setString('societyId', widget.communityModel.id ?? "");
+                    await locator<SharedPreferences>().setString(
+                        'societyName', widget.communityModel.societyName ?? "");
                     final response =
                         await _communityRepository.updateJoinedSociety(
                       formBody: {

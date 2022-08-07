@@ -32,6 +32,6 @@ class StorageService {
     var user = _sharedPreferences.getString(
       'currentUser',
     );
-    return user!=null?UserModel.fromJson(jsonDecode(user)):null;
+    return user != null ? UserModel.fromJson(jsonDecode(user)) : null;
   }
 }

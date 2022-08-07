@@ -8,8 +8,6 @@ import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/create_post.dart';
 import 'package:community_internal/ui/screens/job_list.dart';
 import 'package:community_internal/ui/screens/members_screen.dart';
-import 'package:community_internal/ui/screens/settings%20module/amount_page.dart';
-import 'package:community_internal/ui/screens/settings%20module/posting_screen.dart';
 import 'package:community_internal/ui/screens/verification_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,6 +22,7 @@ void main() async {
     await Firebase.initializeApp()
         .then((value) => print("Connected to Firebase"));
   } catch (e) {}
+
   runApp(const MyApp());
 }
 
@@ -73,7 +72,13 @@ class _SplashScreenState extends State<SplashScreen> {
           builder: (context) {
             return StorageService().isUserLoggedIn()
                 ? user?.status?.startsWith('e') ?? false
-                    ? const CommunityList()
+                    ? user?.societyId?.isNotEmpty ?? false
+                        ? MyHomePage(
+                            societyId: user!.societyId!,
+                            societyName: locator<SharedPreferences>()
+                                .getString('societyName')!,
+                          )
+                        : const CommunityList()
                     : VerifyPage(phonenumber: user!.mobileNumber.toString())
                 : const LanguagePage();
           },
@@ -126,8 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
         societyId: widget.societyId,
         societyName: widget.societyName,
       ),
-      Posting(),
-      Request()
     ];
   }
 
@@ -192,20 +195,6 @@ class _MyHomePageState extends State<MyHomePage> {
               color: _selectedIndex == 4 ? Colors.amber : Colors.grey,
             ),
             label: 'Ads'.toUpperCase(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.payments,
-              color: _selectedIndex == 5 ? Colors.amber : Colors.grey,
-            ),
-            label: 'Balance'.toUpperCase(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.request_page,
-              color: _selectedIndex == 6 ? Colors.amber : Colors.grey,
-            ),
-            label: 'Request'.toUpperCase(),
           ),
         ],
       ),
