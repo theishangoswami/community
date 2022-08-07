@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +55,10 @@ class _SameExState extends State<SameEx> {
     "Upload Receipt",
   ];
 
+  final FilePickerService _filePickerService = FilePickerService();
+  File? file;
+  int? type;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +111,20 @@ class _SameExState extends State<SameEx> {
                       ],
                     );
                   })),
+          ListTile(
+            onTap: () async {
+              var file = await _filePickerService.pickImageFromGallery();
+              setState(() {
+                this.file = file;
+                type = 2;
+              });
+            },
+            leading: const Icon(
+              Icons.photo,
+              color: Colors.blue,
+            ),
+            title: Text("Photo".toUpperCase()),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
