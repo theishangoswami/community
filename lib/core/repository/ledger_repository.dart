@@ -8,7 +8,7 @@ class LedgerRepository {
   Future<void> addDonation(Map<String, dynamic> body) async {
     try {
       var res = await HttpBuilder.post(
-        'https://mydemoweb.online/community_app/user/api/donation/add',
+        'https://www.akhilbhartiyasamaj.com/user/api/donation/add',
         baseUrl: false,
         body: body,
       );
@@ -25,7 +25,7 @@ class LedgerRepository {
   Future<List<Donation>?> getDonation(String societyId) async {
     try {
       var res = await HttpBuilder.get(
-        'https://mydemoweb.online/community_app/user/api/donation_view_society_wise/$societyId',
+        'https://www.akhilbhartiyasamaj.com/user/api/donation_view_society_wise/$societyId',
         baseUrl: false,
       );
       if (res != null) {
