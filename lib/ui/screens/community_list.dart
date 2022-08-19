@@ -30,8 +30,8 @@ class _CommunityListState extends State<CommunityList> {
 
   bool isBusy = false;
   fetchCommunityList() async {
-    final SharedPreferences _sharedPreferences = locator<SharedPreferences>();
-    final communityId = _sharedPreferences.getString('communityId');
+    final user = StorageService().getCurrentUser();
+    final communityId = user!.communityId;
     setState(() {
       isBusy = true;
     });
