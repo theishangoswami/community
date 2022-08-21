@@ -288,8 +288,8 @@ class _CommunityTileCustomState extends State<CommunityTileCustom> {
                     final response =
                         await _communityRepository.updateJoinedSociety(
                       formBody: {
-                        "societyId": widget.communityModel.id.toString(),
-                        "userId":
+                        "society_id": widget.communityModel.id.toString(),
+                        "user_id":
                             StorageService().getCurrentUser()!.id.toString(),
                       },
                     );
