@@ -21,6 +21,8 @@ StateDetail _$StateDetailFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$StateDetail {
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'country_id')
+  String? get countryId => throw _privateConstructorUsedError;
   @JsonKey(name: 'state_name')
   String get stateName => throw _privateConstructorUsedError;
 
@@ -35,7 +37,10 @@ abstract class $StateDetailCopyWith<$Res> {
   factory $StateDetailCopyWith(
           StateDetail value, $Res Function(StateDetail) then) =
       _$StateDetailCopyWithImpl<$Res>;
-  $Res call({String id, @JsonKey(name: 'state_name') String stateName});
+  $Res call(
+      {String id,
+      @JsonKey(name: 'country_id') String? countryId,
+      @JsonKey(name: 'state_name') String stateName});
 }
 
 /// @nodoc
@@ -49,6 +54,7 @@ class _$StateDetailCopyWithImpl<$Res> implements $StateDetailCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? countryId = freezed,
     Object? stateName = freezed,
   }) {
     return _then(_value.copyWith(
@@ -56,6 +62,10 @@ class _$StateDetailCopyWithImpl<$Res> implements $StateDetailCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      countryId: countryId == freezed
+          ? _value.countryId
+          : countryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       stateName: stateName == freezed
           ? _value.stateName
           : stateName // ignore: cast_nullable_to_non_nullable
@@ -71,7 +81,10 @@ abstract class _$$_StateDetailCopyWith<$Res>
           _$_StateDetail value, $Res Function(_$_StateDetail) then) =
       __$$_StateDetailCopyWithImpl<$Res>;
   @override
-  $Res call({String id, @JsonKey(name: 'state_name') String stateName});
+  $Res call(
+      {String id,
+      @JsonKey(name: 'country_id') String? countryId,
+      @JsonKey(name: 'state_name') String stateName});
 }
 
 /// @nodoc
@@ -87,6 +100,7 @@ class __$$_StateDetailCopyWithImpl<$Res> extends _$StateDetailCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? countryId = freezed,
     Object? stateName = freezed,
   }) {
     return _then(_$_StateDetail(
@@ -94,6 +108,10 @@ class __$$_StateDetailCopyWithImpl<$Res> extends _$StateDetailCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      countryId: countryId == freezed
+          ? _value.countryId
+          : countryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       stateName: stateName == freezed
           ? _value.stateName
           : stateName // ignore: cast_nullable_to_non_nullable
@@ -106,7 +124,9 @@ class __$$_StateDetailCopyWithImpl<$Res> extends _$StateDetailCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_StateDetail implements _StateDetail {
   _$_StateDetail(
-      {required this.id, @JsonKey(name: 'state_name') required this.stateName});
+      {required this.id,
+      @JsonKey(name: 'country_id') this.countryId,
+      @JsonKey(name: 'state_name') required this.stateName});
 
   factory _$_StateDetail.fromJson(Map<String, dynamic> json) =>
       _$$_StateDetailFromJson(json);
@@ -114,12 +134,15 @@ class _$_StateDetail implements _StateDetail {
   @override
   final String id;
   @override
+  @JsonKey(name: 'country_id')
+  final String? countryId;
+  @override
   @JsonKey(name: 'state_name')
   final String stateName;
 
   @override
   String toString() {
-    return 'StateDetail(id: $id, stateName: $stateName)';
+    return 'StateDetail(id: $id, countryId: $countryId, stateName: $stateName)';
   }
 
   @override
@@ -128,6 +151,7 @@ class _$_StateDetail implements _StateDetail {
         (other.runtimeType == runtimeType &&
             other is _$_StateDetail &&
             const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.countryId, countryId) &&
             const DeepCollectionEquality().equals(other.stateName, stateName));
   }
 
@@ -136,6 +160,7 @@ class _$_StateDetail implements _StateDetail {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(countryId),
       const DeepCollectionEquality().hash(stateName));
 
   @JsonKey(ignore: true)
@@ -154,6 +179,7 @@ class _$_StateDetail implements _StateDetail {
 abstract class _StateDetail implements StateDetail {
   factory _StateDetail(
           {required final String id,
+          @JsonKey(name: 'country_id') final String? countryId,
           @JsonKey(name: 'state_name') required final String stateName}) =
       _$_StateDetail;
 
@@ -162,6 +188,9 @@ abstract class _StateDetail implements StateDetail {
 
   @override
   String get id;
+  @override
+  @JsonKey(name: 'country_id')
+  String? get countryId;
   @override
   @JsonKey(name: 'state_name')
   String get stateName;

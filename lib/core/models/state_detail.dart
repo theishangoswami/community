@@ -7,6 +7,7 @@ part 'state_detail.g.dart';
 class StateDetail with _$StateDetail {
   factory StateDetail({
     required String id,
+    @JsonKey(name: 'country_id') String? countryId,
     @JsonKey(name: 'state_name') required String stateName,
   }) = _StateDetail;
 
