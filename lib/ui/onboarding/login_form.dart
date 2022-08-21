@@ -107,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                   if (formKey.currentState?.validate() ?? false) {
                     widget.setBusy(true);
                     bool res = await _authRepository.sendOtp(
-                      (_mobileNumberController.text),
+                      (_mobileNumberController.text.trim()),
                     );
                     widget.setBusy(false);
 

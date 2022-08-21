@@ -41,4 +41,42 @@ class LedgerRepository {
     }
     return null;
   }
+
+  Future<String?> getTotalDonation(String trustyId) async {
+    try {
+      var res = await HttpBuilder.get(
+          'https://www.akhilbhartiyasamaj.com/user/api/donation_view_amount/$trustyId',
+          baseUrl: false);
+      if (res != null) {
+        var body = jsonDecode(res.body)['resp'] as List;
+        if (body.isNotEmpty) {
+          return body[0]['total_donation'];
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<String?> getTotalExpense(String trustyId) async {
+    try {
+      var res = await HttpBuilder.get(
+          'https://www.akhilbhartiyasamaj.com/user/api/total_expense_amount/$trustyId',
+          baseUrl: false);
+      if (res != null) {
+        var body = jsonDecode(res.body)['resp'] as List;
+        if (body.isNotEmpty) {
+          return body[0]['total_expnse_amount'];
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
 }

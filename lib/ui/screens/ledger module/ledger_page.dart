@@ -230,130 +230,168 @@
 //     );
 //   }
 // }
-import 'package:community_internal/ui/screens/member_profile.dart';
+import 'package:community_internal/app/locator.dart';
+import 'package:community_internal/core/models/donation.dart';
+import 'package:community_internal/core/repository/ledger_repository.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/ledger module/slider.dart';
+import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'slider.dart';
 
-class ledger_page extends StatefulWidget {
-  const ledger_page({Key? key}) : super(key: key);
+class LedgerPage extends StatefulWidget {
+  const LedgerPage({Key? key}) : super(key: key);
   @override
-  _ledger_pageState createState() => _ledger_pageState();
+  _LedgerPageState createState() => _LedgerPageState();
 }
 
-class _ledger_pageState extends State<ledger_page> {
+class _LedgerPageState extends State<LedgerPage> {
+  bool _isloading = false;
+  final LedgerRepository _ledgerRepository = LedgerRepository();
+  List<Donation>? donationList = [];
+  String? totalDonationAmount;
+  String? totalExpenseAmount;
+  void fetchDonationListAndAmounts() async {
+    setState(() {
+      _isloading = true;
+    });
+    final user = StorageService().getCurrentUser();
+    donationList =
+        await _ledgerRepository.getDonation(user!.societyId.toString());
+    totalDonationAmount = await _ledgerRepository.getTotalDonation(user.id!);
+    totalExpenseAmount = await _ledgerRepository.getTotalExpense(user.id!);
+    print('Toatl Donation Amount: $totalDonationAmount');
+    print('Toatl Expense Amount: $totalExpenseAmount');
+    print('Donation List: $donationList');
+    setState(() {
+      _isloading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDonationListAndAmounts();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Ledger".toUpperCase(),
-          style: const TextStyle(fontWeight: FontWeight.bold),
+    return LoadingHelper(
+      isLoading: _isloading,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Ledger".toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.white,
+          iconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
         ),
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
-      ),
-      body: SizedBox(
-        child: ListView(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: Colors.greenAccent,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 20,
+        body: SizedBox(
+          child: ListView(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
-                        children: [
-                          Text("₹ 10,000".toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold)),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "To Collect".toUpperCase(),
-                            style: const TextStyle(fontSize: 14),
-                          )
-                        ],
+                      color: Colors.greenAccent,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 20,
+                        ),
+                        child: Column(
+                          children: [
+                            Text("₹ ${totalDonationAmount ?? 0}".toUpperCase(),
+                                style: const TextStyle(
+                                    fontSize: 23, fontWeight: FontWeight.bold)),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "To Collect".toUpperCase(),
+                              style: const TextStyle(fontSize: 14),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: Colors.deepOrange,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 20,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
-                        children: [
-                          Text("₹ 30,000".toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold)),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "To Pay".toUpperCase(),
-                            style: const TextStyle(fontSize: 14),
-                          )
-                        ],
+                      color: Colors.deepOrange,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 20,
+                        ),
+                        child: Column(
+                          children: [
+                            Text("₹ ${totalExpenseAmount ?? 0}".toUpperCase(),
+                                style: const TextStyle(
+                                    fontSize: 23, fontWeight: FontWeight.bold)),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "To Pay".toUpperCase(),
+                              style: const TextStyle(fontSize: 14),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 68),
-                  child: Text(
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
                     "Transactions".toUpperCase(),
                     style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.w500),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                SegmentedControlSample(),
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-          ],
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  donationList?.isEmpty ?? true
+                      ? const Text('No trasactions yet')
+                      : SegmentedControlSample(
+                          donationList: donationList,
+                        ),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );
