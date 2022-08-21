@@ -56,25 +56,40 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample>
           const SizedBox(
             height: 50,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            itemCount: widget.donationList!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return TransactionCard(
-                amount: "₹ ${widget.donationList![index].amount}".toUpperCase(),
-                date: DateFormat('d LLLL')
-                    .format(
-                      DateTime.parse(widget.donationList![index].date),
-                    )
-                    .toUpperCase(),
-                personName:
-                    "By ${widget.donationList![index].name} ji".toUpperCase(),
-                title: 'Donation Received'.toUpperCase(),
-              );
-            },
-          ),
+          _selectedSegment == Sky.donation
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: widget.donationList!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TransactionCard(
+                      amount: "₹ ${widget.donationList![index].amount}",
+                      date: DateFormat('d LLLL')
+                          .format(
+                            DateTime.parse(widget.donationList![index].date),
+                          )
+                          .toUpperCase(),
+                      personName: "By ${widget.donationList![index].name} ji"
+                          .toUpperCase(),
+                      title: 'Donation Received'.toUpperCase(),
+                    );
+                  },
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TransactionCard(
+                      amount: "₹ 100",
+                      date: '6 August'.toUpperCase(),
+                      personName: "By Nihal ji".toUpperCase(),
+                      title: 'Expenses Spent'.toUpperCase(),
+                    );
+                  },
+                ),
         ],
       ),
     );
