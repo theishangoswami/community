@@ -1,5 +1,6 @@
 import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/community.dart';
+import 'package:community_internal/core/models/country.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
@@ -297,6 +298,65 @@ class _CommunityProfileFieldDropDownState
                   (community) => DropdownMenuItem<Community>(
                     value: community,
                     child: Text(community.communityName),
+                  ),
+                )
+                .toList(),
+            onChanged: widget.onChanged,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class CountryProfileFieldDropDown extends StatefulWidget {
+  final Icon icon;
+  final List<Country> countryList;
+  final Country selectedCountry;
+  final void Function(Country?)? onChanged;
+  const CountryProfileFieldDropDown(
+      {Key? key,
+      required this.icon,
+      required this.countryList,
+      required this.selectedCountry,
+      this.onChanged})
+      : super(key: key);
+
+  @override
+  State<CountryProfileFieldDropDown> createState() => _CountryProfileFieldDropDownState();
+}
+
+class _CountryProfileFieldDropDownState extends State<CountryProfileFieldDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          height: 70,
+          width: 30,
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(3),
+            ),
+          ),
+          child: widget.icon,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: DropdownButtonFormField<Country>(
+            validator: (value) =>
+                value!.id == '-1' ? 'Please select a country' : null,
+            isExpanded: true,
+            value: widget.selectedCountry,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: widget.countryList
+                .map(
+                  (country) => DropdownMenuItem<Country>(
+                    value: country,
+                    child: Text(country.countryName),
                   ),
                 )
                 .toList(),

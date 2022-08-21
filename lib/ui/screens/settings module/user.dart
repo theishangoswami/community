@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/community.dart';
+import 'package:community_internal/core/models/country.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
@@ -44,8 +45,11 @@ class _UserDetailsState extends State<UserDetails> {
   String _selectedGender = 'male';
   final _formKey = GlobalKey<FormState>();
   bool imageError = false;
-
-  final List<StateDetail> _stateList = [
+  final List<Country> _countryList = [
+    Country(id: '-1', countryName: 'Select Country'),
+  ];
+  Country _selectedCountry = Country(id: '-1', countryName: 'Select Country');
+  List<StateDetail> _stateList = [
     StateDetail(id: '-1', stateName: 'Select State')
   ];
   StateDetail _selectedState = StateDetail(id: '-1', stateName: 'Select State');
@@ -80,6 +84,10 @@ class _UserDetailsState extends State<UserDetails> {
     communityName: 'Select Community',
     status: 'active',
   );
+  void refreshStateList() {
+    _stateList = [StateDetail(id: '-1', stateName: 'Select State')];
+    _selectedState = StateDetail(id: '-1', stateName: 'Select State');
+  }
 
   void refreshDistrictList() {
     _districtList = [
@@ -102,11 +110,17 @@ class _UserDetailsState extends State<UserDetails> {
         Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
   }
 
-  void fetchStateList() async {
+  void fetchStateList(String countryId) async {
+    refreshStateList();
+    setState(() {
+      _isLoading = true;
+    });
     await UserRepository().getState().then((value) {
       if (value?.isNotEmpty ?? false) {
         setState(() {
-          _stateList.addAll(value!);
+          _stateList.addAll(
+              value!.where((element) => element.countryId == countryId));
+          _isLoading = false;
         });
       }
     });
@@ -175,11 +189,25 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
+  void fetchCountryList() async {
+    refreshStateList();
+    refreshDistrictList();
+    refreshCityList();
+    refreshPincodeList();
+    await UserRepository().getCountry().then((value) {
+      if (value?.isNotEmpty ?? false) {
+        setState(() {
+          _countryList.addAll(value!);
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _phoneController.text = widget.phoneNumber;
-    fetchStateList();
+    fetchCountryList();
     fetchCommunityList();
   }
 
@@ -289,6 +317,20 @@ class _UserDetailsState extends State<UserDetails> {
                       setState(() {
                         _selectedGender = value!;
                       });
+                    },
+                  ),
+                  CountryProfileFieldDropDown(
+                    icon: const Icon(
+                      Icons.flag,
+                      color: Colors.black,
+                    ),
+                    countryList: _countryList,
+                    selectedCountry: _selectedCountry,
+                    onChanged: (Country? newValue) {
+                      setState(() {
+                        _selectedCountry = newValue!;
+                      });
+                      fetchStateList(_selectedCountry.id);
                     },
                   ),
                   StateProfileFieldDropDown(
@@ -401,10 +443,9 @@ class _UserDetailsState extends State<UserDetails> {
                     ),
                     validator: (value) {
                       String p = r'(?!^0+$)[a-zA-Z0-9]{6,9}$';
-
                       RegExp regExp = RegExp(p);
                       if (value?.isEmpty ?? true) {
-                        return 'Please enter your passport number';
+                        return null;
                       } else if (!regExp.hasMatch(value?.trim() ?? "") ||
                           value!.length != 8) {
                         return 'Enter a valid passport number';
@@ -434,43 +475,43 @@ class _UserDetailsState extends State<UserDetails> {
                           });
                           if (_formKey.currentState!.validate() &&
                               !imageError) {
-                            final SharedPreferences _sharedPreferences =
-                                locator<SharedPreferences>();
-                            await _sharedPreferences.setString(
-                                'communityId', _selectedCommunity.id);
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            await UserRepository().userRegistration(
-                              {
-                                'name': _nameController.text.trim(),
-                                'mobile_number': _phoneController.text.trim(),
-                                'email': _emailController.text.trim(),
-                                'adhar_card':
-                                    _aadhaarCardController.text.trim(),
-                                'passport_no': _passPortController.text.trim(),
-                                'state_id': _selectedState.id,
-                                'district_id': _selectedDistrict.id,
-                                'city_id': _selectedCity.id,
-                                'pincode_id': _selectedPincode.id,
-                                'community_id': _selectedCommunity.id,
-                                'gender': _selectedGender,
-                                'address': _addressController.text.trim(),
-                                'country_id': '1'
-                              },
-                              _selectedImage,
-                            );
-                            setState(() {
-                              _isLoading = false;
-                            });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VerifyPage(
-                                  phonenumber: widget.phoneNumber,
-                                ),
-                              ),
-                            );
+                            // final SharedPreferences _sharedPreferences =
+                            //     locator<SharedPreferences>();
+                            // await _sharedPreferences.setString(
+                            //     'communityId', _selectedCommunity.id);
+                            // setState(() {
+                            //   _isLoading = true;
+                            // });
+                            // await UserRepository().userRegistration(
+                            //   {
+                            //     'name': _nameController.text.trim(),
+                            //     'mobile_number': _phoneController.text.trim(),
+                            //     'email': _emailController.text.trim(),
+                            //     'adhar_card':
+                            //         _aadhaarCardController.text.trim(),
+                            //     'passport_no': _passPortController.text.trim(),
+                            //     'state_id': _selectedState.id,
+                            //     'district_id': _selectedDistrict.id,
+                            //     'city_id': _selectedCity.id,
+                            //     'pincode_id': _selectedPincode.id,
+                            //     'community_id': _selectedCommunity.id,
+                            //     'gender': _selectedGender,
+                            //     'address': _addressController.text.trim(),
+                            //     'country_id': '1'
+                            //   },
+                            //   _selectedImage,
+                            // );
+                            // setState(() {
+                            //   _isLoading = false;
+                            // });
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => VerifyPage(
+                            //       phonenumber: widget.phoneNumber,
+                            //     ),
+                            //   ),
+                            // );
                           }
                         },
                         child: const Text(
