@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/community.dart';
+import 'package:community_internal/core/models/country.dart';
 import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
@@ -126,6 +127,25 @@ class UserRepository {
         if (body.isNotEmpty) {
           return List<Community>.from(
             body.map((community) => Community.fromJson(community)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<Country>?> getCountry() async {
+    try {
+      var res = await HttpBuilder.get('country/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<Country>.from(
+            body.map((country) => Country.fromJson(country)),
           );
         }
       }
