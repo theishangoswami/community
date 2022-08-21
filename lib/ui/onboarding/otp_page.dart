@@ -150,7 +150,8 @@ class _OtpInputState extends State<OtpInput> {
                                 ? MyHomePage(
                                     societyId: user!.societyId!,
                                     societyName: locator<SharedPreferences>()
-                                        .getString('societyName')!,
+                                            .getString('societyName') ??
+                                        '',
                                   )
                                 : const CommunityList()
                             : user?.registrationDate == null

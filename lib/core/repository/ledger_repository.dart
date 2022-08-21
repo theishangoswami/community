@@ -42,10 +42,10 @@ class LedgerRepository {
     return null;
   }
 
-  Future<String?> getTotalDonation(String trustyId) async {
+  Future<String?> getTotalDonation(String societyId) async {
     try {
       var res = await HttpBuilder.get(
-          'https://www.akhilbhartiyasamaj.com/user/api/donation_view_amount/$trustyId',
+          'https://www.akhilbhartiyasamaj.com/user/api/total_donation_view_society_wise/$societyId',
           baseUrl: false);
       if (res != null) {
         var body = jsonDecode(res.body)['resp'] as List;
@@ -61,10 +61,10 @@ class LedgerRepository {
     return null;
   }
 
-  Future<String?> getTotalExpense(String trustyId) async {
+  Future<String?> getTotalExpense(String societyId) async {
     try {
       var res = await HttpBuilder.get(
-          'https://www.akhilbhartiyasamaj.com/user/api/total_expense_amount/$trustyId',
+          'https://www.akhilbhartiyasamaj.com/user/api/total_expense_view_society_wise/$societyId',
           baseUrl: false);
       if (res != null) {
         var body = jsonDecode(res.body)['resp'] as List;

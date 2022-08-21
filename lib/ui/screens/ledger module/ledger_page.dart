@@ -262,8 +262,10 @@ class _LedgerPageState extends State<LedgerPage> {
     final user = StorageService().getCurrentUser();
     donationList =
         await _ledgerRepository.getDonation(user!.societyId.toString());
-    totalDonationAmount = await _ledgerRepository.getTotalDonation(user.id!);
-    totalExpenseAmount = await _ledgerRepository.getTotalExpense(user.id!);
+    totalDonationAmount =
+        await _ledgerRepository.getTotalDonation(user.societyId!);
+    totalExpenseAmount =
+        await _ledgerRepository.getTotalExpense(user.societyId!);
     print('Toatl Donation Amount: $totalDonationAmount');
     print('Toatl Expense Amount: $totalExpenseAmount');
     print('Donation List: $donationList');
