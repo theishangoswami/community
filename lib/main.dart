@@ -76,7 +76,8 @@ class _SplashScreenState extends State<SplashScreen> {
                         ? MyHomePage(
                             societyId: user!.societyId!,
                             societyName: locator<SharedPreferences>()
-                                .getString('societyName')!,
+                                    .getString('societyName') ??
+                                '',
                           )
                         : const CommunityList()
                     : VerifyPage(phonenumber: user!.mobileNumber.toString())
