@@ -235,8 +235,11 @@ import 'package:community_internal/core/models/donation.dart';
 import 'package:community_internal/core/repository/ledger_repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/ledger module/slider.dart';
+import 'package:community_internal/ui/screens/ledger%20module/other_community.dart';
+import 'package:community_internal/ui/screens/ledger%20module/same_community.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'slider.dart';
 
@@ -280,6 +283,44 @@ class _LedgerPageState extends State<LedgerPage> {
     return LoadingHelper(
       isLoading: _isloading,
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: SpeedDial(
+            child: const Icon(
+              Icons.add,
+              size: 30,
+            ),
+            spacing: 20,
+            elevation: 0,
+            buttonSize: const Size(70, 70),
+            backgroundColor: Colors.transparent,
+            children: [
+              SpeedDialChild(
+                child: const Icon(Icons.face),
+                label: 'YOUR COMMUNITY',
+                backgroundColor: Colors.amberAccent,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SameCom()),
+                  );
+                },
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.face),
+                label: 'OTHER COMMUNITY',
+                backgroundColor: Colors.amberAccent,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OtherCom()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           title: Text(
             "Ledger".toUpperCase(),
@@ -290,8 +331,8 @@ class _LedgerPageState extends State<LedgerPage> {
             color: Colors.black,
           ),
         ),
-        body: SizedBox(
-          child: ListView(
+        body: SingleChildScrollView(
+          child: Column(
             children: [
               const SizedBox(
                 height: 20,
@@ -385,10 +426,7 @@ class _LedgerPageState extends State<LedgerPage> {
                 ],
               ),
               const SizedBox(
-                height: 5,
-              ),
-              const SizedBox(
-                height: 30,
+                height: 10,
               ),
             ],
           ),
