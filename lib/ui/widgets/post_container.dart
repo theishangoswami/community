@@ -354,7 +354,7 @@ class _PostStatsState extends State<_PostStats> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>  Commentt()),
+                    MaterialPageRoute(builder: (context) => const CommentPage()),
                   );
                   // _commentBox(context);
                   // if (kDebugMode) {
