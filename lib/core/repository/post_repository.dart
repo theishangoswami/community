@@ -110,10 +110,10 @@ class PostRepository {
   }
 
   Future<void> addLike(LikeModel likeModel) async =>
-      await HttpBuilder.post(Constants.baseUrl + 'likes/add',
+      await HttpBuilder.post('likes/add',
           body: likeModel.toJson());
 
   Future<void> addComment(CommentModel commentModel) async =>
-      await HttpBuilder.post(Constants.baseUrl + 'comment/add',
+      await HttpBuilder.post('comment/add',
           body: commentModel.toJson());
 }
