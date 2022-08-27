@@ -11,18 +11,20 @@ String commentModelToJson(CommentModel data) => json.encode(data.toJson());
 
 class CommentModel {
   CommentModel({
-    required this.id,
+    this.id,
     required this.userId,
     required this.postId,
     required this.societyId,
-    required this.comment,
+    this.comment,
+    this.status = 'enable',
   });
 
-  final String id;
+  final String? id;
   final String userId;
   final String postId;
   final String societyId;
-  final String comment;
+  final String? comment;
+  final String status;
 
   CommentModel copyWith({
     String? id,
@@ -37,15 +39,16 @@ class CommentModel {
         postId: postId ?? this.postId,
         societyId: societyId ?? this.societyId,
         comment: comment ?? this.comment,
+        status: status,
       );
 
   factory CommentModel.fromJson(Map<String, dynamic> json) => CommentModel(
-        id: json["id"],
-        userId: json["user_id"],
-        postId: json["post_id"],
-        societyId: json["society_id"],
-        comment: json["comment"],
-      );
+      id: json["id"],
+      userId: json["user_id"],
+      postId: json["post_id"],
+      societyId: json["society_id"],
+      comment: json["comment"],
+      status: json['status']);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -53,5 +56,6 @@ class CommentModel {
         "post_id": postId,
         "society_id": societyId,
         "comment": comment,
+        'status': status,
       };
 }
