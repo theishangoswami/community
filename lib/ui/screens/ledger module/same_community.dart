@@ -1,6 +1,7 @@
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/repository/ledger_repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
+import 'package:community_internal/main.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -140,7 +141,8 @@ class _SameComState extends State<SameCom> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CommunityList(),
+                      builder: (context) => MyHomePage(
+                          societyId: userId.societyId!, societyName: ''),
                     ),
                   );
                 },
