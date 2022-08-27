@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:community_internal/core/models/donation.dart';
+import 'package:community_internal/core/models/expense.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
 import 'package:flutter/foundation.dart';
 
@@ -32,6 +33,26 @@ class LedgerRepository {
         var body = jsonDecode(res.body)['resp'] as List;
         if (body.isNotEmpty) {
           return List<Donation>.from(body.map((x) => Donation.fromJson(x)));
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<Expense>?> getExpense(String societyId) async {
+    try {
+      var res = await HttpBuilder.get(
+        'https://www.akhilbhartiyasamaj.com/user/api/expense_view_society_wise/$societyId',
+        baseUrl: false,
+      );
+      if (res != null) {
+        var body = jsonDecode(res.body)['resp'] as List;
+        if (body.isNotEmpty) {
+          return List<Expense>.from(body.map((x) => Expense.fromJson(x)));
         }
       }
     } catch (e) {

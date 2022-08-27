@@ -232,6 +232,7 @@
 // }
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/models/donation.dart';
+import 'package:community_internal/core/models/expense.dart';
 import 'package:community_internal/core/repository/ledger_repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/ledger module/slider.dart';
@@ -253,6 +254,7 @@ class _LedgerPageState extends State<LedgerPage> {
   bool _isloading = false;
   final LedgerRepository _ledgerRepository = LedgerRepository();
   List<Donation>? donationList = [];
+  List<Expense>? expenseList = [];
   String? totalDonationAmount;
   String? totalExpenseAmount;
   void fetchDonationListAndAmounts() async {
@@ -262,6 +264,7 @@ class _LedgerPageState extends State<LedgerPage> {
     final user = StorageService().getCurrentUser();
     donationList =
         await _ledgerRepository.getDonation(user!.societyId.toString());
+    expenseList = await _ledgerRepository.getExpense(user.societyId.toString());
     totalDonationAmount =
         await _ledgerRepository.getTotalDonation(user.societyId!);
     totalExpenseAmount =
@@ -420,11 +423,10 @@ class _LedgerPageState extends State<LedgerPage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  donationList?.isEmpty ?? true
-                      ? const Text('No trasactions yet')
-                      : SegmentedControlSample(
-                          donationList: donationList,
-                        ),
+                  SegmentedControlSample(
+                    donationList: donationList,
+                    expenseList: expenseList,
+                  ),
                 ],
               ),
               const SizedBox(
