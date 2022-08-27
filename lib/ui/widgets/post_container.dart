@@ -251,6 +251,21 @@ class _PostStatsState extends State<_PostStats> {
     }
   }
 
+  void _addLike() async {
+    setState(() {
+      isLikesFetched = false;
+    });
+    await _postRepository.addLike(
+      LikeModel(
+        id: const Uuid().v1(),
+        postId: widget.post.id!,
+        soceityId: widget.post.societyId!,
+        userId: widget.post.userId!,
+      ),
+    );
+    _fetchLikes();
+  }
+
   void _fetchComments() async {
     comments = await _postRepository.fetchComments(widget.post.id!);
     setState(() {
@@ -333,15 +348,8 @@ class _PostStatsState extends State<_PostStats> {
                 label: 'Like'.toUpperCase(),
                 lableColor: Colors.black87,
                 onTap: () {
-// Add Like ->
-                  _postRepository.addLike(
-                    LikeModel(
-                      id: const Uuid().v1(),
-                      postId: widget.post.id!,
-                      soceityId: widget.post.societyId!,
-                      userId: widget.post.userId!,
-                    ),
-                  );
+                  // Add Like to the post
+                  _addLike();
                 },
               ),
               _PostButton(
@@ -354,7 +362,8 @@ class _PostStatsState extends State<_PostStats> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CommentPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const CommentPage()),
                   );
                   // _commentBox(context);
                   // if (kDebugMode) {
