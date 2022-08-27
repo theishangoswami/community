@@ -10,13 +10,13 @@ String likeModelToJson(LikeModel data) => json.encode(data.toJson());
 
 class LikeModel {
   LikeModel({
-    required this.id,
+    this.id,
     required this.postId,
     required this.soceityId,
     required this.userId,
   });
 
-  final String id;
+  final String? id;
   final String postId;
   final String soceityId;
   final String userId;
