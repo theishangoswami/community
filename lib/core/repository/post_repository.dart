@@ -14,7 +14,8 @@ import 'package:http_parser/http_parser.dart';
 class PostRepository {
   Future<List<PostModel>> getPosts(String societyId) async {
     try {
-      var res = await HttpBuilder.get('social_media_post/society_wise/$societyId');
+      var res =
+          await HttpBuilder.get('social_media_post/society_wise/$societyId');
       if (res != null) {
         var body = jsonDecode(res.body)['result'];
         return body.map<PostModel>((json) => PostModel.fromJson(json)).toList();
@@ -33,6 +34,7 @@ class PostRepository {
       );
       if (res != null) {
         var body = jsonDecode(res.body)['resp'];
+        print(body);
         return body.map<LikeModel>((json) => LikeModel.fromJson(json)).toList();
       }
     } catch (e) {
@@ -109,11 +111,47 @@ class PostRepository {
     return false;
   }
 
-  Future<void> addLike(LikeModel likeModel) async =>
-      await HttpBuilder.post('likes/add',
-          body: likeModel.toJson());
+  Future<bool> addLike(LikeModel likeModel) async {
+    try {
+      final response =
+          await HttpBuilder.post('likes/add', body: likeModel.toJson());
+      if (response!.statusCode == 200 || response.statusCode == 201) {
+        Fluttertoast.showToast(msg: "Liked");
+        return true;
+      }
+    } catch (e) {
+      debugPrint("$e");
+    }
+    return false;
+  }
 
-  Future<void> addComment(CommentModel commentModel) async =>
-      await HttpBuilder.post('comment/add',
-          body: commentModel.toJson());
+  Future<bool> addComment(CommentModel commentModel) async {
+    try {
+      final response =
+          await HttpBuilder.post('comment/add', body: commentModel.toJson());
+      if (response!.statusCode == 200 || response.statusCode == 201) {
+        Fluttertoast.showToast(msg: "Comment Added");
+        return true;
+      }
+    } catch (e) {
+      debugPrint("$e");
+    }
+    return false;
+  }
+
+  Future<List<CommentModel>> fetchComment(String postId) async {
+    try {
+      final response = await HttpBuilder.get(
+        'comment/view/$postId',
+      );
+      if (response!.statusCode == 200 || response.statusCode == 201) {
+        var body = jsonDecode(response.body)['resp'] as List;
+        return List<CommentModel>.from(
+            body.map((json) => CommentModel.fromJson(json)));
+      }
+    } catch (e) {
+      debugPrint("$e");
+    }
+    return [];
+  }
 }

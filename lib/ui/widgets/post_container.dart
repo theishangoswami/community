@@ -252,18 +252,19 @@ class _PostStatsState extends State<_PostStats> {
   }
 
   void _addLike() async {
-    setState(() {
-      isLikesFetched = false;
-    });
-    await _postRepository.addLike(
+    final response = await _postRepository.addLike(
       LikeModel(
-        id: const Uuid().v1(),
         postId: widget.post.id!,
         soceityId: widget.post.societyId!,
         userId: widget.post.userId!,
       ),
     );
-    _fetchLikes();
+    if (response) {
+      setState(() {
+        isLikesFetched = false;
+      });
+      _fetchLikes();
+    }
   }
 
   void _fetchComments() async {
@@ -363,8 +364,11 @@ class _PostStatsState extends State<_PostStats> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CommentPage()),
-                  );
+                      builder: (context) => CommentPage(
+                        post: widget.post,
+                      ),
+                    ),
+                  ).whenComplete(() => _fetchComments());
                   // _commentBox(context);
                   // if (kDebugMode) {
                   //   print('Comment');
@@ -418,7 +422,6 @@ class _PostStatsState extends State<_PostStats> {
 // Add Comment ->
                           _postRepository.addComment(
                             CommentModel(
-                              id: const Uuid().v1(),
                               comment: _controller.text,
                               postId: widget.post.id!,
                               userId: widget.post.userId!,
