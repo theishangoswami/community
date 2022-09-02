@@ -104,7 +104,9 @@ class _LoginFormState extends State<LoginForm> {
               width: MediaQuery.of(context).size.width * 0.5,
               child: ElevatedButton(
                 onPressed: () async {
+                  print("in on pressed");
                   if (formKey.currentState?.validate() ?? false) {
+                    print("in function");
                     widget.setBusy(true);
                     bool res = await _authRepository.sendOtp(
                       (_mobileNumberController.text.trim()),
@@ -121,6 +123,8 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       );
                     }
+                  } else {
+                    print("Not validated");
                   }
                 },
                 child: Text(
