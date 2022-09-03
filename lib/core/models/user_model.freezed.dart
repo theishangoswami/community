@@ -48,6 +48,8 @@ mixin _$UserModel {
   String? get communityId => throw _privateConstructorUsedError;
   @JsonKey(name: 'society_id')
   String? get societyId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'society_name')
+  String? get societyName => throw _privateConstructorUsedError;
   @JsonKey(name: 'country_id')
   String? get countryId => throw _privateConstructorUsedError;
   @JsonKey(name: 'state_id')
@@ -96,6 +98,7 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: 'registration_date') String? registrationDate,
       @JsonKey(name: 'community_id') String? communityId,
       @JsonKey(name: 'society_id') String? societyId,
+      @JsonKey(name: 'society_name') String? societyName,
       @JsonKey(name: 'country_id') String? countryId,
       @JsonKey(name: 'state_id') String? stateId,
       @JsonKey(name: 'city_id') String? cityId,
@@ -136,6 +139,7 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? registrationDate = freezed,
     Object? communityId = freezed,
     Object? societyId = freezed,
+    Object? societyName = freezed,
     Object? countryId = freezed,
     Object? stateId = freezed,
     Object? cityId = freezed,
@@ -214,6 +218,10 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
           ? _value.societyId
           : societyId // ignore: cast_nullable_to_non_nullable
               as String?,
+      societyName: societyName == freezed
+          ? _value.societyName
+          : societyName // ignore: cast_nullable_to_non_nullable
+              as String?,
       countryId: countryId == freezed
           ? _value.countryId
           : countryId // ignore: cast_nullable_to_non_nullable
@@ -289,6 +297,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       @JsonKey(name: 'registration_date') String? registrationDate,
       @JsonKey(name: 'community_id') String? communityId,
       @JsonKey(name: 'society_id') String? societyId,
+      @JsonKey(name: 'society_name') String? societyName,
       @JsonKey(name: 'country_id') String? countryId,
       @JsonKey(name: 'state_id') String? stateId,
       @JsonKey(name: 'city_id') String? cityId,
@@ -331,6 +340,7 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
     Object? registrationDate = freezed,
     Object? communityId = freezed,
     Object? societyId = freezed,
+    Object? societyName = freezed,
     Object? countryId = freezed,
     Object? stateId = freezed,
     Object? cityId = freezed,
@@ -409,6 +419,10 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
           ? _value.societyId
           : societyId // ignore: cast_nullable_to_non_nullable
               as String?,
+      societyName: societyName == freezed
+          ? _value.societyName
+          : societyName // ignore: cast_nullable_to_non_nullable
+              as String?,
       countryId: countryId == freezed
           ? _value.countryId
           : countryId // ignore: cast_nullable_to_non_nullable
@@ -481,6 +495,7 @@ class _$_UserModel implements _UserModel {
       @JsonKey(name: 'registration_date') this.registrationDate,
       @JsonKey(name: 'community_id') this.communityId,
       @JsonKey(name: 'society_id') this.societyId,
+      @JsonKey(name: 'society_name') this.societyName,
       @JsonKey(name: 'country_id') this.countryId,
       @JsonKey(name: 'state_id') this.stateId,
       @JsonKey(name: 'city_id') this.cityId,
@@ -542,6 +557,9 @@ class _$_UserModel implements _UserModel {
   @JsonKey(name: 'society_id')
   final String? societyId;
   @override
+  @JsonKey(name: 'society_name')
+  final String? societyName;
+  @override
   @JsonKey(name: 'country_id')
   final String? countryId;
   @override
@@ -576,7 +594,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, userName: $userName, userEmail: $userEmail, mobileNumber: $mobileNumber, gender: $gender, fatherName: $fatherName, motherName: $motherName, brotherName: $brotherName, sisterName: $sisterName, education: $education, adharNumber: $adharNumber, passportNumber: $passportNumber, password: $password, registrationDate: $registrationDate, communityId: $communityId, societyId: $societyId, countryId: $countryId, stateId: $stateId, cityId: $cityId, districtId: $districtId, pinCodeId: $pinCodeId, address: $address, profile: $profile, status: $status, otp: $otp, userType: $userType, referralCode: $referralCode, joiningId: $joiningId)';
+    return 'UserModel(id: $id, userName: $userName, userEmail: $userEmail, mobileNumber: $mobileNumber, gender: $gender, fatherName: $fatherName, motherName: $motherName, brotherName: $brotherName, sisterName: $sisterName, education: $education, adharNumber: $adharNumber, passportNumber: $passportNumber, password: $password, registrationDate: $registrationDate, communityId: $communityId, societyId: $societyId, societyName: $societyName, countryId: $countryId, stateId: $stateId, cityId: $cityId, districtId: $districtId, pinCodeId: $pinCodeId, address: $address, profile: $profile, status: $status, otp: $otp, userType: $userType, referralCode: $referralCode, joiningId: $joiningId)';
   }
 
   @override
@@ -609,6 +627,8 @@ class _$_UserModel implements _UserModel {
             const DeepCollectionEquality()
                 .equals(other.communityId, communityId) &&
             const DeepCollectionEquality().equals(other.societyId, societyId) &&
+            const DeepCollectionEquality()
+                .equals(other.societyName, societyName) &&
             const DeepCollectionEquality().equals(other.countryId, countryId) &&
             const DeepCollectionEquality().equals(other.stateId, stateId) &&
             const DeepCollectionEquality().equals(other.cityId, cityId) &&
@@ -645,6 +665,7 @@ class _$_UserModel implements _UserModel {
         const DeepCollectionEquality().hash(registrationDate),
         const DeepCollectionEquality().hash(communityId),
         const DeepCollectionEquality().hash(societyId),
+        const DeepCollectionEquality().hash(societyName),
         const DeepCollectionEquality().hash(countryId),
         const DeepCollectionEquality().hash(stateId),
         const DeepCollectionEquality().hash(cityId),
@@ -690,6 +711,7 @@ abstract class _UserModel implements UserModel {
       @JsonKey(name: 'registration_date') final String? registrationDate,
       @JsonKey(name: 'community_id') final String? communityId,
       @JsonKey(name: 'society_id') final String? societyId,
+      @JsonKey(name: 'society_name') final String? societyName,
       @JsonKey(name: 'country_id') final String? countryId,
       @JsonKey(name: 'state_id') final String? stateId,
       @JsonKey(name: 'city_id') final String? cityId,
@@ -750,6 +772,9 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: 'society_id')
   String? get societyId;
+  @override
+  @JsonKey(name: 'society_name')
+  String? get societyName;
   @override
   @JsonKey(name: 'country_id')
   String? get countryId;

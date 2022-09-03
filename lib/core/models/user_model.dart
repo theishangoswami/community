@@ -22,6 +22,7 @@ class UserModel with _$UserModel {
     @JsonKey(name: 'registration_date') String? registrationDate,
     @JsonKey(name: 'community_id') String? communityId,
     @JsonKey(name: 'society_id') String? societyId,
+    @JsonKey(name: 'society_name') String? societyName,
     @JsonKey(name: 'country_id') String? countryId,
     @JsonKey(name: 'state_id') String? stateId,
     @JsonKey(name: 'city_id') String? cityId,
