@@ -19,6 +19,7 @@ class JobModel {
     this.companyLogo,
     required this.status,
     required this.date,
+    required this.endDate,
   });
 
   final String? id;
@@ -34,6 +35,7 @@ class JobModel {
   final String? companyLogo;
   final String? status;
   final DateTime? date;
+  final DateTime? endDate;
 
   JobModel copyWith({
     String? id,
@@ -49,6 +51,7 @@ class JobModel {
     String? companyLogo,
     String? status,
     DateTime? date,
+    DateTime? endDate,
   }) =>
       JobModel(
         id: id ?? this.id,
@@ -64,6 +67,7 @@ class JobModel {
         companyLogo: companyLogo ?? this.companyLogo,
         status: status ?? this.status,
         date: date ?? this.date,
+        endDate: endDate ?? this.endDate,
       );
 
   factory JobModel.fromJson(Map<String, dynamic> json) => JobModel(
@@ -80,6 +84,7 @@ class JobModel {
         companyLogo: json["company_logo"],
         status: json["status"],
         date: DateTime.parse(json["date"]),
+        endDate: DateTime.parse(json["exp_date"]),
       );
 
   Map<String, dynamic> toJson() {
@@ -97,6 +102,7 @@ class JobModel {
       "company_logo": companyLogo,
       "status": status,
       "date": date?.toIso8601String(),
+      "exp_date": endDate?.toIso8601String(),
     };
     map.removeWhere((key, value) => value == null);
     return map;

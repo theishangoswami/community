@@ -177,7 +177,7 @@ class _JobListState extends State<JobList> with AutomaticKeepAliveClientMixin {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "POST ON ${DateFormat('yMd').format(job.date!)}  |  ${DateFormat('yMd').format(job.date!)} ",
+                                "POST ON ${DateFormat('yMd').format(job.date!)}  |  ${DateFormat('yMd').format(job.endDate!)} ",
                                 //   "Posted on ${job.date?.toIso8601String() ?? "NA"}",
                                 style: const TextStyle(fontSize: 14),
                               ),

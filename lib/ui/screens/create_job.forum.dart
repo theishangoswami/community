@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:community_internal/core/models/job.model.dart';
@@ -8,6 +9,7 @@ import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class CreateJobForum extends StatefulWidget {
   const CreateJobForum({Key? key}) : super(key: key);
@@ -30,6 +32,7 @@ class CreateJobForumState extends State<CreateJobForum> {
   String education = 'Graduation/Diploma';
   String salary = '1 LPA';
   String experience = '0-1 Years';
+  DateTime? _selectedDate = DateTime.now();
 
 // List of items in our dropdown menu
   var edu = [
@@ -59,52 +62,24 @@ class CreateJobForumState extends State<CreateJobForum> {
     '9-10 LPA',
     '10 LPA',
   ];
-  Uint8List? image;
+  File? image;
   pickImage() {
     _filePickerService.pickImageFromGallery().then((value) async {
       if (value != null) {
-        image = await value.readAsBytes();
+        image = value;
         setState(() {});
       }
     });
   }
 
   String? genderValue;
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final JobRepository _jobRepository = JobRepository();
   final StorageService _storageService = StorageService();
   bool isBusy = false;
-  createJob() async {
-    UserModel user = _storageService.getCurrentUser()!;
-    if ((formKey.currentState?.validate() ?? false) && image != null) {
-      setState(() {
-        isBusy = true;
-      });
-      bool res = await _jobRepository.createJob(
-        JobModel(
-          userId: user.id,
-          jobsTitle: jobTitleController.text.trim(),
-          description: jobDescController.text.trim(),
-          companyName: firmNameController.text,
-          gender: genderValue,
-          experience: experience,
-          education: education,
-          location: jobLocationController.text.trim(),
-          packages: salary,
-          status: "enable",
-          date: DateTime.now(),
-        ),
-        image!,
-      );
-      setState(() {
-        isBusy = false;
-      });
-      if (res) {
-        Navigator.pop(context, true);
-        Fluttertoast.showToast(msg: "Job Post added successfully");
-      }
-    }
-  }
+  // void createJob() async {
+
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +115,7 @@ class CreateJobForumState extends State<CreateJobForum> {
           // ],
         ),
         body: Form(
-          key: formKey,
+          key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -155,8 +130,7 @@ class CreateJobForumState extends State<CreateJobForum> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: TextFormField(
                         validator: (value) {
-                          String text = value ?? "";
-                          if (text.isEmpty) {
+                          if (value?.isEmpty ?? true) {
                             return "Please enter a valid firm name";
                           }
                           return null;
@@ -182,8 +156,7 @@ class CreateJobForumState extends State<CreateJobForum> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: TextFormField(
                         validator: (value) {
-                          String text = value ?? "";
-                          if (text.isEmpty) {
+                          if (value?.isEmpty ?? true) {
                             return "Please enter a valid job title";
                           }
                           return null;
@@ -209,8 +182,7 @@ class CreateJobForumState extends State<CreateJobForum> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: TextFormField(
                         validator: (value) {
-                          String text = value ?? "";
-                          if (text.isEmpty) {
+                          if (value?.isEmpty ?? true) {
                             return "Please enter a valid description";
                           }
                           return null;
@@ -230,7 +202,7 @@ class CreateJobForumState extends State<CreateJobForum> {
                 ),
                 image != null
                     ? ListTile(
-                        title: Image.memory(
+                        title: Image.file(
                           image!,
                           height: 120,
                         ),
@@ -375,16 +347,16 @@ class CreateJobForumState extends State<CreateJobForum> {
                                   elevation: 0,
                                   color: Colors.grey[400],
                                   child: Center(
-                                    child: DropdownButtonFormField(
+                                    child: DropdownButtonFormField<String>(
                                       validator: (value) {
-                                        if (value == null) {
+                                        if (value?.isEmpty ?? true) {
                                           return "Please choose option";
                                         }
                                         return null;
                                       },
                                       value: experience,
                                       items: exp.map((String experience) {
-                                        return DropdownMenuItem(
+                                        return DropdownMenuItem<String>(
                                           value: experience,
                                           child: Center(
                                             child: Padding(
@@ -442,16 +414,16 @@ class CreateJobForumState extends State<CreateJobForum> {
                                 elevation: 0,
                                 color: Colors.grey[400],
                                 child: Center(
-                                  child: DropdownButtonFormField(
+                                  child: DropdownButtonFormField<String>(
                                     validator: (value) {
-                                      if (value == null) {
+                                      if (value?.isEmpty ?? true) {
                                         return "Please choose option";
                                       }
                                       return null;
                                     },
                                     value: education,
                                     items: edu.map((String experience) {
-                                      return DropdownMenuItem(
+                                      return DropdownMenuItem<String>(
                                         value: experience,
                                         child: Center(
                                           child: Padding(
@@ -512,16 +484,16 @@ class CreateJobForumState extends State<CreateJobForum> {
                                   elevation: 0,
                                   color: Colors.grey[400],
                                   child: Center(
-                                    child: DropdownButtonFormField(
+                                    child: DropdownButtonFormField<String>(
                                       validator: (value) {
-                                        if (value == null) {
+                                        if (value?.isEmpty ?? true) {
                                           return "Please choose option";
                                         }
                                         return null;
                                       },
                                       value: salary,
                                       items: sal.map((String experience) {
-                                        return DropdownMenuItem(
+                                        return DropdownMenuItem<String>(
                                           value: experience,
                                           child: Center(
                                             child: Padding(
@@ -559,29 +531,36 @@ class CreateJobForumState extends State<CreateJobForum> {
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
-                          initialDate: DateTime.now(),
+                          initialDate: _selectedDate!,
                           firstDate: DateTime(2000),
                           //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2100));
+                      setState(() {
+                        if (pickedDate != null) {
+                          _selectedDate = pickedDate;
+                          date.text = _selectedDate != null
+                              ? DateFormat('yMd').format(_selectedDate!)
+                              : 'End Date';
+                        }
+                      });
                     },
                     child: Card(
                       elevation: 5,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: TextFormField(
+                          controller: date,
                           enabled: false,
                           decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
-                            labelText: 'End Date',
                             hintText: 'Please fill in end date',
                           ),
                           validator: (value) {
-                            if ((value ?? "").isEmpty) {
+                            if (value?.isEmpty ?? true) {
                               return "Please fill in end date";
                             }
                             return null;
                           },
-                          //  controller: jobLocationController,
                         ),
                       ),
                     ),
@@ -603,7 +582,7 @@ class CreateJobForumState extends State<CreateJobForum> {
                           hintText: 'Please fill in Job Location',
                         ),
                         validator: (value) {
-                          if ((value ?? "").isEmpty) {
+                          if (value?.isEmpty ?? true) {
                             return "Please fill in Job Location";
                           }
                           return null;
@@ -633,8 +612,36 @@ class CreateJobForumState extends State<CreateJobForum> {
                   width: 300,
                   height: 45,
                   child: ElevatedButton(
-                    onPressed: () {
-                      createJob();
+                    onPressed: () async {
+                      UserModel user = _storageService.getCurrentUser()!;
+                      if (_formKey.currentState!.validate() && image != null) {
+                        setState(() {
+                          isBusy = true;
+                        });
+                        bool res = await _jobRepository.postJob(
+                          {
+                            'userId': user.id.toString(),
+                            'jobsTitle': jobTitleController.text.trim(),
+                            'description': jobDescController.text.trim(),
+                            'companyName': firmNameController.text.trim(),
+                            'gender': genderValue.toString(),
+                            'experience': experience,
+                            'education': education,
+                            'location': jobLocationController.text.trim(),
+                            'packages': salary,
+                            'status': "enable",
+                            'date': DateTime.now().toString(),
+                            'endDate': _selectedDate.toString(),
+                          },
+                          image,
+                        );
+                        setState(() {
+                          isBusy = false;
+                        });
+                        if (res) {
+                          Navigator.pop(context, true);
+                        }
+                      }
                     },
                     child: Text(
                       "Post".toUpperCase(),

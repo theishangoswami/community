@@ -26,28 +26,20 @@ class JobRepository {
     return [];
   }
 
-  Future<bool> createJob(JobModel jobModel, Uint8List image) async {
+  Future<bool> postJob(Map<String, String> formBody, image) async {
     try {
-      Dio dio = Dio();
-      var formData = FormData.fromMap({
-        ...jobModel.toJson(),
-        'company_logo': MultipartFile.fromBytes(
-          image,
-          filename: 'company_logo',
-          contentType: MediaType('image', 'jpeg'),
-        ),
-      });
-      var response = await dio.post(
-        Constants.baseUrl + "jobs/add",
-        data: formData,
-      );
-      debugPrint("Jon add response:${response.data}\nUrl:${response.realUri}");
-      return response.statusCode == 200;
-    } on DioError catch (e) {
-      debugPrint("Dio error :$e");
-      Fluttertoast.showToast(msg: e.message);
+      final res = await HttpBuilder.postFormData('jobs/add',
+          body: formBody,
+          image: image,
+          imageParameterName: 'company_logo',
+          successMessage: "Job posted successfully.");
+      if (res!.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
     } catch (e) {
-      debugPrint("$e");
+      if (kDebugMode) {
+        print(e);
+      }
     }
     return false;
   }
