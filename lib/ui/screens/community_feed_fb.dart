@@ -3,10 +3,10 @@ import 'package:community_internal/ui/widgets/post_container.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/models/post.model.dart';
 import '../../core/repository/post_repository.dart';
-import '../widgets/dummy_drawer.dart';
 import '../widgets/user_avatar.dart';
 import 'member_profile.dart';
 
@@ -63,7 +63,6 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
-        // drawer: const DummyDrawer(),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
@@ -75,11 +74,26 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             color: Colors.black,
           ),
           actions: [
+            IconButton(
+                onPressed: () async {
+                  var url = Uri.parse(
+                      "https://akhilbhartiyasamaj.com/view_cashier_app.php?user_id=${user!.id}");
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.inAppWebView);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                icon: const Icon(
+                  Icons.balance,
+                  color: Colors.black,
+                  size: 30,
+                )),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
                 child: UserAvatar(
-                  radius: 50,
+                  radius: 45,
                   imgUrl: user!.profile,
                 ),
                 onTap: () {
@@ -106,7 +120,7 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
                 child: CupertinoSlidingSegmentedControl<int>(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 7.0, vertical: 7.0),
-                  backgroundColor: Color.fromARGB(255, 226, 226, 226),
+                  backgroundColor: const Color.fromARGB(255, 226, 226, 226),
                   groupValue: sharedValue,
                   children: slidingwidgets,
                   onValueChanged: (int? val) {

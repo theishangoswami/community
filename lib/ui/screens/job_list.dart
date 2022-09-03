@@ -8,6 +8,7 @@ import 'package:community_internal/ui/widgets/dummy_drawer.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'Job_description.dart';
 import 'create_job.forum.dart';
@@ -176,7 +177,8 @@ class _JobListState extends State<JobList> with AutomaticKeepAliveClientMixin {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "Posted on ${job.date?.toIso8601String() ?? "NA"}",
+                                "POST ON ${DateFormat('yMd').format(job.date!)}  |  ${DateFormat('yMd').format(job.date!)} ",
+                                //   "Posted on ${job.date?.toIso8601String() ?? "NA"}",
                                 style: const TextStyle(fontSize: 14),
                               ),
                             ),

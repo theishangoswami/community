@@ -172,6 +172,7 @@
 // }
 import 'package:community_internal/core/models/job.model.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDetails extends StatefulWidget {
   final JobModel jobModel;
@@ -344,25 +345,16 @@ class _JobDetailsState extends State<JobDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(11),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.local_activity,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      var url = Uri.parse(
+                          "https://www.akhilbhartiyasamaj.com/api/jobs/apply/6/69");
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url, mode: LaunchMode.inAppWebView);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
                     child: Container(
                       height: 50,
                       width: 200,

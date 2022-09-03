@@ -116,28 +116,28 @@ class CreateJobForumState extends State<CreateJobForum> {
           title: Container(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Post a Full Time Job".toUpperCase(),
+              "Post a Job".toUpperCase(),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          actions: const [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              child: CircleAvatar(
-                backgroundColor: Colors.white70,
-                child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text(
-                    "S",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
+          // actions: const [
+          //   Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          //     child: CircleAvatar(
+          //       backgroundColor: Colors.white70,
+          //       child: Padding(
+          //         padding: EdgeInsets.all(4.0),
+          //         child: Text(
+          //           "S",
+          //           style: TextStyle(
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.black,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   )
+          // ],
         ),
         body: Form(
           key: formKey,
@@ -552,6 +552,43 @@ class CreateJobForumState extends State<CreateJobForum> {
                 ),
                 const SizedBox(
                   height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          //DateTime.now() - not to allow to choose before today.
+                          lastDate: DateTime(2100));
+                    },
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: TextFormField(
+                          enabled: false,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'End Date',
+                            hintText: 'Please fill in end date',
+                          ),
+                          validator: (value) {
+                            if ((value ?? "").isEmpty) {
+                              return "Please fill in end date";
+                            }
+                            return null;
+                          },
+                          //  controller: jobLocationController,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0, right: 12.0),

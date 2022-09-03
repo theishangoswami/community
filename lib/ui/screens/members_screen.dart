@@ -1,4 +1,6 @@
 import 'package:community_internal/core/services/key_storage.service.dart';
+import 'package:community_internal/ui/screens/member_page/filter.dart';
+import 'package:community_internal/ui/screens/member_page/search.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
 import 'package:community_internal/ui/screens/members.list.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
@@ -21,7 +23,7 @@ class _MembersScreenState extends State<MembersScreen>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(length: 5, vsync: this);
+    _controller = TabController(length: 3, vsync: this);
     _controller?.addListener(() {
       setState(() {});
     });
@@ -37,69 +39,75 @@ class _MembersScreenState extends State<MembersScreen>
   Widget build(BuildContext context) {
     final user = StorageService().getCurrentUser();
     return Scaffold(
-      // drawer: const DummyDrawer(),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          "Members".toUpperCase(),
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: GestureDetector(
-              child: UserAvatar(
-                radius: 50,
-                imgUrl: user!.profile,
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const MemberProfileScreen(),
-                  ),
-                );
-              },
-            ),
-          )
-        ],
-        bottom: TabBar(
-          labelColor: Colors.black,
-          isScrollable: true,
-          indicatorColor: Colors.white70,
-          indicatorWeight: 0.3,
-          controller: _controller,
-          indicator: const BoxDecoration(
-            color: Colors.black12,
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
-            ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(130.0),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            "Members".toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          tabs: [
-            Tab(
-              text: 'Address'.toUpperCase(),
-              icon: const Icon(FontAwesomeIcons.locationDot),
-            ),
-            Tab(
-              text: 'Pin Code'.toUpperCase(),
-              icon: const Icon(FontAwesomeIcons.map),
-            ),
-            Tab(
-              text: 'Groups'.toUpperCase(),
-              icon: const Icon(FontAwesomeIcons.peopleGroup),
-            ),
-            Tab(
-              text: 'Identity'.toUpperCase(),
-              icon: const Icon(FontAwesomeIcons.fingerprint),
-            ),
-            Tab(
-              text: 'Search'.toUpperCase(),
-              icon: const Icon(FontAwesomeIcons.searchengin),
-            ),
+          backgroundColor: Colors.white,
+          iconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: GestureDetector(
+                child: UserAvatar(
+                  radius: 50,
+                  imgUrl: user!.profile!,
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const MemberProfileScreen(),
+                    ),
+                  );
+                },
+              ),
+            )
           ],
+          bottom: TabBar(
+            labelColor: Colors.black,
+            indicatorColor: Colors.white,
+            indicatorWeight: 0.3,
+            controller: _controller,
+            tabs: [
+              GestureDetector(
+                onTap: () {
+                  showFilterSheet(context);
+                },
+                child: Tab(
+                  text: 'City'.toUpperCase(),
+                  icon: const Icon(FontAwesomeIcons.locationDot),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  showFilterSheet(context);
+                },
+                child: Tab(
+                  text: 'Pin Code'.toUpperCase(),
+                  icon: const Icon(FontAwesomeIcons.map),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SearchPage(),
+                    ),
+                  );
+                },
+                child: Tab(
+                  text: 'Search'.toUpperCase(),
+                  icon: const Icon(FontAwesomeIcons.searchengin),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: const MembersGridList(),

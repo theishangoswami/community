@@ -61,20 +61,39 @@ class _MembersGridListState extends State<MembersGridList> {
                   children: [
                     Expanded(
                       flex: 4,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          image: DecorationImage(
-                            image: AssetImage(
-                              Assets.images.person.path,
+                      child: Stack(children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
                             ),
-                            fit: BoxFit.cover,
+                            image: DecorationImage(
+                              image: AssetImage(
+                                Assets.images.person.path,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
+                        Container(
+                            alignment: Alignment.bottomRight,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Icon(
+                                  Icons.message,
+                                  color: Colors.amber,
+                                ),
+                              ),
+                            )),
+                      ]),
                     ),
                     Expanded(
                       flex: 2,
@@ -90,6 +109,9 @@ class _MembersGridListState extends State<MembersGridList> {
                                 fontSize: 18,
                               ),
                             ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             Text(
                               (user.mobileNumber ?? "").toUpperCase(),
                               style: const TextStyle(
@@ -97,10 +119,14 @@ class _MembersGridListState extends State<MembersGridList> {
                                 color: Colors.blueGrey,
                               ),
                             ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             Text(
                               (user.userEmail ?? "NA").toUpperCase(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
+                                fontSize: 12,
                                 color: Colors.blueGrey,
                               ),
                             ),

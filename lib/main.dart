@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/ads_screen.dart';
+import 'package:community_internal/ui/screens/balance/balance.dart';
 import 'package:community_internal/ui/screens/community_feed_fb.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/ui/screens/create_post.dart';
