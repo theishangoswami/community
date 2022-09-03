@@ -37,6 +37,14 @@ mixin _$UserModel {
   @JsonKey(name: 'sister_name')
   String? get sisterName => throw _privateConstructorUsedError;
   String? get education => throw _privateConstructorUsedError;
+  @JsonKey(name: 'highschool')
+  String? get highSchool => throw _privateConstructorUsedError;
+  @JsonKey(name: 'intermediate')
+  String? get interMediate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'graduation')
+  String? get graduation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'post_graduation')
+  String? get postGraduation => throw _privateConstructorUsedError;
   @JsonKey(name: 'adhar_number')
   String? get adharNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'passport_number')
@@ -60,6 +68,8 @@ mixin _$UserModel {
   String? get districtId => throw _privateConstructorUsedError;
   @JsonKey(name: 'pincode_id')
   String? get pinCodeId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'gotra_id')
+  String? get gotraId => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
   String? get profile => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
@@ -92,6 +102,10 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: 'brother_name') String? brotherName,
       @JsonKey(name: 'sister_name') String? sisterName,
       String? education,
+      @JsonKey(name: 'highschool') String? highSchool,
+      @JsonKey(name: 'intermediate') String? interMediate,
+      @JsonKey(name: 'graduation') String? graduation,
+      @JsonKey(name: 'post_graduation') String? postGraduation,
       @JsonKey(name: 'adhar_number') String? adharNumber,
       @JsonKey(name: 'passport_number') String? passportNumber,
       String? password,
@@ -104,6 +118,7 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: 'city_id') String? cityId,
       @JsonKey(name: 'district_id') String? districtId,
       @JsonKey(name: 'pincode_id') String? pinCodeId,
+      @JsonKey(name: 'gotra_id') String? gotraId,
       String? address,
       String? profile,
       String? status,
@@ -133,6 +148,10 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? brotherName = freezed,
     Object? sisterName = freezed,
     Object? education = freezed,
+    Object? highSchool = freezed,
+    Object? interMediate = freezed,
+    Object? graduation = freezed,
+    Object? postGraduation = freezed,
     Object? adharNumber = freezed,
     Object? passportNumber = freezed,
     Object? password = freezed,
@@ -145,6 +164,7 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? cityId = freezed,
     Object? districtId = freezed,
     Object? pinCodeId = freezed,
+    Object? gotraId = freezed,
     Object? address = freezed,
     Object? profile = freezed,
     Object? status = freezed,
@@ -194,6 +214,22 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
           ? _value.education
           : education // ignore: cast_nullable_to_non_nullable
               as String?,
+      highSchool: highSchool == freezed
+          ? _value.highSchool
+          : highSchool // ignore: cast_nullable_to_non_nullable
+              as String?,
+      interMediate: interMediate == freezed
+          ? _value.interMediate
+          : interMediate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      graduation: graduation == freezed
+          ? _value.graduation
+          : graduation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postGraduation: postGraduation == freezed
+          ? _value.postGraduation
+          : postGraduation // ignore: cast_nullable_to_non_nullable
+              as String?,
       adharNumber: adharNumber == freezed
           ? _value.adharNumber
           : adharNumber // ignore: cast_nullable_to_non_nullable
@@ -241,6 +277,10 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
       pinCodeId: pinCodeId == freezed
           ? _value.pinCodeId
           : pinCodeId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gotraId: gotraId == freezed
+          ? _value.gotraId
+          : gotraId // ignore: cast_nullable_to_non_nullable
               as String?,
       address: address == freezed
           ? _value.address
@@ -291,6 +331,10 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       @JsonKey(name: 'brother_name') String? brotherName,
       @JsonKey(name: 'sister_name') String? sisterName,
       String? education,
+      @JsonKey(name: 'highschool') String? highSchool,
+      @JsonKey(name: 'intermediate') String? interMediate,
+      @JsonKey(name: 'graduation') String? graduation,
+      @JsonKey(name: 'post_graduation') String? postGraduation,
       @JsonKey(name: 'adhar_number') String? adharNumber,
       @JsonKey(name: 'passport_number') String? passportNumber,
       String? password,
@@ -303,6 +347,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       @JsonKey(name: 'city_id') String? cityId,
       @JsonKey(name: 'district_id') String? districtId,
       @JsonKey(name: 'pincode_id') String? pinCodeId,
+      @JsonKey(name: 'gotra_id') String? gotraId,
       String? address,
       String? profile,
       String? status,
@@ -334,6 +379,10 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
     Object? brotherName = freezed,
     Object? sisterName = freezed,
     Object? education = freezed,
+    Object? highSchool = freezed,
+    Object? interMediate = freezed,
+    Object? graduation = freezed,
+    Object? postGraduation = freezed,
     Object? adharNumber = freezed,
     Object? passportNumber = freezed,
     Object? password = freezed,
@@ -346,6 +395,7 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
     Object? cityId = freezed,
     Object? districtId = freezed,
     Object? pinCodeId = freezed,
+    Object? gotraId = freezed,
     Object? address = freezed,
     Object? profile = freezed,
     Object? status = freezed,
@@ -395,6 +445,22 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
           ? _value.education
           : education // ignore: cast_nullable_to_non_nullable
               as String?,
+      highSchool: highSchool == freezed
+          ? _value.highSchool
+          : highSchool // ignore: cast_nullable_to_non_nullable
+              as String?,
+      interMediate: interMediate == freezed
+          ? _value.interMediate
+          : interMediate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      graduation: graduation == freezed
+          ? _value.graduation
+          : graduation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postGraduation: postGraduation == freezed
+          ? _value.postGraduation
+          : postGraduation // ignore: cast_nullable_to_non_nullable
+              as String?,
       adharNumber: adharNumber == freezed
           ? _value.adharNumber
           : adharNumber // ignore: cast_nullable_to_non_nullable
@@ -443,6 +509,10 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
           ? _value.pinCodeId
           : pinCodeId // ignore: cast_nullable_to_non_nullable
               as String?,
+      gotraId: gotraId == freezed
+          ? _value.gotraId
+          : gotraId // ignore: cast_nullable_to_non_nullable
+              as String?,
       address: address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -489,6 +559,10 @@ class _$_UserModel implements _UserModel {
       @JsonKey(name: 'brother_name') this.brotherName,
       @JsonKey(name: 'sister_name') this.sisterName,
       this.education,
+      @JsonKey(name: 'highschool') this.highSchool,
+      @JsonKey(name: 'intermediate') this.interMediate,
+      @JsonKey(name: 'graduation') this.graduation,
+      @JsonKey(name: 'post_graduation') this.postGraduation,
       @JsonKey(name: 'adhar_number') this.adharNumber,
       @JsonKey(name: 'passport_number') this.passportNumber,
       this.password,
@@ -501,6 +575,7 @@ class _$_UserModel implements _UserModel {
       @JsonKey(name: 'city_id') this.cityId,
       @JsonKey(name: 'district_id') this.districtId,
       @JsonKey(name: 'pincode_id') this.pinCodeId,
+      @JsonKey(name: 'gotra_id') this.gotraId,
       this.address,
       this.profile,
       this.status,
@@ -540,6 +615,18 @@ class _$_UserModel implements _UserModel {
   @override
   final String? education;
   @override
+  @JsonKey(name: 'highschool')
+  final String? highSchool;
+  @override
+  @JsonKey(name: 'intermediate')
+  final String? interMediate;
+  @override
+  @JsonKey(name: 'graduation')
+  final String? graduation;
+  @override
+  @JsonKey(name: 'post_graduation')
+  final String? postGraduation;
+  @override
   @JsonKey(name: 'adhar_number')
   final String? adharNumber;
   @override
@@ -575,6 +662,9 @@ class _$_UserModel implements _UserModel {
   @JsonKey(name: 'pincode_id')
   final String? pinCodeId;
   @override
+  @JsonKey(name: 'gotra_id')
+  final String? gotraId;
+  @override
   final String? address;
   @override
   final String? profile;
@@ -594,7 +684,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, userName: $userName, userEmail: $userEmail, mobileNumber: $mobileNumber, gender: $gender, fatherName: $fatherName, motherName: $motherName, brotherName: $brotherName, sisterName: $sisterName, education: $education, adharNumber: $adharNumber, passportNumber: $passportNumber, password: $password, registrationDate: $registrationDate, communityId: $communityId, societyId: $societyId, societyName: $societyName, countryId: $countryId, stateId: $stateId, cityId: $cityId, districtId: $districtId, pinCodeId: $pinCodeId, address: $address, profile: $profile, status: $status, otp: $otp, userType: $userType, referralCode: $referralCode, joiningId: $joiningId)';
+    return 'UserModel(id: $id, userName: $userName, userEmail: $userEmail, mobileNumber: $mobileNumber, gender: $gender, fatherName: $fatherName, motherName: $motherName, brotherName: $brotherName, sisterName: $sisterName, education: $education, highSchool: $highSchool, interMediate: $interMediate, graduation: $graduation, postGraduation: $postGraduation, adharNumber: $adharNumber, passportNumber: $passportNumber, password: $password, registrationDate: $registrationDate, communityId: $communityId, societyId: $societyId, societyName: $societyName, countryId: $countryId, stateId: $stateId, cityId: $cityId, districtId: $districtId, pinCodeId: $pinCodeId, gotraId: $gotraId, address: $address, profile: $profile, status: $status, otp: $otp, userType: $userType, referralCode: $referralCode, joiningId: $joiningId)';
   }
 
   @override
@@ -618,6 +708,14 @@ class _$_UserModel implements _UserModel {
                 .equals(other.sisterName, sisterName) &&
             const DeepCollectionEquality().equals(other.education, education) &&
             const DeepCollectionEquality()
+                .equals(other.highSchool, highSchool) &&
+            const DeepCollectionEquality()
+                .equals(other.interMediate, interMediate) &&
+            const DeepCollectionEquality()
+                .equals(other.graduation, graduation) &&
+            const DeepCollectionEquality()
+                .equals(other.postGraduation, postGraduation) &&
+            const DeepCollectionEquality()
                 .equals(other.adharNumber, adharNumber) &&
             const DeepCollectionEquality()
                 .equals(other.passportNumber, passportNumber) &&
@@ -635,6 +733,7 @@ class _$_UserModel implements _UserModel {
             const DeepCollectionEquality()
                 .equals(other.districtId, districtId) &&
             const DeepCollectionEquality().equals(other.pinCodeId, pinCodeId) &&
+            const DeepCollectionEquality().equals(other.gotraId, gotraId) &&
             const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality().equals(other.profile, profile) &&
             const DeepCollectionEquality().equals(other.status, status) &&
@@ -659,6 +758,10 @@ class _$_UserModel implements _UserModel {
         const DeepCollectionEquality().hash(brotherName),
         const DeepCollectionEquality().hash(sisterName),
         const DeepCollectionEquality().hash(education),
+        const DeepCollectionEquality().hash(highSchool),
+        const DeepCollectionEquality().hash(interMediate),
+        const DeepCollectionEquality().hash(graduation),
+        const DeepCollectionEquality().hash(postGraduation),
         const DeepCollectionEquality().hash(adharNumber),
         const DeepCollectionEquality().hash(passportNumber),
         const DeepCollectionEquality().hash(password),
@@ -671,6 +774,7 @@ class _$_UserModel implements _UserModel {
         const DeepCollectionEquality().hash(cityId),
         const DeepCollectionEquality().hash(districtId),
         const DeepCollectionEquality().hash(pinCodeId),
+        const DeepCollectionEquality().hash(gotraId),
         const DeepCollectionEquality().hash(address),
         const DeepCollectionEquality().hash(profile),
         const DeepCollectionEquality().hash(status),
@@ -705,6 +809,10 @@ abstract class _UserModel implements UserModel {
       @JsonKey(name: 'brother_name') final String? brotherName,
       @JsonKey(name: 'sister_name') final String? sisterName,
       final String? education,
+      @JsonKey(name: 'highschool') final String? highSchool,
+      @JsonKey(name: 'intermediate') final String? interMediate,
+      @JsonKey(name: 'graduation') final String? graduation,
+      @JsonKey(name: 'post_graduation') final String? postGraduation,
       @JsonKey(name: 'adhar_number') final String? adharNumber,
       @JsonKey(name: 'passport_number') final String? passportNumber,
       final String? password,
@@ -717,6 +825,7 @@ abstract class _UserModel implements UserModel {
       @JsonKey(name: 'city_id') final String? cityId,
       @JsonKey(name: 'district_id') final String? districtId,
       @JsonKey(name: 'pincode_id') final String? pinCodeId,
+      @JsonKey(name: 'gotra_id') final String? gotraId,
       final String? address,
       final String? profile,
       final String? status,
@@ -756,6 +865,18 @@ abstract class _UserModel implements UserModel {
   @override
   String? get education;
   @override
+  @JsonKey(name: 'highschool')
+  String? get highSchool;
+  @override
+  @JsonKey(name: 'intermediate')
+  String? get interMediate;
+  @override
+  @JsonKey(name: 'graduation')
+  String? get graduation;
+  @override
+  @JsonKey(name: 'post_graduation')
+  String? get postGraduation;
+  @override
   @JsonKey(name: 'adhar_number')
   String? get adharNumber;
   @override
@@ -790,6 +911,9 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: 'pincode_id')
   String? get pinCodeId;
+  @override
+  @JsonKey(name: 'gotra_id')
+  String? get gotraId;
   @override
   String? get address;
   @override
