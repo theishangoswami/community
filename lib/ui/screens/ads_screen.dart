@@ -1,5 +1,6 @@
 import 'package:community_internal/core/models/post.model.dart';
 import 'package:community_internal/core/repository/post_repository.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
 import 'package:community_internal/ui/widgets/post_container.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
@@ -41,6 +42,7 @@ class _AdsScreenState extends State<AdsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser();
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -59,8 +61,9 @@ class _AdsScreenState extends State<AdsScreen> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
-                child: const UserAvatar(
+                child: UserAvatar(
                   radius: 50,
+                  imgUrl: user!.profile,
                 ),
                 onTap: () {
                   Navigator.of(context).push(

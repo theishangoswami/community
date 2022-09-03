@@ -476,6 +476,7 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser();
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -493,8 +494,9 @@ class _CreatePostState extends State<CreatePost> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
-                child: const UserAvatar(
+                child: UserAvatar(
                   radius: 50,
+                  imgUrl: user!.profile,
                 ),
                 onTap: () {
                   Navigator.of(context).push(

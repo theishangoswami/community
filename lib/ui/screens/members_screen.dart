@@ -1,3 +1,4 @@
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
 import 'package:community_internal/ui/screens/members.list.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
@@ -34,6 +35,7 @@ class _MembersScreenState extends State<MembersScreen>
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser();
     return Scaffold(
       // drawer: const DummyDrawer(),
       appBar: AppBar(
@@ -50,8 +52,9 @@ class _MembersScreenState extends State<MembersScreen>
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: GestureDetector(
-              child: const UserAvatar(
+              child: UserAvatar(
                 radius: 50,
+                imgUrl: user!.profile,
               ),
               onTap: () {
                 Navigator.of(context).push(

@@ -1,3 +1,4 @@
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/ledger%20module/ledger_page.dart';
 import 'package:community_internal/ui/screens/messaging.dart';
 import 'package:community_internal/ui/screens/settings%20module/invite_friends.dart';
@@ -14,17 +15,19 @@ class MemberProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: UserAvatar(
               radius: 60,
+              imgUrl: user!.profile,
             ),
           ),
         ],
@@ -35,7 +38,10 @@ class MemberProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const UserAvatar(radius: 140),
+                UserAvatar(
+                  radius: 140,
+                  imgUrl: user.profile,
+                ),
                 const SizedBox(
                   height: 20,
                 ),

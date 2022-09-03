@@ -1,3 +1,4 @@
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/widgets/post_container.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,6 +59,7 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser();
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -76,8 +78,9 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
-                child: const UserAvatar(
+                child: UserAvatar(
                   radius: 50,
+                  imgUrl: user!.profile,
                 ),
                 onTap: () {
                   Navigator.of(context).push(

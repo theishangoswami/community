@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_internal/app/constants.dart';
 import 'package:community_internal/core/models/job.model.dart';
 import 'package:community_internal/core/repository/jobs.repository.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
 import 'package:community_internal/ui/widgets/dummy_drawer.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
@@ -43,6 +44,7 @@ class _JobListState extends State<JobList> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final user = StorageService().getCurrentUser();
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -61,8 +63,9 @@ class _JobListState extends State<JobList> with AutomaticKeepAliveClientMixin {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
-                child: const UserAvatar(
+                child: UserAvatar(
                   radius: 50,
+                  imgUrl: user!.profile,
                 ),
                 onTap: () async {
                   await Navigator.of(context).push(
