@@ -8,6 +8,7 @@ import 'package:community_internal/core/models/district.dart';
 import 'package:community_internal/core/models/gotra.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
+import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/core/services/file.service.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
@@ -41,6 +42,11 @@ class _UserDetailsState extends State<UserDetails> {
   final TextEditingController _aadhaarCardController = TextEditingController();
   final TextEditingController _passPortController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _highSchoolController = TextEditingController();
+  final TextEditingController _interMediateController = TextEditingController();
+  final TextEditingController _graduationController = TextEditingController();
+  final TextEditingController _postGraduationController =
+      TextEditingController();
   bool _isLoading = false;
   File? _selectedImage;
   String _selectedGender = 'male';
@@ -303,10 +309,12 @@ class _UserDetailsState extends State<UserDetails> {
                     },
                   ),
                   imageError
-                      ? const Text(
-                          'Please select a image',
-                          style: TextStyle(color: Colors.red, fontSize: 15),
-                        )
+                      ? widget.isUpdate
+                          ? const SizedBox()
+                          : const Text(
+                              'Please select a image',
+                              style: TextStyle(color: Colors.red, fontSize: 15),
+                            )
                       : const SizedBox(),
                   const SizedBox(
                     height: 10,
@@ -526,6 +534,50 @@ class _UserDetailsState extends State<UserDetails> {
                     controller: _passPortController,
                     keyboardType: TextInputType.text,
                   ),
+                  widget.isUpdate
+                      ? Column(
+                          children: [
+                            ProfileTextFeild(
+                              icon: const Icon(
+                                Icons.cast_for_education,
+                                color: Colors.black,
+                              ),
+                              displaytText: 'Education 10th'.toUpperCase(),
+                              controller: _highSchoolController,
+                              keyboardType: TextInputType.text,
+                            ),
+                            ProfileTextFeild(
+                              icon: const Icon(
+                                Icons.cast_for_education,
+                                color: Colors.black,
+                              ),
+                              displaytText: 'Education 12th'.toUpperCase(),
+                              controller: _interMediateController,
+                              keyboardType: TextInputType.text,
+                            ),
+                            ProfileTextFeild(
+                              icon: const Icon(
+                                Icons.cast_for_education,
+                                color: Colors.black,
+                              ),
+                              displaytText:
+                                  'Education Graduation'.toUpperCase(),
+                              controller: _graduationController,
+                              keyboardType: TextInputType.text,
+                            ),
+                            ProfileTextFeild(
+                              icon: const Icon(
+                                Icons.cast_for_education,
+                                color: Colors.black,
+                              ),
+                              displaytText:
+                                  'Education Post Graduation'.toUpperCase(),
+                              controller: _postGraduationController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ],
+                        )
+                      : const SizedBox(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
@@ -543,45 +595,84 @@ class _UserDetailsState extends State<UserDetails> {
                               imageError = true;
                             }
                           });
-                          if (_formKey.currentState!.validate() &&
-                              !imageError) {
-                            final SharedPreferences _sharedPreferences =
-                                locator<SharedPreferences>();
-                            await _sharedPreferences.setString(
-                                'communityId', _selectedCommunity.id);
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            await UserRepository().userRegistration(
-                              {
-                                'name': _nameController.text.trim(),
-                                'mobile_number': _phoneController.text.trim(),
-                                'email': _emailController.text.trim(),
-                                'adhar_card':
-                                    _aadhaarCardController.text.trim(),
-                                'passport_no': _passPortController.text.trim(),
-                                'state_id': _selectedState.id,
-                                'district_id': _selectedDistrict.id,
-                                'city_id': _selectedCity.id,
-                                'pincode_id': _selectedPincode.id,
-                                'community_id': _selectedCommunity.id,
-                                'gender': _selectedGender,
-                                'address': _addressController.text.trim(),
-                                'country_id': _selectedCountry.id,
-                              },
-                              _selectedImage,
-                            );
-                            setState(() {
-                              _isLoading = false;
-                            });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VerifyPage(
-                                  phonenumber: widget.phoneNumber,
+                          if (widget.isUpdate) {
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              await UserRepository().updateUserProfile(
+                                {
+                                  'name': _nameController.text.trim(),
+                                  'email': _emailController.text.trim(),
+                                  'mobile_number': _phoneController.text.trim(),
+                                  'gender': _selectedGender,
+                                  'highschool':
+                                      _highSchoolController.text.trim(),
+                                  'intermediate':
+                                      _interMediateController.text.trim(),
+                                  'gradution':
+                                      _graduationController.text.trim(),
+                                  'post_gradution':
+                                      _postGraduationController.text.trim(),
+                                  'adhar_number':
+                                      _aadhaarCardController.text.trim(),
+                                  'passport_number':
+                                      _passPortController.text.trim(),
+                                  'gotra_id': _selectedGotra.id,
+                                  'country_id': _selectedCountry.id,
+                                  'state_id': _selectedState.id,
+                                  'district_id': _selectedDistrict.id,
+                                  'city_id': _selectedCity.id,
+                                  'pincode_id': _selectedPincode.id,
+                                  'address': _addressController.text.trim(),
+                                },
+                                _selectedImage,
+                              );
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              await StorageService()
+                                  .saveUser(_phoneController.text.trim());
+                              Navigator.pop(context);
+                            }
+                          } else {
+                            if (_formKey.currentState!.validate() &&
+                                !imageError) {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              await UserRepository().userRegistration(
+                                {
+                                  'name': _nameController.text.trim(),
+                                  'mobile_number': _phoneController.text.trim(),
+                                  'email': _emailController.text.trim(),
+                                  'adhar_card':
+                                      _aadhaarCardController.text.trim(),
+                                  'passport_no':
+                                      _passPortController.text.trim(),
+                                  'state_id': _selectedState.id,
+                                  'district_id': _selectedDistrict.id,
+                                  'city_id': _selectedCity.id,
+                                  'pincode_id': _selectedPincode.id,
+                                  'community_id': _selectedCommunity.id,
+                                  'gender': _selectedGender,
+                                  'address': _addressController.text.trim(),
+                                  'country_id': _selectedCountry.id,
+                                },
+                                _selectedImage,
+                              );
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => VerifyPage(
+                                    phonenumber: widget.phoneNumber,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           }
                         },
                         child: Text(

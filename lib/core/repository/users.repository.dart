@@ -191,6 +191,17 @@ class UserRepository {
     }
   }
 
-  Future<void> updateUserProfile(UserModel userModel) async =>
-      await HttpBuilder.post('user/update_profile', body: userModel.toJson());
+  Future<void> updateUserProfile(Map<String, String> formBody, image) async {
+    try {
+      await HttpBuilder.postFormData('user/update_profile',
+          body: formBody,
+          image: image,
+          imageParameterName: 'profile',
+          successMessage: "Your details have been updated.");
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 }
