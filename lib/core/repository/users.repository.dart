@@ -177,6 +177,26 @@ class UserRepository {
     return null;
   }
 
+  Future<List<UserModel>?> getSearchedUser(String searchQuery) async {
+    try {
+      var res = await HttpBuilder.get('user_filter/view/$searchQuery');
+      if (res != null) {
+        var body = jsonDecode(res.body)['resp'] as List;
+        if (body.isNotEmpty) {
+          print('Result: $body');
+          return List<UserModel>.from(
+            body.map((user) => UserModel.fromJson(user)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
   Future<void> userRegistration(Map<String, String> formBody, image) async {
     try {
       await HttpBuilder.postFormData('first_user/registation',
