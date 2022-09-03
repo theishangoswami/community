@@ -171,6 +171,7 @@
 //   }
 // }
 import 'package:community_internal/core/models/job.model.dart';
+import 'package:community_internal/core/repository/jobs.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -183,6 +184,14 @@ class JobDetails extends StatefulWidget {
 }
 
 class _JobDetailsState extends State<JobDetails> {
+  final JobRepository _jobRepository = JobRepository();
+  void applyForJob(String jobId, String userId) async {
+    final response = await _jobRepository.applyJob(jobId, userId);
+    if (response) {
+      Navigator.pop(context, true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -347,13 +356,7 @@ class _JobDetailsState extends State<JobDetails> {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      var url = Uri.parse(
-                          "https://www.akhilbhartiyasamaj.com/api/jobs/apply/6/69");
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url, mode: LaunchMode.inAppWebView);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
+                      applyForJob(widget.jobModel.id!, widget.jobModel.userId!);
                     },
                     child: Container(
                       height: 50,

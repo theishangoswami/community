@@ -115,14 +115,17 @@ class _JobListState extends State<JobList> with AutomaticKeepAliveClientMixin {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
+                onTap: () async {
+                  final response = await Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => JobDetails(
                         jobModel: job,
                       ),
                     ),
                   );
+                  if (response) {
+                    fetchAllJobs();
+                  }
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(

@@ -26,6 +26,22 @@ class JobRepository {
     return [];
   }
 
+  Future<bool> applyJob(String jobId, String userId) async {
+    try {
+      var res = await HttpBuilder.get('jobs/apply/$jobId/$userId');
+      if (res!.statusCode == 200) {
+        var body = jsonDecode(res.body)['message'];
+        Fluttertoast.showToast(msg: body);
+        return true;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return false;
+  }
+
   Future<bool> postJob(Map<String, String> formBody, image) async {
     try {
       final res = await HttpBuilder.postFormData('jobs/add',
