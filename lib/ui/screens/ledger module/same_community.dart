@@ -124,9 +124,9 @@ class _SameComState extends State<SameCom> {
                   final SharedPreferences _sharedPreferences =
                       locator<SharedPreferences>();
                   final societyId = _sharedPreferences.getString('societyId');
-                  final userId = StorageService().getCurrentUser();
+                  final user = StorageService().getCurrentUser();
                   await LedgerRepository().addDonation({
-                    'trusty_id': userId!.id,
+                    'trusty_id': user!.id,
                     'user_name': _controller[0].text.trim(),
                     'user_mobile': _controller[2].text.trim(),
                     'user_email': _controller[1].text.trim(),
@@ -142,7 +142,9 @@ class _SameComState extends State<SameCom> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => MyHomePage(
-                          societyId: userId.societyId!, societyName: ''),
+                        societyId: user.societyId!,
+                        societyName: user.societyName ?? '',
+                      ),
                     ),
                   );
                 },

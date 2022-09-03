@@ -149,9 +149,7 @@ class _OtpInputState extends State<OtpInput> {
                             ? user?.societyId?.isNotEmpty ?? false
                                 ? MyHomePage(
                                     societyId: user!.societyId!,
-                                    societyName: locator<SharedPreferences>()
-                                            .getString('societyName') ??
-                                        '',
+                                    societyName: user.societyName ?? '',
                                   )
                                 : const CommunityList()
                             : user?.registrationDate == null
