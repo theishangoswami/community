@@ -1,15 +1,15 @@
 import 'dart:io';
-
-import 'package:community_internal/core/services/file.service.dart';
 import 'package:flutter/material.dart';
 
 class ProfileImage extends StatefulWidget {
   final File? selectedImage;
   final void Function()? onTap;
+  final String? imageUrl;
   const ProfileImage({
     Key? key,
     required this.selectedImage,
     this.onTap,
+    this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -33,8 +33,10 @@ class _ProfileImageState extends State<ProfileImage> {
                 radius: 67,
                 backgroundImage: widget.selectedImage?.path.isNotEmpty ?? false
                     ? Image.file(widget.selectedImage!).image
-                    : const NetworkImage(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU",
+                    : NetworkImage(
+                        widget.imageUrl?.isEmpty ?? true
+                            ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU"
+                            : widget.imageUrl!,
                       ),
               ),
             ),

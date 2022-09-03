@@ -3,8 +3,8 @@ import 'package:community_internal/ui/screens/ledger%20module/ledger_page.dart';
 import 'package:community_internal/ui/screens/messaging.dart';
 import 'package:community_internal/ui/screens/settings%20module/invite_friends.dart';
 import 'package:community_internal/ui/screens/settings%20module/member_details.dart';
-import 'package:community_internal/ui/screens/settings%20module/profile_page.dart';
 import 'package:community_internal/ui/screens/settings%20module/settings.dart';
+import 'package:community_internal/ui/screens/settings%20module/user.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -94,10 +94,14 @@ class MemberProfileScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
+                          final user = StorageService().getCurrentUser();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Profilee(),
+                              builder: (context) => UserDetails(
+                                phoneNumber: user!.mobileNumber!,
+                                isUpdate: true,
+                              ),
                             ),
                           );
                         },

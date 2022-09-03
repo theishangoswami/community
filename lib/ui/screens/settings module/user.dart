@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/models/city.dart';
@@ -10,7 +9,7 @@ import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/core/services/file.service.dart';
-import 'package:community_internal/ui/screens/community_list.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/verification_ui.dart';
 import 'package:community_internal/ui/widgets/gender_selection.dart';
 import 'package:community_internal/ui/widgets/profile_field.dart';
@@ -21,13 +20,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-List<TextEditingController> _controller = [
-  for (int i = 1; i < 13; i++) TextEditingController()
-];
-
 class UserDetails extends StatefulWidget {
   final String phoneNumber;
-  const UserDetails({Key? key, required this.phoneNumber}) : super(key: key);
+  final bool isUpdate;
+  const UserDetails({
+    Key? key,
+    required this.phoneNumber,
+    this.isUpdate = false,
+  }) : super(key: key);
 
   @override
   State<UserDetails> createState() => _UserDetailsState();
@@ -110,7 +110,7 @@ class _UserDetailsState extends State<UserDetails> {
         Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
   }
 
-  void fetchStateList(String countryId) async {
+  Future<void> fetchStateList(String countryId) async {
     refreshStateList();
     setState(() {
       _isLoading = true;
@@ -126,7 +126,7 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
-  void fetchDistrictList(String stateId) async {
+  Future<void> fetchDistrictList(String stateId) async {
     refreshDistrictList();
     refreshCityList();
     refreshPincodeList();
@@ -144,7 +144,7 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
-  void fetchCityList(String districtId) async {
+  Future<void> fetchCityList(String districtId) async {
     refreshCityList();
     refreshPincodeList();
     setState(() {
@@ -162,7 +162,7 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
-  void fetchPincodeList(String cityId) async {
+  Future<void> fetchPincodeList(String cityId) async {
     refreshPincodeList();
     setState(() {
       _isLoading = true;
@@ -179,7 +179,7 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
-  void fetchCommunityList() async {
+  Future<void> fetchCommunityList() async {
     await UserRepository().getCommunity().then((value) {
       if (value?.isNotEmpty ?? false) {
         setState(() {
@@ -189,7 +189,7 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
-  void fetchCountryList() async {
+  Future<void> fetchCountryList() async {
     refreshStateList();
     refreshDistrictList();
     refreshCityList();
@@ -203,16 +203,53 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
+  Future<void> fetchProfileDetails() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final user = StorageService().getCurrentUser()!;
+    _nameController.text = user.userName!;
+    _emailController.text = user.userEmail!;
+    _selectedGender = user.gender!;
+    _addressController.text = user.address!;
+    _aadhaarCardController.text = user.adharNumber!;
+    _passPortController.text = user.passportNumber ?? '';
+    await fetchCountryList();
+    _selectedCountry =
+        _countryList.firstWhere((country) => country.id == user.countryId);
+    await fetchStateList(_selectedCountry.id);
+    _selectedState = _stateList.firstWhere((state) => state.id == user.stateId);
+    await fetchDistrictList(_selectedState.id);
+    _selectedDistrict =
+        _districtList.firstWhere((district) => district.id == user.districtId);
+    await fetchCityList(_selectedDistrict.id);
+    _selectedCity = _cityList.firstWhere((city) => city.id == user.cityId);
+    await fetchPincodeList(_selectedCity.id);
+    _selectedPincode =
+        _pincodeList.firstWhere((pincode) => pincode.id == user.pinCodeId);
+    await fetchCommunityList();
+    _selectedCommunity = _communityList
+        .firstWhere((community) => community.id == user.communityId);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _phoneController.text = widget.phoneNumber;
-    fetchCountryList();
-    fetchCommunityList();
+    if (widget.isUpdate) {
+      fetchProfileDetails();
+    } else {
+      fetchCountryList();
+      fetchCommunityList();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser()!;
     return LoadingHelper(
       isLoading: _isLoading,
       child: GestureDetector(
@@ -221,7 +258,7 @@ class _UserDetailsState extends State<UserDetails> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("User Details"),
+            title: Text(widget.isUpdate ? 'Update Profile' : "User Details"),
           ),
           body: Form(
             key: _formKey,
@@ -231,6 +268,7 @@ class _UserDetailsState extends State<UserDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ProfileImage(
+                    imageUrl: user.profile,
                     selectedImage: _selectedImage,
                     onTap: () {
                       final FilePickerService _filePickerService =
@@ -475,48 +513,48 @@ class _UserDetailsState extends State<UserDetails> {
                           });
                           if (_formKey.currentState!.validate() &&
                               !imageError) {
-                            // final SharedPreferences _sharedPreferences =
-                            //     locator<SharedPreferences>();
-                            // await _sharedPreferences.setString(
-                            //     'communityId', _selectedCommunity.id);
-                            // setState(() {
-                            //   _isLoading = true;
-                            // });
-                            // await UserRepository().userRegistration(
-                            //   {
-                            //     'name': _nameController.text.trim(),
-                            //     'mobile_number': _phoneController.text.trim(),
-                            //     'email': _emailController.text.trim(),
-                            //     'adhar_card':
-                            //         _aadhaarCardController.text.trim(),
-                            //     'passport_no': _passPortController.text.trim(),
-                            //     'state_id': _selectedState.id,
-                            //     'district_id': _selectedDistrict.id,
-                            //     'city_id': _selectedCity.id,
-                            //     'pincode_id': _selectedPincode.id,
-                            //     'community_id': _selectedCommunity.id,
-                            //     'gender': _selectedGender,
-                            //     'address': _addressController.text.trim(),
-                            //     'country_id': '1'
-                            //   },
-                            //   _selectedImage,
-                            // );
-                            // setState(() {
-                            //   _isLoading = false;
-                            // });
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => VerifyPage(
-                            //       phonenumber: widget.phoneNumber,
-                            //     ),
-                            //   ),
-                            // );
+                            final SharedPreferences _sharedPreferences =
+                                locator<SharedPreferences>();
+                            await _sharedPreferences.setString(
+                                'communityId', _selectedCommunity.id);
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            await UserRepository().userRegistration(
+                              {
+                                'name': _nameController.text.trim(),
+                                'mobile_number': _phoneController.text.trim(),
+                                'email': _emailController.text.trim(),
+                                'adhar_card':
+                                    _aadhaarCardController.text.trim(),
+                                'passport_no': _passPortController.text.trim(),
+                                'state_id': _selectedState.id,
+                                'district_id': _selectedDistrict.id,
+                                'city_id': _selectedCity.id,
+                                'pincode_id': _selectedPincode.id,
+                                'community_id': _selectedCommunity.id,
+                                'gender': _selectedGender,
+                                'address': _addressController.text.trim(),
+                                'country_id': _selectedCountry.id,
+                              },
+                              _selectedImage,
+                            );
+                            setState(() {
+                              _isLoading = false;
+                            });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => VerifyPage(
+                                  phonenumber: widget.phoneNumber,
+                                ),
+                              ),
+                            );
                           }
                         },
-                        child: const Text(
-                          "NEXT",
-                          style: TextStyle(
+                        child: Text(
+                          widget.isUpdate ? 'SAVE' : "NEXT",
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
                             fontSize: 19,
@@ -534,243 +572,3 @@ class _UserDetailsState extends State<UserDetails> {
     );
   }
 }
-
-// class Profile extends StatefulWidget {
-//   const Profile({Key? key}) : super(key: key);
-//
-//   @override
-//   State<Profile> createState() => _ProfileState();
-// }
-//
-// class _ProfileState extends State<Profile> {
-//   String _selectedGender = 'male';
-//   List<Icon> icons = const [
-//     Icon(
-//       Icons.person,
-//       color: Colors.black,
-//     ),
-//     Icon(
-//       Icons.person,
-//       color: Colors.black,
-//     ),
-//     Icon(
-//       Icons.phone_android,
-//       color: Colors.black,
-//     ),
-//     Icon(
-//       Icons.attach_email,
-//       color: Colors.black,
-//     ),
-//     Icon(
-//       Icons.countertops,
-//       color: Colors.black,
-//     ),
-//     Icon(
-//       Icons.map_outlined,
-//       color: Colors.black,
-//     ),
-//     Icon(
-//       Icons.location_on_sharp,
-//       color: Colors.black,
-//     ),
-//     Icon(
-//       Icons.book_outlined,
-//       color: Colors.black,
-//     ),
-//     Icon(Icons.vertical_split, color: Colors.black),
-//     Icon(Icons.add_card_outlined, color: Colors.black),
-//     Icon(Icons.airplanemode_active, color: Colors.black),
-//   ];
-//   List<String> datas = [
-//     "",
-//     "Name",
-//     "pHONE Number",
-//     "Email",
-//     "State",
-//     "District",
-//     "town",
-//     "Address",
-//     "Religion",
-//     "Aadhar card number",
-//     "passport number"
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("User Details"),
-//       ),
-//       body: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Expanded(
-//               child: ListView.builder(
-//                   itemCount: 11,
-//                   itemBuilder: (context, index) {
-//                     print("shivam ${_controller[index].text}");
-//                     return index == 0
-//                         ? Stack(
-//                             children: [
-//                               Padding(
-//                                 padding: const EdgeInsets.all(12),
-//                                 child: Align(
-//                                   alignment: Alignment.topLeft,
-//                                   child: CircleAvatar(
-//                                     radius: 70,
-//                                     backgroundColor: Colors.black,
-//                                     child: CircleAvatar(
-//                                       backgroundColor: Colors.white,
-//                                       radius: 67,
-//                                       child: SizedBox(
-//                                           height: 74,
-//                                           width: 60,
-//                                           child: Image.network(
-//                                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU",
-//                                             fit: BoxFit.cover,
-//                                           )),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               const Padding(
-//                                 padding: EdgeInsets.symmetric(
-//                                     vertical: 85, horizontal: 130),
-//                                 child: CircleAvatar(
-//                                     radius: 15,
-//                                     backgroundColor: Colors.black,
-//                                     child: Icon(
-//                                       Icons.edit,
-//                                       size: 20,
-//                                       color: Colors.white,
-//                                     )),
-//                               ),
-//                             ],
-//                           )
-//                         : index != 4
-//                             ? Row(
-//                                 children: [
-//                                   Container(
-//                                       height: 70,
-//                                       width: 30,
-//                                       decoration: const BoxDecoration(
-//                                         color: Colors.amber,
-//                                         borderRadius: BorderRadius.horizontal(
-//                                             left: Radius.circular(3)),
-//                                       ),
-//                                       child: icons[index]),
-//                                   const SizedBox(
-//                                     width: 10,
-//                                   ),
-//                                   Expanded(
-//                                     child: Stack(
-//                                       children: [
-//                                         Text(
-//                                           datas[index].toUpperCase(),
-//                                           style: const TextStyle(
-//                                               fontWeight: FontWeight.w400),
-//                                         ),
-//                                         Padding(
-//                                           padding: const EdgeInsets.symmetric(
-//                                               vertical: 26),
-//                                           child: Text(
-//                                             _controller[index].text,
-//                                             style: const TextStyle(
-//                                                 fontWeight: FontWeight.w400),
-//                                           ),
-//                                         ),
-//                                         const Padding(
-//                                           padding: EdgeInsets.symmetric(
-//                                               horizontal: 300, vertical: 10),
-//                                           child: Icon(Icons.edit),
-//                                         ),
-//                                       ],
-//                                     ),
-//                                   )
-//                                 ],
-//                               )
-//                             : SizedBox(
-//                                 height: 80,
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     const Padding(
-//                                       padding: EdgeInsets.symmetric(
-//                                           vertical: 3, horizontal: 37),
-//                                       child: Text(' GENDER:'),
-//                                     ),
-//                                     Row(
-//                                       children: [
-//                                         const SizedBox(
-//                                           width: 24,
-//                                         ),
-//                                         Container(
-//                                           child: Radio<String>(
-//                                             value: 'male',
-//                                             groupValue: _selectedGender,
-//                                             onChanged: (value) {
-//                                               setState(() {
-//                                                 _selectedGender = value!;
-//                                               });
-//                                             },
-//                                           ),
-//                                         ),
-//                                         const Text("MALE"),
-//                                         const SizedBox(
-//                                           width: 70,
-//                                         ),
-//                                         Container(
-//                                           child: Radio<String>(
-//                                             value: 'female',
-//                                             groupValue: _selectedGender,
-//                                             onChanged: (value) {
-//                                               setState(() {
-//                                                 _selectedGender = value!;
-//                                               });
-//                                             },
-//                                           ),
-//                                         ),
-//                                         const Text('FEMALE'),
-//                                       ],
-//                                     )
-//                                   ],
-//                                 ),
-//                               );
-//                   })),
-//           Align(
-//             alignment: Alignment.bottomCenter,
-//             child: Padding(
-//               padding: const EdgeInsets.all(25),
-//               child: ElevatedButton(
-//                 style: ButtonStyle(
-//                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-//                         RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(25),
-//                 ))),
-//                 onPressed: () async {
-// // Update User Profile
-//                   // UserRepository().updateUserProfile()
-//                   Navigator.pop(context);
-//                   // Navigator.push(
-//                   //   context,
-//                   //   MaterialPageRoute(builder: (context) => const CommunityList()),
-//                   // );
-//                 },
-//                 child: const Padding(
-//                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 120),
-//                   child: Text(
-//                     "SAVE",
-//                     style: TextStyle(
-//                         color: Colors.black,
-//                         fontWeight: FontWeight.w400,
-//                         fontSize: 19),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
