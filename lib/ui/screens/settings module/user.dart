@@ -5,6 +5,7 @@ import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/country.dart';
 import 'package:community_internal/core/models/district.dart';
+import 'package:community_internal/core/models/gotra.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/repository/users.repository.dart';
@@ -84,6 +85,10 @@ class _UserDetailsState extends State<UserDetails> {
     communityName: 'Select Community',
     status: 'active',
   );
+  final List<Gotra> _gotraList = [
+    Gotra(id: '-1', gotraName: 'Select Gotra'),
+  ];
+  Gotra _selectedGotra = Gotra(id: '-1', gotraName: 'Select Gotra');
   void refreshStateList() {
     _stateList = [StateDetail(id: '-1', stateName: 'Select State')];
     _selectedState = StateDetail(id: '-1', stateName: 'Select State');
@@ -189,6 +194,16 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
+  Future<void> fetchGotraList() async {
+    await UserRepository().getGotra().then((value) {
+      if (value?.isNotEmpty ?? false) {
+        setState(() {
+          _gotraList.addAll(value!);
+        });
+      }
+    });
+  }
+
   Future<void> fetchCountryList() async {
     refreshStateList();
     refreshDistrictList();
@@ -230,6 +245,8 @@ class _UserDetailsState extends State<UserDetails> {
     await fetchCommunityList();
     _selectedCommunity = _communityList
         .firstWhere((community) => community.id == user.communityId);
+    await fetchGotraList();
+    _selectedGotra = _gotraList.firstWhere((gotra) => gotra.id == user.gotraId);
     setState(() {
       _isLoading = false;
     });
@@ -439,6 +456,21 @@ class _UserDetailsState extends State<UserDetails> {
                       });
                     },
                   ),
+                  widget.isUpdate
+                      ? GotraProfileFieldDropDown(
+                          icon: const Icon(
+                            Icons.vertical_split,
+                            color: Colors.black,
+                          ),
+                          gotraList: _gotraList,
+                          selectedGotra: _selectedGotra,
+                          onChanged: (Gotra? newValue) {
+                            setState(() {
+                              _selectedGotra = newValue!;
+                            });
+                          },
+                        )
+                      : const SizedBox(),
                   ProfileTextFeild(
                     icon: const Icon(
                       Icons.add_card_outlined,

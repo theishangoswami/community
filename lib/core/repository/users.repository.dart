@@ -4,6 +4,7 @@ import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/country.dart';
 import 'package:community_internal/core/models/district.dart';
+import 'package:community_internal/core/models/gotra.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/models/user_model.dart';
@@ -146,6 +147,25 @@ class UserRepository {
         if (body.isNotEmpty) {
           return List<Country>.from(
             body.map((country) => Country.fromJson(country)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<Gotra>?> getGotra() async {
+    try {
+      var res = await HttpBuilder.get('gotra/view');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<Gotra>.from(
+            body.map((gotra) => Gotra.fromJson(gotra)),
           );
         }
       }

@@ -2,6 +2,7 @@ import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/community.dart';
 import 'package:community_internal/core/models/country.dart';
 import 'package:community_internal/core/models/district.dart';
+import 'package:community_internal/core/models/gotra.dart';
 import 'package:community_internal/core/models/pincode.dart';
 import 'package:community_internal/core/models/state_detail.dart';
 import 'package:flutter/material.dart';
@@ -323,10 +324,12 @@ class CountryProfileFieldDropDown extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CountryProfileFieldDropDown> createState() => _CountryProfileFieldDropDownState();
+  State<CountryProfileFieldDropDown> createState() =>
+      _CountryProfileFieldDropDownState();
 }
 
-class _CountryProfileFieldDropDownState extends State<CountryProfileFieldDropDown> {
+class _CountryProfileFieldDropDownState
+    extends State<CountryProfileFieldDropDown> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -357,6 +360,66 @@ class _CountryProfileFieldDropDownState extends State<CountryProfileFieldDropDow
                   (country) => DropdownMenuItem<Country>(
                     value: country,
                     child: Text(country.countryName),
+                  ),
+                )
+                .toList(),
+            onChanged: widget.onChanged,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class GotraProfileFieldDropDown extends StatefulWidget {
+  final Icon icon;
+  final List<Gotra> gotraList;
+  final Gotra selectedGotra;
+  final void Function(Gotra?)? onChanged;
+  const GotraProfileFieldDropDown(
+      {Key? key,
+      required this.icon,
+      required this.gotraList,
+      required this.selectedGotra,
+      this.onChanged})
+      : super(key: key);
+
+  @override
+  State<GotraProfileFieldDropDown> createState() =>
+      _GotraProfileFieldDropDownState();
+}
+
+class _GotraProfileFieldDropDownState extends State<GotraProfileFieldDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          height: 70,
+          width: 30,
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(3),
+            ),
+          ),
+          child: widget.icon,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: DropdownButtonFormField<Gotra>(
+            validator: (value) =>
+                value!.id == '-1' ? 'Please select a gotra' : null,
+            isExpanded: true,
+            value: widget.selectedGotra,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: widget.gotraList
+                .map(
+                  (gotra) => DropdownMenuItem<Gotra>(
+                    value: gotra,
+                    child: Text(gotra.gotraName),
                   ),
                 )
                 .toList(),
