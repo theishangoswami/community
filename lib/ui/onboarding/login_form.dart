@@ -1,5 +1,6 @@
 import 'package:community_internal/core/repository/auth.repository.dart';
 import 'package:community_internal/ui/onboarding/otp_page.dart';
+import 'package:community_internal/ui/screens/settings%20module/referal_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -88,17 +89,25 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.08,
             ),
-            const Text(
-              'OTP WILL SENT TO YOUR REGISTER MOBILE NUMBER',
-              style: TextStyle(
-                color: Colors.grey,
-                decoration: TextDecoration.underline,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReferalInput(),
+                  ),
+                );
+              },
+              child: Text(
+                'HAVE A REFERAL CODE?',
+                style: TextStyle(
+                    color: Colors.blueAccent, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: MediaQuery.of(context).size.height * 0.08,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
