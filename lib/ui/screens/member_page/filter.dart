@@ -11,7 +11,7 @@ showFilterSheet(
   City? selectedCity,
   Function(City?)? onCityChanged,
   List<City>? cityList,
-  void Function()? onPressed,
+  void Function()? applyOnPressed,
 }) {
   showModalBottomSheet(
     isScrollControlled: true,
@@ -97,7 +97,7 @@ showFilterSheet(
                     ),
                   ),
                 ),
-                onPressed: onPressed,
+                onPressed: applyOnPressed,
                 child: const Text(
                   'Apply',
                   style: TextStyle(

@@ -20,7 +20,7 @@ class MembersScreen extends StatefulWidget {
 }
 
 class _MembersScreenState extends State<MembersScreen> {
-  List<UserModel> _userList = [];
+  List<UserModel>? _userList = [];
   final List<Pincode> _pinCodeList = [
     Pincode(pinCode: "Please select a pincode", id: "-1", cityId: ''),
   ];
@@ -49,6 +49,26 @@ class _MembersScreenState extends State<MembersScreen> {
     await UserRepository().getPincode().then((value) {
       _pinCodeList.addAll(value!);
     });
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void fetchCityBasedDetails(String cityId) async {
+    setState(() {
+      _isLoading = true;
+    });
+    _userList = await UserRepository().getCityBasedFiltering(cityId);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void fetchPinCodeBasedDetails(String pinCodeId) async {
+    setState(() {
+      _isLoading = true;
+    });
+    _userList = await UserRepository().getPinCodeBasedFiltering(pinCodeId);
     setState(() {
       _isLoading = false;
     });
@@ -109,7 +129,10 @@ class _MembersScreenState extends State<MembersScreen> {
                             _selectedCity = newValue!;
                           });
                         },
-                        onPressed: () {},
+                        applyOnPressed: () {
+                          fetchCityBasedDetails(_selectedCity.id);
+                          Navigator.of(context).pop();
+                        },
                       );
                     },
                   ),
@@ -127,7 +150,10 @@ class _MembersScreenState extends State<MembersScreen> {
                             _selectedPincode = newValue!;
                           });
                         },
-                        onPressed: () {},
+                        applyOnPressed: () {
+                          fetchPinCodeBasedDetails(_selectedPincode.id);
+                          Navigator.of(context).pop();
+                        },
                       );
                     },
                   ),
@@ -148,7 +174,7 @@ class _MembersScreenState extends State<MembersScreen> {
           ),
         ),
         body: MembersGridList(
-          userList: _userList,
+          userList: _userList ?? [],
         ),
       ),
     );

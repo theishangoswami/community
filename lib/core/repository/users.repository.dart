@@ -197,6 +197,46 @@ class UserRepository {
     return null;
   }
 
+  Future<List<UserModel>?> getCityBasedFiltering(String cityId) async {
+    try {
+      var res = await HttpBuilder.get('city_filter/view/$cityId');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          print('Result: $body');
+          return List<UserModel>.from(
+            body.map((user) => UserModel.fromJson(user)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
+  Future<List<UserModel>?> getPinCodeBasedFiltering(String pinCodeId) async {
+    try {
+      var res = await HttpBuilder.get('pincode_filter/view/$pinCodeId');
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          print('Result: $body');
+          return List<UserModel>.from(
+            body.map((user) => UserModel.fromJson(user)),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
   Future<void> userRegistration(Map<String, String> formBody, image) async {
     try {
       await HttpBuilder.postFormData('first_user/registation',
