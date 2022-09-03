@@ -24,11 +24,11 @@ class _SearchPageState extends State<SearchPage> {
           child: TextField(
             decoration: InputDecoration(
               hintText: "Search people".toUpperCase(),
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                   fontWeight: FontWeight.w700),
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.search,
                 color: Colors.black,
                 size: 24,
@@ -37,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
       ),
-      body: Center(child: Text("Your searches appear here")),
+      body: const Center(child: Text("Your searches appear here")),
     );
   }
 }

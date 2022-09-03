@@ -1,13 +1,16 @@
+import 'package:community_internal/core/models/city.dart';
+import 'package:community_internal/core/models/pincode.dart';
+import 'package:community_internal/core/models/user_model.dart';
+import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/member_page/filter.dart';
 import 'package:community_internal/ui/screens/member_page/search.dart';
 import 'package:community_internal/ui/screens/member_profile.dart';
 import 'package:community_internal/ui/screens/members.list.dart';
 import 'package:community_internal/ui/widgets/user_avatar.dart';
+import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../widgets/dummy_drawer.dart';
 
 class MembersScreen extends StatefulWidget {
   const MembersScreen({Key? key}) : super(key: key);
@@ -16,32 +19,48 @@ class MembersScreen extends StatefulWidget {
   _MembersScreenState createState() => _MembersScreenState();
 }
 
-class _MembersScreenState extends State<MembersScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController? _controller;
-
+class _MembersScreenState extends State<MembersScreen> {
+  List<UserModel> _userList = [];
+  final List<Pincode> _pinCodeList = [
+    Pincode(pinCode: "Please select a pincode", id: "-1", cityId: ''),
+  ];
+  Pincode _selectedPincode =
+      Pincode(pinCode: "Please select a pincode", id: "-1", cityId: '');
+  final List<City> _cityList = [
+    City(cityName: "Please select a city", id: "-1", districtId: '-1'),
+  ];
+  City _selectedCity =
+      City(cityName: "Please select a city", id: "-1", districtId: '-1');
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
-    _controller = TabController(length: 3, vsync: this);
-    _controller?.addListener(() {
-      setState(() {});
-    });
+    fetchDetails();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _controller?.dispose();
+  void fetchDetails() async {
+    setState(() {
+      _isLoading = true;
+    });
+    _userList = await UserRepository().getAllUsers();
+    await UserRepository().getCity().then((value) {
+      _cityList.addAll(value!);
+    });
+    await UserRepository().getPincode().then((value) {
+      _pinCodeList.addAll(value!);
+    });
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final user = StorageService().getCurrentUser();
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(130.0),
-        child: AppBar(
+    return LoadingHelper(
+      isLoading: _isLoading,
+      child: Scaffold(
+        appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
             "Members".toUpperCase(),
@@ -69,48 +88,103 @@ class _MembersScreenState extends State<MembersScreen>
               ),
             )
           ],
-          bottom: TabBar(
-            labelColor: Colors.black,
-            indicatorColor: Colors.white,
-            indicatorWeight: 0.3,
-            controller: _controller,
-            tabs: [
-              GestureDetector(
-                onTap: () {
-                  showFilterSheet(context);
-                },
-                child: Tab(
-                  text: 'City'.toUpperCase(),
-                  icon: const Icon(FontAwesomeIcons.locationDot),
-                ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(70),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TabHeading(
+                    iconName: FontAwesomeIcons.locationDot,
+                    title: 'City',
+                    onTap: () {
+                      showFilterSheet(
+                        context,
+                        showPinCodeField: false,
+                        selectedCity: _selectedCity,
+                        cityList: _cityList,
+                        onCityChanged: (City? newValue) {
+                          setState(() {
+                            _selectedCity = newValue!;
+                          });
+                        },
+                        onPressed: () {},
+                      );
+                    },
+                  ),
+                  TabHeading(
+                    iconName: FontAwesomeIcons.map,
+                    title: 'Pin code',
+                    onTap: () {
+                      showFilterSheet(
+                        context,
+                        showPinCodeField: true,
+                        pinCodeList: _pinCodeList,
+                        selectedPincode: _selectedPincode,
+                        onPinCodeChanged: (Pincode? newValue) {
+                          setState(() {
+                            _selectedPincode = newValue!;
+                          });
+                        },
+                        onPressed: () {},
+                      );
+                    },
+                  ),
+                  TabHeading(
+                    iconName: FontAwesomeIcons.searchengin,
+                    title: 'Search',
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SearchPage(),
+                        ),
+                      );
+                    },
+                  )
+                ],
               ),
-              GestureDetector(
-                onTap: () {
-                  showFilterSheet(context);
-                },
-                child: Tab(
-                  text: 'Pin Code'.toUpperCase(),
-                  icon: const Icon(FontAwesomeIcons.map),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const SearchPage(),
-                    ),
-                  );
-                },
-                child: Tab(
-                  text: 'Search'.toUpperCase(),
-                  icon: const Icon(FontAwesomeIcons.searchengin),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
+        body: MembersGridList(
+          userList: _userList,
+        ),
       ),
-      body: const MembersGridList(),
+    );
+  }
+}
+
+class TabHeading extends StatelessWidget {
+  final String title;
+  final IconData iconName;
+  final void Function()? onTap;
+  const TabHeading({
+    Key? key,
+    required this.title,
+    required this.iconName,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Icon(
+            iconName,
+            size: 28,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            title.toUpperCase(),
+            style: const TextStyle(fontSize: 15),
+          ),
+        ],
+      ),
     );
   }
 }
