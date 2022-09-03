@@ -1,7 +1,10 @@
+import 'package:community_internal/core/models/user_model.dart';
+import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/widgets/post_container.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/models/post.model.dart';
 import '../../core/repository/post_repository.dart';
@@ -24,6 +27,7 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
   final PostRepository _postRepository = PostRepository();
   List<PostModel> postsList = [];
   bool isBusy = false;
+  final StorageService _storageService = StorageService();
 
   Future<void> fetchPostList() async {
     setState(() {
@@ -58,6 +62,7 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = _storageService.getCurrentUser()!;
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -73,11 +78,26 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             color: Colors.black,
           ),
           actions: [
+            IconButton(
+                onPressed: () async {
+                  var url = Uri.parse(
+                      "https://akhilbhartiyasamaj.com/view_cashier_app.php?user_id=${user.id}");
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.inAppWebView);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                icon: Icon(
+                  Icons.balance,
+                  color: Colors.black,
+                  size: 30,
+                )),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
                 child: const UserAvatar(
-                  radius: 50,
+                  radius: 45,
                 ),
                 onTap: () {
                   Navigator.of(context).push(

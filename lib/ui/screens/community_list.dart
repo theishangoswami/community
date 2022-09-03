@@ -85,7 +85,7 @@ class _CommunityListState extends State<CommunityList> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15.0, vertical: 30),
                     child: Text(
-                      'Join your community'.toUpperCase(),
+                      'Join your society'.toUpperCase(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 24,
@@ -119,20 +119,22 @@ class _CommunityListState extends State<CommunityList> {
           ),
         ),
         Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(18),
-              child: FloatingActionButton(
-                  onPressed: () async {
-                    var url = Uri.parse("https://www.youtube.com/");
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  },
-                  child: Icon(Icons.add)),
-            )),
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.all(18),
+            child: FloatingActionButton(
+                onPressed: () async {
+                  var url = Uri.parse(
+                      "https://mydemoweb.online/community_app/admin/new_society_aps.php");
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.inAppWebView);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                child: Icon(Icons.add)),
+          ),
+        ),
       ],
     );
   }

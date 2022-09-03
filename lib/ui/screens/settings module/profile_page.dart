@@ -54,19 +54,19 @@ class _UserDetailsState extends State<UserDetails> {
     District(id: '-1', districtName: 'Select District', stateId: '-1')
   ];
   District _selectedDistrict =
-  District(id: '-1', districtName: 'Select District', stateId: '-1');
+      District(id: '-1', districtName: 'Select District', stateId: '-1');
 
   List<City> _cityList = [
     City(id: '-1', cityName: 'Select City', districtId: '-1')
   ];
   City _selectedCity =
-  City(id: '-1', cityName: 'Select City', districtId: '-1');
+      City(id: '-1', cityName: 'Select City', districtId: '-1');
 
   List<Pincode> _pincodeList = [
     Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode'),
   ];
   Pincode _selectedPincode =
-  Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
+      Pincode(id: '-1', cityId: '-1', pinCode: 'Select Pincode');
 
   final List<Community> _communityList = [
     Community(
@@ -206,9 +206,9 @@ class _UserDetailsState extends State<UserDetails> {
                     selectedImage: _selectedImage,
                     onTap: () {
                       final FilePickerService _filePickerService =
-                      FilePickerService();
+                          FilePickerService();
                       final pickedImage =
-                      _filePickerService.pickImageFromGallery();
+                          _filePickerService.pickImageFromGallery();
                       pickedImage.then((value) {
                         if (value?.path.isNotEmpty ?? false) {
                           setState(() {
@@ -221,9 +221,9 @@ class _UserDetailsState extends State<UserDetails> {
                   ),
                   imageError
                       ? const Text(
-                    'Please select a image',
-                    style: TextStyle(color: Colors.red, fontSize: 15),
-                  )
+                          'Please select a image',
+                          style: TextStyle(color: Colors.red, fontSize: 15),
+                        )
                       : const SizedBox(),
                   const SizedBox(
                     height: 10,
@@ -435,7 +435,7 @@ class _UserDetailsState extends State<UserDetails> {
                           if (_formKey.currentState!.validate() &&
                               !imageError) {
                             final SharedPreferences _sharedPreferences =
-                            locator<SharedPreferences>();
+                                locator<SharedPreferences>();
                             await _sharedPreferences.setString(
                                 'communityId', _selectedCommunity.id);
                             setState(() {
@@ -447,7 +447,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 'mobile_number': _phoneController.text.trim(),
                                 'email': _emailController.text.trim(),
                                 'adhar_card':
-                                _aadhaarCardController.text.trim(),
+                                    _aadhaarCardController.text.trim(),
                                 'passport_no': _passPortController.text.trim(),
                                 'state_id': _selectedState.id,
                                 'district_id': _selectedDistrict.id,
@@ -493,7 +493,6 @@ class _UserDetailsState extends State<UserDetails> {
     );
   }
 }
-
 
 class Profilee extends StatefulWidget {
   const Profilee({Key? key}) : super(key: key);
@@ -595,7 +594,6 @@ class _ProfileeState extends State<Profilee> {
       Icons.cast_for_education,
       color: Colors.black,
     ),
-
   ];
   List<String> datas = [
     "",
@@ -610,14 +608,7 @@ class _ProfileeState extends State<Profilee> {
     "Religion",
     "Aadhar card number",
     "passport number",
-    "Rishi Gotra",
-    "Shasan Gotra",
-    "Pravar Shankya",
-    "Pravar Naam",
-    "Sutra",
-    "Ved",
-    "Devta",
-    "Shaka",
+    "Gotra",
     "Education 10th",
     "Education 12th",
     "Education Graduation",
@@ -635,135 +626,135 @@ class _ProfileeState extends State<Profilee> {
         children: [
           Expanded(
               child: ListView.builder(
-                  itemCount:23,
+                  itemCount: 23,
                   itemBuilder: (context, index) {
                     return index == 0
                         ? Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: CircleAvatar(
-                              radius: 70,
-                              backgroundColor: Colors.black,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 67,
-                                child: Container(
-                                    height: 74,
-                                    width: 60,
-                                    child: Image.network(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU",
-                                      fit: BoxFit.cover,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: CircleAvatar(
+                                    radius: 70,
+                                    backgroundColor: Colors.black,
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 67,
+                                      child: Container(
+                                          height: 74,
+                                          width: 60,
+                                          child: Image.network(
+                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjzKgGevOlmVCQ_ROMb5GhVGn-8bCG2ncUNA&usqp=CAU",
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 85, horizontal: 130),
+                                child: CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.black,
+                                    child: Icon(
+                                      Icons.edit,
+                                      size: 20,
+                                      color: Colors.white,
                                     )),
                               ),
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 85, horizontal: 130),
-                          child: CircleAvatar(
-                              radius: 15,
-                              backgroundColor: Colors.black,
-                              child: Icon(
-                                Icons.edit,
-                                size: 20,
-                                color: Colors.white,
-                              )),
-                        ),
-                      ],
-                    )
-                        : index != 3
-                        ? Row(
-                      children: [
-                        Container(
-                            height: 70,
-                            width: 30,
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.horizontal(
-                                  left: Radius.circular(3)),
-                            ),
-                            child: icons[index]),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Stack(
-                            children: [
-                              Text(
-                                datas[index].toUpperCase(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 26),
-                                child: Text(
-                                  _controller[index].text,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 300, vertical: 10),
-                                child: Icon(Icons.edit),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                        : Container(
-                      height: 80,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 3, horizontal: 37),
-                            child: const Text(' GENDER:'),
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 24,
-                              ),
-                              Container(
-                                child: Radio<String>(
-                                  value: 'male',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                              ),
-                              Text("MALE"),
-                              SizedBox(
-                                width: 70,
-                              ),
-                              Container(
-                                child: Radio<String>(
-                                  value: 'female',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                              ),
-                              Text('FEMALE'),
                             ],
                           )
-                        ],
-                      ),
-                    );
+                        : index != 3
+                            ? Row(
+                                children: [
+                                  Container(
+                                      height: 70,
+                                      width: 30,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: BorderRadius.horizontal(
+                                            left: Radius.circular(3)),
+                                      ),
+                                      child: icons[index]),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Stack(
+                                      children: [
+                                        Text(
+                                          datas[index].toUpperCase(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 26),
+                                          child: Text(
+                                            _controller[index].text,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 300, vertical: 10),
+                                          child: Icon(Icons.edit),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Container(
+                                height: 80,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 3, horizontal: 37),
+                                      child: const Text(' GENDER:'),
+                                    ),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 24,
+                                        ),
+                                        Container(
+                                          child: Radio<String>(
+                                            value: 'male',
+                                            groupValue: _selectedGender,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _selectedGender = value!;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Text("MALE"),
+                                        SizedBox(
+                                          width: 70,
+                                        ),
+                                        Container(
+                                          child: Radio<String>(
+                                            value: 'female',
+                                            groupValue: _selectedGender,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _selectedGender = value!;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Text('FEMALE'),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              );
                   })),
           Align(
             alignment: Alignment.bottomCenter,
@@ -773,8 +764,8 @@ class _ProfileeState extends State<Profilee> {
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ))),
+                  borderRadius: BorderRadius.circular(25),
+                ))),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -783,7 +774,7 @@ class _ProfileeState extends State<Profilee> {
                 },
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 15, horizontal: 120),
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 120),
                   child: Text(
                     "SAVE",
                     style: TextStyle(

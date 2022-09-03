@@ -302,8 +302,8 @@ class _LedgerPageState extends State<LedgerPage> {
             backgroundColor: Colors.transparent,
             children: [
               SpeedDialChild(
-                child: const Icon(Icons.face),
-                label: 'YOUR COMMUNITY',
+                child: const Icon(Icons.money),
+                label: 'ADD DONATION',
                 backgroundColor: Colors.amberAccent,
                 onTap: () {
                   Navigator.push(
@@ -313,8 +313,8 @@ class _LedgerPageState extends State<LedgerPage> {
                 },
               ),
               SpeedDialChild(
-                child: const Icon(Icons.face),
-                label: 'OTHER COMMUNITY',
+                child: const Icon(Icons.currency_rupee),
+                label: 'GUPT DONATION',
                 backgroundColor: Colors.amberAccent,
                 onTap: () {
                   Navigator.push(
