@@ -45,6 +45,7 @@ class _CommunityListState extends State<CommunityList> {
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser();
     return Stack(
       children: [
         LoadingHelper(
@@ -64,8 +65,9 @@ class _CommunityListState extends State<CommunityList> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: GestureDetector(
-                    child: const UserAvatar(
+                    child: UserAvatar(
                       radius: 50,
+                      imgUrl: user!.profile!,
                     ),
                     onTap: () {
                       Navigator.of(context).push(

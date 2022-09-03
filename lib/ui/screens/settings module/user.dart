@@ -252,7 +252,9 @@ class _UserDetailsState extends State<UserDetails> {
     _selectedCommunity = _communityList
         .firstWhere((community) => community.id == user.communityId);
     await fetchGotraList();
-    _selectedGotra = _gotraList.firstWhere((gotra) => gotra.id == user.gotraId);
+    _selectedGotra = user.gotraId?.isNotEmpty ?? false
+        ? _gotraList.firstWhere((gotra) => gotra.id == user.gotraId)
+        : _selectedGotra;
     setState(() {
       _isLoading = false;
     });
@@ -631,9 +633,12 @@ class _UserDetailsState extends State<UserDetails> {
                               setState(() {
                                 _isLoading = false;
                               });
-                              await StorageService()
+                              final res = await StorageService()
                                   .saveUser(_phoneController.text.trim());
-                              Navigator.pop(context);
+                              print('Response is $res');
+                              if (res) {
+                                Navigator.pop(context);
+                              }
                             }
                           } else {
                             if (_formKey.currentState!.validate() &&

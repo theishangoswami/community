@@ -3,7 +3,13 @@ import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final bool isrefferal;
+  final String? refferalCode;
+  const LoginPage({
+    Key? key,
+    this.isrefferal = false,
+    this.refferalCode,
+  }) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -37,6 +43,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const Spacer(),
               LoginForm(
+                isrefferal: widget.isrefferal,
+                refferalCode: widget.refferalCode,
                 isBusy: isBusy,
                 setBusy: (value) {
                   setState(() {

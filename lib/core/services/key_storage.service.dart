@@ -21,6 +21,7 @@ class StorageService {
           'currentUser',
           jsonEncode(jsonDecode(res.body)['resp'][0]),
         );
+        return true;
       }
     } catch (e) {
       debugPrint(e.toString());

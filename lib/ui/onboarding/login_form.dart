@@ -1,4 +1,5 @@
 import 'package:community_internal/core/repository/auth.repository.dart';
+import 'package:community_internal/core/repository/users.repository.dart';
 import 'package:community_internal/ui/onboarding/otp_page.dart';
 import 'package:community_internal/ui/screens/settings%20module/referal_input.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +8,14 @@ import 'package:flutter/services.dart';
 class LoginForm extends StatefulWidget {
   final bool isBusy;
   final Function(bool value) setBusy;
+  final bool isrefferal;
+  final String? refferalCode;
   const LoginForm({
     Key? key,
     required this.isBusy,
     required this.setBusy,
+    this.isrefferal = false,
+    this.refferalCode,
   }) : super(key: key);
 
   @override
@@ -21,6 +26,7 @@ class _LoginFormState extends State<LoginForm> {
   late TextEditingController _mobileNumberController;
   final GlobalKey<FormState> formKey = GlobalKey();
   final AuthRepository _authRepository = AuthRepository();
+  final UserRepository _userRepository = UserRepository();
   bool isBusy = false;
   @override
   void initState() {
@@ -93,7 +99,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ReferalInput(),
@@ -113,15 +119,24 @@ class _LoginFormState extends State<LoginForm> {
               width: MediaQuery.of(context).size.width * 0.5,
               child: ElevatedButton(
                 onPressed: () async {
+                  bool res;
                   print("in on pressed");
                   if (formKey.currentState?.validate() ?? false) {
                     print("in function");
                     widget.setBusy(true);
-                    bool res = await _authRepository.sendOtp(
-                      (_mobileNumberController.text.trim()),
-                    );
+                    if (widget.isrefferal) {
+                      res = await _userRepository.refferalCodeRegistration(
+                        body: {
+                          "mobile_number": _mobileNumberController.text.trim(),
+                          "referal_code": widget.refferalCode!.trim(),
+                        },
+                      );
+                    } else {
+                      res = await _authRepository.sendOtp(
+                        (_mobileNumberController.text.trim()),
+                      );
+                    }
                     widget.setBusy(false);
-
                     if (res) {
                       Navigator.push(
                         context,

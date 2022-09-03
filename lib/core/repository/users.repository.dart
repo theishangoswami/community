@@ -10,6 +10,7 @@ import 'package:community_internal/core/models/state_detail.dart';
 import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UserRepository {
   Future<List<UserModel>> getAllUsers() async {
@@ -235,6 +236,26 @@ class UserRepository {
       }
     }
     return null;
+  }
+
+  Future<bool> refferalCodeRegistration(
+      {required Map<String, String> body}) async {
+    try {
+      var res = await HttpBuilder.post(
+        'referal_user/register',
+        body: body,
+      );
+      if (res!.statusCode == 200 || res.statusCode == 201) {
+        String message = jsonDecode(res.body)['message'];
+        Fluttertoast.showToast(msg: message);
+        return true;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return false;
   }
 
   Future<void> userRegistration(Map<String, String> formBody, image) async {

@@ -1,4 +1,5 @@
 import 'package:community_internal/core/services/key_storage.service.dart';
+import 'package:community_internal/main.dart';
 import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,13 @@ class _VerifyPageState extends State<VerifyPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CommunityList(),
+                        builder: (context) =>
+                            user.societyId?.isNotEmpty ?? false
+                                ? MyHomePage(
+                                    societyId: user.societyId!,
+                                    societyName: user.societyName!,
+                                  )
+                                : const CommunityList(),
                       ),
                     );
                   } else {
