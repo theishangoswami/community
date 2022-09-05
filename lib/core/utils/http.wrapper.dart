@@ -212,9 +212,10 @@ Response Body:${res.body}
     File? image,
     String? imageParameterName,
     required String successMessage,
+    bool baseUrl = true,
   }) async {
     Uri uri = Uri.parse(
-      Constants.baseUrl + url,
+      baseUrl ? Constants.baseUrl + url : url,
     );
 
     var request = http.MultipartRequest("POST", uri);

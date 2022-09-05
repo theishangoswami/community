@@ -1,9 +1,6 @@
 import 'package:community_internal/app/locator.dart';
 import 'package:community_internal/core/repository/ledger_repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
-import 'package:community_internal/main.dart';
-import 'package:community_internal/ui/screens/community_list.dart';
-import 'package:community_internal/ui/screens/profile.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -128,7 +125,7 @@ class _OtherComState extends State<OtherCom> {
                     }
                   },
                   child: const Text(
-                    "SAVE",
+                    "Add Donation",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w400,

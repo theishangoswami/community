@@ -238,6 +238,7 @@ import 'package:community_internal/core/services/key_storage.service.dart';
 import 'package:community_internal/ui/screens/ledger module/slider.dart';
 import 'package:community_internal/ui/screens/ledger%20module/other_community.dart';
 import 'package:community_internal/ui/screens/ledger%20module/same_community.dart';
+import 'package:community_internal/ui/screens/ledger%20module/same_ex.dart';
 import 'package:community_internal/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -272,6 +273,7 @@ class _LedgerPageState extends State<LedgerPage> {
     print('Toatl Donation Amount: $totalDonationAmount');
     print('Toatl Expense Amount: $totalExpenseAmount');
     print('Donation List: $donationList');
+    print('Expense List: $expenseList');
     setState(() {
       _isloading = false;
     });
@@ -323,6 +325,22 @@ class _LedgerPageState extends State<LedgerPage> {
                   final res = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const OtherCom()),
+                  );
+                  if (res == true) {
+                    fetchDonationListAndAmounts();
+                  }
+                },
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.currency_rupee),
+                label: 'ADD EXPENSE',
+                backgroundColor: Colors.amberAccent,
+                onTap: () async {
+                  final res = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SameEx(),
+                    ),
                   );
                   if (res == true) {
                     fetchDonationListAndAmounts();

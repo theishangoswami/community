@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:community_internal/core/models/donation.dart';
 import 'package:community_internal/core/models/expense.dart';
@@ -15,6 +16,28 @@ class LedgerRepository {
         'https://www.akhilbhartiyasamaj.com/user/api/donation/add',
         baseUrl: false,
         body: body,
+      );
+      if (res!.statusCode == 200 || res.statusCode == 201) {
+        print(res.body);
+        return true;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return false;
+  }
+
+  Future<bool> addExpense(Map<String, String> body, File? image) async {
+    try {
+      var res = await HttpBuilder.postFormData(
+        'https://www.akhilbhartiyasamaj.com/user/api/trusty_expense/add',
+        body: body,
+        successMessage: 'Expense added Successfully',
+        baseUrl: false,
+        imageParameterName: 'reciept',
+        image: image,
       );
       if (res!.statusCode == 200 || res.statusCode == 201) {
         print(res.body);
