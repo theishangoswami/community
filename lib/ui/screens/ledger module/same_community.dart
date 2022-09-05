@@ -125,7 +125,7 @@ class _SameComState extends State<SameCom> {
                       locator<SharedPreferences>();
                   final societyId = _sharedPreferences.getString('societyId');
                   final user = StorageService().getCurrentUser();
-                  await LedgerRepository().addDonation({
+                  final res = await LedgerRepository().addDonation({
                     'trusty_id': user!.id,
                     'user_name': _controller[0].text.trim(),
                     'user_mobile': _controller[2].text.trim(),
@@ -138,15 +138,9 @@ class _SameComState extends State<SameCom> {
                   setState(() {
                     _isLoading = false;
                   });
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyHomePage(
-                        societyId: user.societyId!,
-                        societyName: user.societyName ?? '',
-                      ),
-                    ),
-                  );
+                  if (res) {
+                    Navigator.pop(context, true);
+                  }
                 },
                 child: const Text(
                   "SAVE",

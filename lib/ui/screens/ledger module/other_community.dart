@@ -113,28 +113,19 @@ class _OtherComState extends State<OtherCom> {
                         locator<SharedPreferences>();
                     final societyId = _sharedPreferences.getString('societyId');
                     final user = StorageService().getCurrentUser();
-                    await LedgerRepository().addDonation({
+                    final res = await LedgerRepository().addDonation({
                       'trusty_id': user!.id,
-                      'user_name': '',
                       'user_mobile': _controller[0].text.trim(),
-                      'user_email': '',
                       'address': _controller[1].text.trim(),
                       'society_id': societyId,
                       'donation_amount': _controller[2].text.trim(),
-                      'status': ''
                     });
                     setState(() {
                       _isLoading = false;
                     });
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                          societyId: user.societyId!,
-                          societyName: user.societyName ?? '',
-                        ),
-                      ),
-                    );
+                    if (res) {
+                      Navigator.pop(context);
+                    }
                   },
                   child: const Text(
                     "SAVE",

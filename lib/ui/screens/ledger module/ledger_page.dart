@@ -305,22 +305,28 @@ class _LedgerPageState extends State<LedgerPage> {
                 child: const Icon(Icons.money),
                 label: 'ADD DONATION',
                 backgroundColor: Colors.amberAccent,
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  final res = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const SameCom()),
                   );
+                  if (res == true) {
+                    fetchDonationListAndAmounts();
+                  }
                 },
               ),
               SpeedDialChild(
                 child: const Icon(Icons.currency_rupee),
                 label: 'GUPT DONATION',
                 backgroundColor: Colors.amberAccent,
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  final res = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const OtherCom()),
                   );
+                  if (res == true) {
+                    fetchDonationListAndAmounts();
+                  }
                 },
               ),
             ],

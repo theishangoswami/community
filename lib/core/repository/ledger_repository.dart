@@ -9,21 +9,23 @@ import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LedgerRepository {
-  Future<void> addDonation(Map<String, dynamic> body) async {
+  Future<bool> addDonation(Map<String, dynamic> body) async {
     try {
       var res = await HttpBuilder.post(
         'https://www.akhilbhartiyasamaj.com/user/api/donation/add',
         baseUrl: false,
         body: body,
       );
-      if (res != null) {
+      if (res!.statusCode == 200 || res.statusCode == 201) {
         print(res.body);
+        return true;
       }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
     }
+    return false;
   }
 
   Future<List<Donation>?> getDonation(String societyId) async {
