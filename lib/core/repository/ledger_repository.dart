@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:community_internal/core/models/donation.dart';
 import 'package:community_internal/core/models/expense.dart';
+import 'package:community_internal/core/models/memberdetails.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
+import 'package:community_internal/ui/screens/settings%20module/member_details.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LedgerRepository {
   Future<void> addDonation(Map<String, dynamic> body) async {
@@ -99,5 +102,43 @@ class LedgerRepository {
       }
     }
     return null;
+  }
+
+  Future<List<MemberDetails>?> getMemberDetails(String userId) async {
+    try {
+      var res = await HttpBuilder.get(
+        'user/view_member/$userId',
+      );
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<MemberDetails>.from(
+              body.map((member) => MemberDetails.fromJson(member)));
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return [];
+  }
+
+  Future<bool> addMember(Map<String, String> body) async {
+    try {
+      var res = await HttpBuilder.postFormData(
+        'add_member',
+        body: body,
+        successMessage: 'Member Added Successfully',
+      );
+      if (res!.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return false;
   }
 }
