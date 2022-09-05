@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:community_internal/core/models/allchat.dart';
+import 'package:community_internal/core/models/chatbox.dart';
 import 'package:community_internal/core/models/donation.dart';
 import 'package:community_internal/core/models/expense.dart';
 import 'package:community_internal/core/models/memberdetails.dart';
 import 'package:community_internal/core/utils/http.wrapper.dart';
-import 'package:community_internal/ui/screens/settings%20module/member_details.dart';
+import 'package:community_internal/ui/screens/inbox.dart';
 import 'package:flutter/foundation.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class LedgerRepository {
   Future<bool> addDonation(Map<String, dynamic> body) async {
@@ -157,6 +158,70 @@ class LedgerRepository {
         successMessage: 'Member Added Successfully',
       );
       if (res!.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return false;
+  }
+
+  Future<List<AllChat>?> getAllChatDetails(String userId) async {
+    try {
+      var res = await HttpBuilder.get(
+        'view_all/chat/$userId',
+      );
+      if (res != null) {
+        var body = jsonDecode(res.body)['result'] as List;
+        if (body.isNotEmpty) {
+          return List<AllChat>.from(
+            body.map(
+              (chat) => AllChat.fromJson(chat),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return [];
+  }
+
+  Future<List<ChatBox>?> getParticularChatDetails(String userId) async {
+    try {
+      var res = await HttpBuilder.get(
+        'api/chat/view/$userId',
+      );
+      if (res != null) {
+        var body = jsonDecode(res.body)['resp'] as List;
+        if (body.isNotEmpty) {
+          return List<ChatBox>.from(
+            body.map(
+              (chat) => ChatBoxModel.fromJson(chat),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return [];
+  }
+
+  Future<bool> postChatDetails(Map<String, dynamic> body) async {
+    try {
+      var res = await HttpBuilder.post(
+        'chat',
+        body: body,
+      );
+      if (res!.statusCode == 200 || res.statusCode == 201) {
+        print(res.body);
         return true;
       }
     } catch (e) {
