@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             societyName: user.societyName ?? '',
                           )
                         : const CommunityList()
-                    : VerifyPage(phonenumber: user!.mobileNumber.toString())
+                    : VerifyPage(phonenumber: user?.mobileNumber ?? '')
                 : const LanguagePage();
           },
         ),

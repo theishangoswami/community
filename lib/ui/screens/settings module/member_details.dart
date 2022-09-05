@@ -1,173 +1,182 @@
-import 'package:community_internal/ui/screens/community_list.dart';
 import 'package:flutter/material.dart';
 
-int x = 0;
-
 class MultiForm extends StatefulWidget {
+  const MultiForm({Key? key}) : super(key: key);
+
   @override
   _MultiFormState createState() => _MultiFormState();
 }
 
 class _MultiFormState extends State<MultiForm> {
-  List<UserForm> users = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CommunityList()),
-              );
-            },
-            child: Text('REGISTER USERS')),
-        actions: <Widget>[],
+        title: const Text('REGISTER USERS'),
       ),
       body: Container(
-        decoration: BoxDecoration(color: Colors.white),
-        child: users.length <= 0
-            ? Center(
-                child: ListTile(
-                  subtitle: Center(
-                      child: Text('Add form by tapping add button below')),
-                ),
-              )
-            : ListView.builder(
-                addAutomaticKeepAlives: true,
-                itemCount: users.length,
-                itemBuilder: (context, i) => users[i],
-              ),
+        decoration: const BoxDecoration(color: Colors.white),
+        // child: users.length <= 0
+        //     ? const Center(
+        //         child: ListTile(
+        //           subtitle: Center(
+        //             child: Text('Add form by tapping add button below'),
+        //           ),
+        //         ),
+        //       )
+        //     : ListView.builder(
+        //         addAutomaticKeepAlives: true,
+        //         itemCount: users.length,
+        //         itemBuilder: (context, i) => users[i],
+        //       ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: onAddForm,
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddMember(),
+            ),
+          );
+        },
         foregroundColor: Colors.white,
       ),
     );
   }
-
-  ///on add form
-  void onAddForm() {
-    setState(() {
-      users.add(UserForm(
-          // onDelete: () => onDelete(_user),
-          ));
-    });
-  }
 }
 
-class UserForm extends StatefulWidget {
-  final state = _UserFormState();
+class AddMember extends StatefulWidget {
+  const AddMember({Key? key}) : super(key: key);
+
   @override
-  _UserFormState createState() => state;
-//
-// bool isValid() => state.validate();
+  State<AddMember> createState() => _AddMemberState();
 }
 
-class _UserFormState extends State<UserForm> {
+class _AddMemberState extends State<AddMember> {
   final form = GlobalKey<FormState>();
-  String dropdownvalue = 'Son';
-  var items = ['Son', 'Daughter', 'Wife', 'Husband'];
-
+  String dropdownvalue = 'Select Family Member';
+  var items = ['Select Family Member', 'Son', 'Daughter', 'Wife', 'Husband'];
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _mobileNumberController = TextEditingController();
+  final TextEditingController _adhaarCardNumberController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
-    if (x == 5) {
-      x = 0;
-    }
-    x = x + 1;
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Material(
-        elevation: 1,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(8),
-        child: Form(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('ADD MEMBER'),
+          centerTitle: true,
+        ),
+        body: Form(
           key: form,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              AppBar(
-                leading: Icon(Icons.verified_user),
-                elevation: 0,
-                title: Text('MEMBER $x'),
-                backgroundColor: Theme.of(context).accentColor,
-                centerTitle: true,
-                actions: <Widget>[],
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-                child: TextFormField(
-                  decoration: InputDecoration(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextFormField(
+                  controller: _nameController,
+                  keyboardType: TextInputType.name,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Please enter your name' : null,
+                  decoration: const InputDecoration(
                     labelText: 'NAME',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 6),
-                child: Container(
-                  height: 80,
-                  width: 330,
-                  child: DropdownButton(
-                    value: dropdownvalue,
-                    icon: Align(
-                        alignment: Alignment.centerRight,
-                        child: const Icon(Icons.keyboard_arrow_down)),
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Row(
-                          children: [
-                            Text(
-                              items,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 220,
-                            )
-                          ],
+                DropdownButtonFormField<String>(
+                  value: dropdownvalue,
+                  validator: (value) {
+                    return value == 'Select Family Member'
+                        ? 'Select a family member'
+                        : null;
+                  },
+                  icon: const Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.keyboard_arrow_down),
+                  ),
+                  items: items.map((String items) {
+                    return DropdownMenuItem<String>(
+                      value: items,
+                      child: Text(
+                        items.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
-                    },
-                  ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                    });
+                  },
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: TextFormField(
+                TextFormField(
+                  controller: _mobileNumberController,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'PHONE NUMBER',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your phone number';
+                    } else if (value.length != 10) {
+                      return 'Please enter a valid phone number';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 8),
-                child: TextFormField(
-                  decoration: InputDecoration(
+                TextFormField(
+                  controller: _adhaarCardNumberController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
                     labelText: 'AADHAR CARD NUMBER',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your aadhar card number';
+                    } else if (value.length != 12) {
+                      return 'Please enter a valid aadhar card number';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-            ],
+                const Spacer(),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.amber,
+                    primary: Colors.black,
+                    onSurface: Colors.grey,
+                  ),
+                  onPressed: () {
+                    if (form.currentState!.validate()) {}
+                  },
+                  child: const Text('Add Member'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-}
-
-class User {
-  String Name;
-  String relation;
-  String number;
-  String aadhar;
-  User(
-      {this.Name = '', this.relation = '', this.number = '', this.aadhar = ''});
 }
