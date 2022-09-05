@@ -68,7 +68,7 @@ class _SearchPageState extends State<SearchPage> {
           : _isLoading!
               ? const Center(child: CircularProgressIndicator())
               : MembersGridList(
-                  userList: _userList!,
+                  userList: _userList ?? [],
                 ),
     );
   }
