@@ -191,15 +191,15 @@ class LedgerRepository {
     return [];
   }
 
-  Future<List<ChatBox>?> getParticularChatDetails(String userId) async {
+  Future<List<ChatBoxModel>?> getParticularChatDetails(String userId) async {
     try {
       var res = await HttpBuilder.get(
-        'api/chat/view/$userId',
+        'chat/view/$userId',
       );
       if (res != null) {
         var body = jsonDecode(res.body)['resp'] as List;
         if (body.isNotEmpty) {
-          return List<ChatBox>.from(
+          return List<ChatBoxModel>.from(
             body.map(
               (chat) => ChatBoxModel.fromJson(chat),
             ),

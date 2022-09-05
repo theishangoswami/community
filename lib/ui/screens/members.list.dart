@@ -1,5 +1,6 @@
 import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/gen/assets.gen.dart';
+import 'package:community_internal/ui/screens/inbox.dart';
 import 'package:flutter/material.dart';
 
 class MembersGridList extends StatefulWidget {
@@ -62,7 +63,18 @@ class _MembersGridListState extends State<MembersGridList> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatBox(
+                                  recieverId: user.id!,
+                                  chatHeadName: user.userName ?? '',
+                                  profileImageurl: user.profile ?? '',
+                                ),
+                              ),
+                            );
+                          },
                           child: const Icon(
                             Icons.message,
                             color: Colors.amber,

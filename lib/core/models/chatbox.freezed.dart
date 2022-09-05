@@ -21,7 +21,9 @@ ChatBoxModel _$ChatBoxModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChatBoxModel {
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'from_id')
   String get receiverId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'to_id')
   String get senderId => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
@@ -39,8 +41,8 @@ abstract class $ChatBoxModelCopyWith<$Res> {
       _$ChatBoxModelCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      String receiverId,
-      String senderId,
+      @JsonKey(name: 'from_id') String receiverId,
+      @JsonKey(name: 'to_id') String senderId,
       String message,
       String date});
 }
@@ -95,8 +97,8 @@ abstract class _$$_ChatBoxModelCopyWith<$Res>
   @override
   $Res call(
       {String id,
-      String receiverId,
-      String senderId,
+      @JsonKey(name: 'from_id') String receiverId,
+      @JsonKey(name: 'to_id') String senderId,
       String message,
       String date});
 }
@@ -150,8 +152,8 @@ class __$$_ChatBoxModelCopyWithImpl<$Res>
 class _$_ChatBoxModel extends _ChatBoxModel {
   _$_ChatBoxModel(
       {required this.id,
-      required this.receiverId,
-      required this.senderId,
+      @JsonKey(name: 'from_id') required this.receiverId,
+      @JsonKey(name: 'to_id') required this.senderId,
       required this.message,
       required this.date})
       : super._();
@@ -162,8 +164,10 @@ class _$_ChatBoxModel extends _ChatBoxModel {
   @override
   final String id;
   @override
+  @JsonKey(name: 'from_id')
   final String receiverId;
   @override
+  @JsonKey(name: 'to_id')
   final String senderId;
   @override
   final String message;
@@ -214,8 +218,8 @@ class _$_ChatBoxModel extends _ChatBoxModel {
 abstract class _ChatBoxModel extends ChatBoxModel {
   factory _ChatBoxModel(
       {required final String id,
-      required final String receiverId,
-      required final String senderId,
+      @JsonKey(name: 'from_id') required final String receiverId,
+      @JsonKey(name: 'to_id') required final String senderId,
       required final String message,
       required final String date}) = _$_ChatBoxModel;
   _ChatBoxModel._() : super._();
@@ -226,8 +230,10 @@ abstract class _ChatBoxModel extends ChatBoxModel {
   @override
   String get id;
   @override
+  @JsonKey(name: 'from_id')
   String get receiverId;
   @override
+  @JsonKey(name: 'to_id')
   String get senderId;
   @override
   String get message;
