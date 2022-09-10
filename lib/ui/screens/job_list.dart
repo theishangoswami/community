@@ -146,7 +146,8 @@ class _JobListState extends State<JobList> with AutomaticKeepAliveClientMixin {
                             imageUrl: Constants.imageBaseUrl +
                                 (job.companyLogo ?? ""),
                             errorWidget: (_, __, ___) => Image.network(
-                              "https://bigstep.com/assets/images/blog/webservers.jpg",
+                              // "https://bigstep.com/assets/images/blog/webservers.jpg",
+                              job.companyLogo!,
                               fit: BoxFit.fitHeight,
                             ),
                             placeholder: (_, __) => const Center(

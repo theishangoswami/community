@@ -287,69 +287,77 @@ class _LedgerPageState extends State<LedgerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = StorageService().getCurrentUser();
     return LoadingHelper(
       isLoading: _isloading,
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: SpeedDial(
-            child: const Icon(
-              Icons.add,
-              size: 30,
-            ),
-            spacing: 20,
-            elevation: 0,
-            buttonSize: const Size(70, 70),
-            backgroundColor: Colors.transparent,
-            children: [
-              SpeedDialChild(
-                child: const Icon(Icons.money),
-                label: 'ADD DONATION',
-                backgroundColor: Colors.amberAccent,
-                onTap: () async {
-                  final res = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SameCom()),
-                  );
-                  if (res == true) {
-                    fetchDonationListAndAmounts();
-                  }
-                },
-              ),
-              SpeedDialChild(
-                child: const Icon(Icons.currency_rupee),
-                label: 'GUPT DONATION',
-                backgroundColor: Colors.amberAccent,
-                onTap: () async {
-                  final res = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const OtherCom()),
-                  );
-                  if (res == true) {
-                    fetchDonationListAndAmounts();
-                  }
-                },
-              ),
-              SpeedDialChild(
-                child: const Icon(Icons.currency_rupee),
-                label: 'ADD EXPENSE',
-                backgroundColor: Colors.amberAccent,
-                onTap: () async {
-                  final res = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SameEx(),
+        floatingActionButton: user?.userType == '1' ||
+                user?.userType == '2' ||
+                user?.userType == '3' ||
+                user?.userType == '4'
+            ? FloatingActionButton(
+                onPressed: () {},
+                child: SpeedDial(
+                  child: const Icon(
+                    Icons.add,
+                    size: 30,
+                  ),
+                  spacing: 20,
+                  elevation: 0,
+                  buttonSize: const Size(70, 70),
+                  backgroundColor: Colors.transparent,
+                  children: [
+                    SpeedDialChild(
+                      child: const Icon(Icons.money),
+                      label: 'ADD DONATION',
+                      backgroundColor: Colors.amberAccent,
+                      onTap: () async {
+                        final res = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SameCom()),
+                        );
+                        if (res == true) {
+                          fetchDonationListAndAmounts();
+                        }
+                      },
                     ),
-                  );
-                  if (res == true) {
-                    fetchDonationListAndAmounts();
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
+                    SpeedDialChild(
+                      child: const Icon(Icons.currency_rupee),
+                      label: 'GUPT DONATION',
+                      backgroundColor: Colors.amberAccent,
+                      onTap: () async {
+                        final res = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const OtherCom()),
+                        );
+                        if (res == true) {
+                          fetchDonationListAndAmounts();
+                        }
+                      },
+                    ),
+                    SpeedDialChild(
+                      child: const Icon(Icons.currency_rupee),
+                      label: 'ADD EXPENSE',
+                      backgroundColor: Colors.amberAccent,
+                      onTap: () async {
+                        final res = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SameEx(),
+                          ),
+                        );
+                        if (res == true) {
+                          fetchDonationListAndAmounts();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              )
+            : Container(),
         appBar: AppBar(
           title: Text(
             "Ledger".toUpperCase(),

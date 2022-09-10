@@ -605,6 +605,12 @@ class _CreatePostState extends State<CreatePost> {
                     color: Colors.blue,
                   ),
                   title: Text("Photo".toUpperCase()),
+                  trailing: file != null
+                      ? Image.file(
+                          file!,
+                          height: 120,
+                        )
+                      : Container(),
                 ),
                 ListTile(
                   onTap: () async {

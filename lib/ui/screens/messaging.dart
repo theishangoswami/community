@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_internal/core/models/allchat.dart';
 import 'package:community_internal/core/repository/ledger_repository.dart';
 import 'package:community_internal/core/services/key_storage.service.dart';
@@ -56,41 +57,89 @@ class _MessagingState extends State<Messaging> {
                 itemCount: _allChatList!.length,
                 itemBuilder: (context, index) {
                   final chat = _allChatList![index];
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatBox(
-                                recieverId: chat.id,
-                                chatHeadName: chat.name ?? '',
-                                profileImageurl: chat.profile ?? '',
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15.0, left: 10, right: 10, bottom: 0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 5,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 90,
+                            width: 90,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0),
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl: chat.profile?.isNotEmpty ?? false
+                                    ? chat.profile!
+                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU",
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ).whenComplete(() => fetchAllChatDetails());
-                        },
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            backgroundImage: NetworkImage(
-                              chat.profile?.isNotEmpty ?? false
-                                  ? chat.profile!
-                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU",
-                            ),
-                            radius: 25,
-                          ),
-                          title: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Text(
-                              chat.name ?? '',
-                              style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  chat.name?.toUpperCase() ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text("Send a message...".toUpperCase())
+                              ],
+                            ),
+                          ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => ChatBox(
+                          //           recieverId: chat.id,
+                          //           chatHeadName: chat.name ?? '',
+                          //           profileImageurl: chat.profile ?? '',
+                          //         ),
+                          //       ),
+                          //     ).whenComplete(() => fetchAllChatDetails());
+                          //   },
+                          //   child: ListTile(
+                          //     leading: CircleAvatar(
+                          //       backgroundColor: Colors.grey,
+                          //       backgroundImage: NetworkImage(
+                          //         chat.profile?.isNotEmpty ?? false
+                          //             ? chat.profile!
+                          //             : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9HnW7_fXjyucPMl2rsiChfZC1M9fp5DL9QA&usqp=CAU",
+                          //       ),
+                          //       radius: 30,
+                          //     ),
+                          //     title: Padding(
+                          //       padding: const EdgeInsets.all(3),
+                          //       child: Text(
+                          //         chat.name ?? '',
+                          //         style: const TextStyle(
+                          //           fontSize: 17,
+                          //           fontWeight: FontWeight.w500,
+                          //         ),
+                          //       ),
+                          //     ),
                           // subtitle: Column(
                           //   crossAxisAlignment: CrossAxisAlignment.start,
                           //   children: const [
@@ -120,12 +169,11 @@ class _MessagingState extends State<Messaging> {
                           //     color: Colors.green,
                           //   ),
                           // ),
-                        ),
+                          //   ),
+                          // ),
+                        ],
                       ),
-                      const Divider(
-                        color: Colors.black,
-                      ),
-                    ],
+                    ),
                   );
                 },
               )

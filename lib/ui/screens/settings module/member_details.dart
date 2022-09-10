@@ -37,7 +37,7 @@ class _MultiFormState extends State<MultiForm> {
       isLoading: _isLoading,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('REGISTER MEMBERS'),
+          title: const Text('FAMILY DETAILS'),
           centerTitle: true,
         ),
         body: Container(
@@ -93,7 +93,7 @@ class AddMember extends StatefulWidget {
 class _AddMemberState extends State<AddMember> {
   final form = GlobalKey<FormState>();
   String dropdownvalue = 'Select Family Member';
-  var items = ['Select Family Member', 'Son', 'Daughter', 'Wife', 'Husband'];
+  var items = ['Select Family Member', 'Mother', 'Father', 'Brother', 'Sister'];
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _adhaarCardNumberController =

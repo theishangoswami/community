@@ -318,7 +318,16 @@ class _UserDetailsState extends State<UserDetails> {
                               style: TextStyle(color: Colors.red, fontSize: 15),
                             )
                       : const SizedBox(),
-                  const SizedBox(
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
+                    child: Text(
+                      "BASIC DETAILS",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(
                     height: 10,
                   ),
                   ProfileTextFeild(
@@ -383,6 +392,15 @@ class _UserDetailsState extends State<UserDetails> {
                         _selectedGender = value!;
                       });
                     },
+                  ),
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+                    child: Text(
+                      "RESIDENCE DETAILS",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
                   ),
                   CountryProfileFieldDropDown(
                     icon: const Icon(
@@ -452,6 +470,15 @@ class _UserDetailsState extends State<UserDetails> {
                     },
                     pincodeList: _pincodeList,
                     selectedPincode: _selectedPincode,
+                  ),
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+                    child: Text(
+                      "PERSONAL DETAILS",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
                   ),
                   CommunityProfileFieldDropDown(
                     icon: const Icon(
@@ -535,6 +562,15 @@ class _UserDetailsState extends State<UserDetails> {
                     displaytText: 'passport number'.toUpperCase(),
                     controller: _passPortController,
                     keyboardType: TextInputType.text,
+                  ),
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+                    child: Text(
+                      "EDUCATION DETAILS",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
                   ),
                   widget.isUpdate
                       ? Column(

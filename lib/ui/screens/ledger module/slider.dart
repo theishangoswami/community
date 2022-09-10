@@ -41,14 +41,20 @@ class _SegmentedControlSampleState extends State<SegmentedControlSample>
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Text(
                 'Donations',
-                style: TextStyle(color: CupertinoColors.black),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Caladea-Regular',
+                ),
               ),
             ),
             Sky.expense: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Text(
                 'Expenses',
-                style: TextStyle(color: CupertinoColors.black),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Caladea-Regular',
+                ),
               ),
             ),
           },

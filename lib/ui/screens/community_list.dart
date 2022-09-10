@@ -54,7 +54,7 @@ class _CommunityListState extends State<CommunityList> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text(
-                "All Communities".toUpperCase(),
+                "All SOCIETIES".toUpperCase(),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               backgroundColor: Colors.white,

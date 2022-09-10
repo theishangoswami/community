@@ -101,7 +101,7 @@ class _MembersGridListState extends State<MembersGridList> {
                             height: 3,
                           ),
                           Text(
-                            (user.mobileNumber ?? "").toUpperCase(),
+                            (user.societyName ?? "").toUpperCase(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.blueGrey,
@@ -111,7 +111,7 @@ class _MembersGridListState extends State<MembersGridList> {
                             height: 3,
                           ),
                           Text(
-                            (user.userEmail ?? "NA").toUpperCase(),
+                            (user.cityId ?? "NA").toUpperCase(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 12,

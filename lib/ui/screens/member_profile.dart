@@ -110,7 +110,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         },
                         child: const CustomCard(
                           icon: (FontAwesomeIcons.userGroup),
-                          tag: 'family',
+                          tag: 'add family member',
                         ),
                       ),
                       GestureDetector(
@@ -174,13 +174,18 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Page1(),
-                            ),
+                        onTap: () async {
+                          var url = Uri.parse(
+                            "https://akhilbhartiyasamaj.com/board_member_screen.php?user_id=${user.id}",
                           );
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(
+                              url,
+                              mode: LaunchMode.inAppWebView,
+                            );
+                          } else {
+                            throw 'Could not launch $url';
+                          }
                         },
                         child: const CustomCard(
                           icon: (Icons.groups),
@@ -290,7 +295,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         },
                         child: const CustomCard(
                           icon: (Icons.switch_account),
-                          tag: 'switch society',
+                          tag: 'join society',
                         ),
                       ),
                       GestureDetector(
@@ -308,13 +313,18 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Page1(),
-                            ),
+                        onTap: () async {
+                          var url = Uri.parse(
+                            "https://akhilbhartiyasamaj.com/term_and_condition_screen.php",
                           );
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(
+                              url,
+                              mode: LaunchMode.inAppWebView,
+                            );
+                          } else {
+                            throw 'Could not launch $url';
+                          }
                         },
                         child: const CustomCard(
                           icon: (Icons.newspaper),
@@ -322,13 +332,18 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Page1(),
-                            ),
+                        onTap: () async {
+                          var url = Uri.parse(
+                            "https://akhilbhartiyasamaj.com/complaint_and_suggestion.php",
                           );
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(
+                              url,
+                              mode: LaunchMode.inAppWebView,
+                            );
+                          } else {
+                            throw 'Could not launch $url';
+                          }
                         },
                         child: const CustomCard(
                           icon: (Icons.delete_forever),

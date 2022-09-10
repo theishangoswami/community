@@ -60,6 +60,7 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
   @override
   Widget build(BuildContext context) {
     final user = StorageService().getCurrentUser();
+
     return LoadingHelper(
       isLoading: isBusy,
       child: Scaffold(
@@ -74,8 +75,11 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             color: Colors.black,
           ),
           actions: [
-            IconButton(
+            if (user?.userType == '4')
+              IconButton(
                 onPressed: () async {
+                  print("USERTYPE");
+                  print(user?.userType);
                   var url = Uri.parse(
                       "https://akhilbhartiyasamaj.com/view_cashier_app.php?user_id=${user!.id}");
                   if (await canLaunchUrl(url)) {
@@ -88,7 +92,8 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
                   Icons.balance,
                   color: Colors.black,
                   size: 30,
-                )),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
