@@ -563,18 +563,18 @@ class _UserDetailsState extends State<UserDetails> {
                     controller: _passPortController,
                     keyboardType: TextInputType.text,
                   ),
-                  const Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-                    child: Text(
-                      "EDUCATION DETAILS",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
                   widget.isUpdate
                       ? Column(
                           children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 30),
+                              child: Text(
+                                "EDUCATION DETAILS",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
                             ProfileTextFeild(
                               icon: const Icon(
                                 Icons.cast_for_education,
