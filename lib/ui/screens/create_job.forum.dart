@@ -620,10 +620,10 @@ class CreateJobForumState extends State<CreateJobForum> {
                         });
                         bool res = await _jobRepository.postJob(
                           {
-                            'userId': user.id.toString(),
-                            'jobsTitle': jobTitleController.text.trim(),
+                            'user_id': user.id.toString(),
+                            'jobs_title': jobTitleController.text.trim(),
                             'description': jobDescController.text.trim(),
-                            'companyName': firmNameController.text.trim(),
+                            'company_name': firmNameController.text.trim(),
                             'gender': genderValue.toString(),
                             'experience': experience,
                             'education': education,
@@ -631,7 +631,7 @@ class CreateJobForumState extends State<CreateJobForum> {
                             'packages': salary,
                             'status': "enable",
                             'date': DateTime.now().toString(),
-                            'endDate': _selectedDate.toString(),
+                            'exp_date': _selectedDate.toString(),
                           },
                           image,
                         );
