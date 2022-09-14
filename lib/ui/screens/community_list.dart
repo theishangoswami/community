@@ -230,8 +230,6 @@ class _CommunityTileCustomState extends State<CommunityTileCustom> {
             backgroundImage: NetworkImage(
               widget.communityModel.societyLogo ??
                   "https://media.istockphoto.com/vectors/crowd-of-young-and-elderly-men-and-women-in-trendy-hipster-clothes-vector-id1288712636?s=612x612",
-              // height: MediaQuery.of(context).size.height * 0.15,
-              // fit: BoxFit.fill,
             ),
           ),
           const SizedBox(
@@ -285,27 +283,26 @@ class _CommunityTileCustomState extends State<CommunityTileCustom> {
                     ),
                   ),
                   onPressed: () async {
-                    await locator<SharedPreferences>()
-                        .setString('societyId', widget.communityModel.id ?? "");
-                    await locator<SharedPreferences>().setString(
-                        'societyName', widget.communityModel.societyName ?? "");
+                    final user = StorageService().getCurrentUser()!;
                     final response =
                         await _communityRepository.updateJoinedSociety(
                       formBody: {
                         "society_id": widget.communityModel.id.toString(),
-                        "user_id":
-                            StorageService().getCurrentUser()!.id.toString(),
+                        "user_id": user.id!,
                       },
                     );
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                          societyName: widget.communityModel.societyName!,
-                          societyId: widget.communityModel.id!,
+                    if (response) {
+                      await StorageService().saveUser(user.mobileNumber!);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyHomePage(
+                            societyName: widget.communityModel.societyName!,
+                            societyId: widget.communityModel.id!,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),
