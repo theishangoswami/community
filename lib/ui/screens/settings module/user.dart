@@ -687,9 +687,9 @@ class _UserDetailsState extends State<UserDetails> {
                                   'name': _nameController.text.trim(),
                                   'mobile_number': _phoneController.text.trim(),
                                   'email': _emailController.text.trim(),
-                                  'adhar_card':
+                                  'adhar_number':
                                       _aadhaarCardController.text.trim(),
-                                  'passport_no':
+                                  'passport_number':
                                       _passPortController.text.trim(),
                                   'state_id': _selectedState.id,
                                   'district_id': _selectedDistrict.id,
