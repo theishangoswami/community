@@ -1,3 +1,4 @@
+import 'package:community_internal/core/models/city.dart';
 import 'package:community_internal/core/models/user_model.dart';
 import 'package:community_internal/gen/assets.gen.dart';
 import 'package:community_internal/ui/screens/inbox.dart';
@@ -5,7 +6,12 @@ import 'package:flutter/material.dart';
 
 class MembersGridList extends StatefulWidget {
   final List<UserModel> userList;
-  const MembersGridList({Key? key, required this.userList}) : super(key: key);
+  final List<City> cityList;
+  const MembersGridList({
+    Key? key,
+    required this.userList,
+    this.cityList = const [],
+  }) : super(key: key);
 
   @override
   State<MembersGridList> createState() => _MembersGridListState();
@@ -29,6 +35,14 @@ class _MembersGridListState extends State<MembersGridList> {
             itemCount: widget.userList.length,
             itemBuilder: (context, index) {
               var user = widget.userList.elementAt(index);
+              final cityName = user.cityId?.isNotEmpty ?? false
+                  ? widget.cityList.isNotEmpty
+                      ? widget.cityList
+                          .where((element) => element.id == user.cityId)
+                          .first
+                          .cityName
+                      : null
+                  : null;
               return Material(
                 elevation: 8.0,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -91,17 +105,7 @@ class _MembersGridListState extends State<MembersGridList> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            (user.userName ?? "NA").toUpperCase(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 3,
-                          ),
-                          Text(
-                            (user.societyName ?? "").toUpperCase(),
+                            (user.societyName ?? "Society Name").toUpperCase(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.blueGrey,
@@ -111,7 +115,7 @@ class _MembersGridListState extends State<MembersGridList> {
                             height: 3,
                           ),
                           Text(
-                            (user.cityId ?? "NA").toUpperCase(),
+                            (cityName ?? "City Name").toUpperCase(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 12,

@@ -175,6 +175,7 @@ class _MembersScreenState extends State<MembersScreen> {
         ),
         body: MembersGridList(
           userList: _userList ?? [],
+          cityList: _cityList.length == 1 ? [] : _cityList,
         ),
       ),
     );
