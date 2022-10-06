@@ -15,6 +15,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ui/screens/app start module/language.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -89,12 +91,25 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: double.infinity,
-      color: Colors.amber,
-      child: const Center(
-        child: Icon(Icons.ac_unit_sharp, color: Colors.white, size: 90),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: <Widget>[
+            Image.asset('assets/images/akhil_bhartiya_samaj_b.png'),
+            SizedBox(
+              height: 80,
+            ),
+
+            //const Icon(Icons.ac_unit_sharp, color: Colors.black, size: 90),
+            const Text(
+              "AN INITIATIVE BY CMS",
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
       ),
     );
   }

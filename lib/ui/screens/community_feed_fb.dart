@@ -118,24 +118,24 @@ class _CommunityFeedFbState extends State<CommunityFeedFb> {
             const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: CupertinoSlidingSegmentedControl<int>(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 7.0, vertical: 7.0),
-                  backgroundColor: const Color.fromARGB(255, 226, 226, 226),
-                  groupValue: sharedValue,
-                  children: slidingwidgets,
-                  onValueChanged: (int? val) {
-                    setState(() {
-                      sharedValue = val!;
-                    });
-                  },
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            //   child: SizedBox(
+            //     width: double.infinity,
+            //     child: CupertinoSlidingSegmentedControl<int>(
+            //       padding: const EdgeInsets.symmetric(
+            //           horizontal: 7.0, vertical: 7.0),
+            //       backgroundColor: const Color.fromARGB(255, 226, 226, 226),
+            //       groupValue: sharedValue,
+            //       children: slidingwidgets,
+            //       onValueChanged: (int? val) {
+            //         setState(() {
+            //           sharedValue = val!;
+            //         });
+            //       },
+            //     ),
+            //   ),
+            // ),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,

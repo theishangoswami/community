@@ -160,20 +160,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Page1(),
-                            ),
-                          );
-                        },
-                        child: const CustomCard(
-                          icon: (FontAwesomeIcons.star),
-                          tag: 'mahamemeber',
-                        ),
-                      ),
-                      GestureDetector(
                         onTap: () async {
                           var url = Uri.parse(
                             "https://akhilbhartiyasamaj.com/board_member_screen.php?user_id=${user.id}",
@@ -223,13 +209,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         child: const CustomCard(
                           icon: (Icons.mail),
                           tag: 'Notice',
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {},
-                        child: const CustomCard(
-                          icon: (Icons.document_scanner),
-                          tag: 'documents',
                         ),
                       ),
                       GestureDetector(
@@ -376,6 +355,13 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                         child: const CustomCard(
                           icon: (Icons.report),
                           tag: 'report',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: const CustomCard(
+                          icon: (Icons.rate_review),
+                          tag: 'Logout',
                         ),
                       ),
                     ],

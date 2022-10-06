@@ -105,9 +105,20 @@ class _MembersGridListState extends State<MembersGridList> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
+                            (user.userName ?? "Name").toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.blueGrey,
+                                fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 3,
+                          ),
+                          Text(
                             (user.societyName ?? "Society Name").toUpperCase(),
                             style: const TextStyle(
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
                               color: Colors.blueGrey,
                             ),
                           ),
