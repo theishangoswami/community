@@ -384,16 +384,16 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Material(
-        elevation: 10,
+        elevation: 8,
         shadowColor: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
-              size: 70,
+              size: 60,
               color: const Color(0xFFFFB800),
             ),
             const SizedBox(
@@ -405,7 +405,7 @@ class CustomCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
-                  fontSize: 20,
+                  fontSize: 18,
                 ),
               ),
             ),
